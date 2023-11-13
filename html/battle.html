@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/battleStyle.css">
+    <title>DragonSlayer | Battle</title>
+</head>
+<body>
+    <!--Adding sprites to the screen-->
+    <div class="character" id="hero">
+        <div class="stats">
+        <p><span>Cat Rogue</span> Level <span>1</span></p>
+        <progress value="100" max="100"></progress>
+        <p>HP: <span>100</span>/<span>100</span></p>
+        </div>
+        <img src="../img/catrogueDraft.png" alt="">
+    </div>
+
+
+    <div class="character" id="enemy">
+        <div class="stats">
+        <p><span>Dragon</span> Level <span>1</span></p>
+        <progress value="100" max="100"></progress>
+        <p>HP: <span>100</span>/<span>100</span></p>
+    </div>
+        <img src="../img/catrogueDraft.png" alt="">
+    </div>
+
+    <footer>
+        <p>What would you like to do?</p>
+        <p><button id="attack">Attack</button>
+        <button id="useItem">Use Item</button></p>
+        <div class="attacks-container">
+        <p><button id="attack1">Attack 1</button>
+        <button id="attack2">Attack 2</button></p>
+        <p><button id="defend">Defend</button>
+        <button id="statusAttack">Status Attack</button></p>
+        </div>
+    </footer>
+
+    <script src="js/battleScript.js"></script>
+</body>
+</html>
