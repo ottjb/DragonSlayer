@@ -17,7 +17,6 @@ function Character(
   defense,
   speed,
   dodgeChance,
-  status,
   moveset
 ) {
   this.name = name;
@@ -28,7 +27,6 @@ function Character(
   this.defense = defense;
   this.speed = speed;
   this.dodgeChance = dodgeChance;
-  this.status = status;
   this.moveset = moveset;
 }
 
@@ -140,6 +138,7 @@ function rangerSpecial() {
   console.log("Ranger special");
 }
 
+/*
 // Sprite color matrix
 const spriteSheet = [
   [, , ,],
@@ -152,37 +151,55 @@ const spriteSheet = [
   [, , ,],
   [, , ,],
 ];
+*/
+
+// Sprite Sheets
+const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
+const spriteVariant = ["noVariant", "variant"];
+const direction = ["front", "back"];
+const spriteColor = ["base", "blue", "purple", "red"];
+
+function setSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
+  var sprite = `../img/${spriteClass[spriteClassIndex]}/${spriteVariant[variantIndex]}/${direction[directionIndex]}/${spriteColor[colorIndex]}.png`;
+  return sprite;
+}
 
 // Test characters
 const player = new Character(
   "Cat Rogue :D",
-  spriteSheet[1][1],
+  [1, 0, 1, 2],
   150 /*maxHp*/,
   50 /*hp*/,
   20 /*attack*/,
   10 /*defense*/,
   50 /*speed*/,
   0 /*dodgeChance*/,
-  null /*status*/,
   rogueMoveset
 );
 const enemy = new Character(
   "Dragoon >:(",
-  spriteSheet[1][2],
+  [1, 1, 0, 3],
   70 /*maxHp*/,
   28 /*hp*/,
   40 /*attack*/,
   40 /*defense*/,
   50 /*speed*/,
   10 /*dodgeChance*/,
-  null /*status*/,
   rogueMoveset
 );
 
 // All of this runs when the page loads
 // Set player stats
 $("#playerName").html(player.name);
-$("#playerSprite").attr("src", player.sprite);
+$("#playerSprite").attr(
+  "src",
+  setSprite(
+    player.sprite[0],
+    player.sprite[1],
+    player.sprite[2],
+    player.sprite[3]
+  )
+);
 $("#playerHP").html(player.hp);
 $("#playerMaxHP").html(player.maxHp);
 $("#playerHPBar").attr("value", player.hp);
@@ -200,7 +217,10 @@ $("#special").click(player.moveset[3].effect);
 
 // Set enemy stats
 $("#enemyName").html(enemy.name);
-$("#enemySprite").attr("src", enemy.sprite);
+$("#enemySprite").attr(
+  "src",
+  setSprite(enemy.sprite[0], enemy.sprite[1], enemy.sprite[2], enemy.sprite[3])
+);
 $("#enemyHP").html(enemy.hp);
 $("#enemyMaxHP").html(enemy.maxHp);
 $("#enemyHPBar").attr("value", enemy.hp);
