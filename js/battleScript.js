@@ -9,6 +9,64 @@ Add enemy moves
 
 console.log("battleScript.js loaded");
 
+// Classes 
+characters = [
+    // Fighter
+    {
+        name: "fighter",
+        defaultSprite: '',
+        baseMaxHP: 150,
+        baseAttack: 20,
+        baseDefense: 10,
+        baseSpeed: 50,
+        baseDodgeChance: 0,
+        bonusAttack: 0,
+        bonusDefense: 0,
+        bonusSpeed: 0,
+        bonusDodgeChance: 0,
+
+    },
+    // Rogue
+    {
+
+    },
+    // Wizard
+    {
+
+    },
+    // Ranger
+    {
+
+    }
+]
+
+// Sprite Sheets
+const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
+const spriteVariant = ["noVariant", "variant"];
+const direction = ["front", "back"];
+const spriteColor = ["base", "alt1", "alt2", "alt3"];
+/*
+Colors:  base  alt1   alt2   alt3
+Fighter:
+Rogue:   base   blue   purple red
+Wizard:  blue
+Ranger:  base   blue   purple white
+*/
+
+
+function Rogue(baseMaxHP, baseAttack, baseDefense, baseSpeed, baseDodgeChance, bonusAttack, bonusDefense, bonusSpeed, bonusDodgeChance, moveset) {
+    this.baseMaxHP = baseMaxHP;
+    this.baseAttack = baseAttack;
+    this.baseDefense = baseDefense;
+    this.baseSpeed = baseSpeed;
+    this.baseDodgeChance = baseDodgeChance;
+    this.bonusAttack = bonusAttack;
+    this.bonusDefense = bonusDefense;
+    this.bonusSpeed = bonusSpeed;
+    this.bonusDodgeChance = bonusDodgeChance;
+
+}
+
 function Character(
   name,
   className,
@@ -142,12 +200,6 @@ function rangerHeal() {
 function rangerSpecial() {
   console.log("Ranger special");
 }
-
-// Sprite Sheets
-const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
-const spriteVariant = ["noVariant", "variant"];
-const direction = ["front", "back"];
-const spriteColor = ["base", "blue", "purple", "red"];
 
 function setSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
   var sprite = `../img/${spriteClass[spriteClassIndex]}/${spriteVariant[variantIndex]}/${direction[directionIndex]}/${spriteColor[colorIndex]}.png`;
