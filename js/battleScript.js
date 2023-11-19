@@ -7,44 +7,17 @@ Finish off rogue moves
 Add enemy moves
  */
 
-console.log("battleScript.js loaded");
+/////////////
+// Sprites //
+/////////////
 
-// Classes 
-characters = [
-    // Fighter
-    {
-        name: "fighter",
-        defaultSprite: '',
-        baseMaxHP: 150,
-        baseAttack: 20,
-        baseDefense: 10,
-        baseSpeed: 50,
-        baseDodgeChance: 0,
-        bonusAttack: 0,
-        bonusDefense: 0,
-        bonusSpeed: 0,
-        bonusDodgeChance: 0,
-
-    },
-    // Rogue
-    {
-
-    },
-    // Wizard
-    {
-
-    },
-    // Ranger
-    {
-
-    }
-]
-
-// Sprite Sheets
+// Sprite paths
 const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
 const spriteVariant = ["noVariant", "variant"];
 const direction = ["front", "back"];
 const spriteColor = ["base", "alt1", "alt2", "alt3"];
+
+// Sprite color table for reference
 /*
 Colors:  base  alt1   alt2   alt3
 Fighter:
@@ -53,185 +26,201 @@ Wizard:  blue
 Ranger:  base   blue   purple white
 */
 
-
-function Rogue(baseMaxHP, baseAttack, baseDefense, baseSpeed, baseDodgeChance, bonusAttack, bonusDefense, bonusSpeed, bonusDodgeChance, moveset) {
-    this.baseMaxHP = baseMaxHP;
-    this.baseAttack = baseAttack;
-    this.baseDefense = baseDefense;
-    this.baseSpeed = baseSpeed;
-    this.baseDodgeChance = baseDodgeChance;
-    this.bonusAttack = bonusAttack;
-    this.bonusDefense = bonusDefense;
-    this.bonusSpeed = bonusSpeed;
-    this.bonusDodgeChance = bonusDodgeChance;
-
-}
-
-function Character(
-  name,
-  className,
-  sprite,
-  maxHp,
-  hp,
-  attack,
-  defense,
-  speed,
-  dodgeChance,
-  moveset
-) {
-  this.name = name;
-  this.className = className;
-  this.sprite = sprite;
-  this.maxHp = maxHp;
-  this.hp = hp;
-  this.attack = attack;
-  this.defense = defense;
-  this.speed = speed;
-  this.dodgeChance = dodgeChance;
-  this.moveset = moveset;
-}
-
-// Movesets
-
-var classes = ["fighter", "rogue", "wizard", "ranger"];
-
-// Fighter
-var fighterMoveset = [
-  { name: "Stab", effect: fighterAttack },
-  { name: "Dodge", effect: fighterDefend },
-  { name: "Bandage", effect: fighterHeal },
-  { name: "Backstab", effect: fighterSpecial },
-];
-function fighterAttack() {}
-
-function fighterDefend() {}
-
-function fighterHeal() {}
-
-function fighterSpecial() {}
-
-// Rogue
-var rogueMoveset = [
-  { name: "Stab", effect: rogueAttack() },
-  { name: "Dodge", effect: rogueDefend() },
-  { name: "Bandage", effect: rogueHeal() },
-  { name: "Shadow Step", effect: rogueSpecial() },
-];
-function rogueAttack() {
-  var attackRoll = Math.floor(Math.random() * 100);
-  if (attackRoll <= enemy.dodgeChance) {
-    console.log("Enemy dodged");
-    return;
-  }
-  var baseDamage = 10;
-  if (player.attack - enemy.defense > 0) {
-    enemy.hp -= baseDamage + (player.attack - enemy.defense);
-  } else {
-    enemy.hp -= baseDamage;
-  }
-
-  if (enemy.hp < 0) {
-    enemy.hp = 0;
-  }
-  updateHP();
-  console.log("Rogue attack", enemy.hp);
-  return;
-}
-
-function rogueDefend() {
-  player.dodgeChance += 75;
-  player.status = defend;
-  console.log("Rogue defend", player.dodgeChance);
-  return;
-}
-
-function rogueHeal() {
-  // heal 25% of missing hp
-  player.hp += Math.round((player.maxHp - player.hp) * 0.25);
-  if (player.hp > player.maxHp) {
-    player.hp = player.maxHp;
-  }
-  console.log("Rogue heal", player.hp);
-  updateHP();
-  return;
-}
-
-function rogueSpecial() {
-  player.speed = 100;
-  player.status = special;
-  console.log("Rogue Special", player.speed);
-  return;
-}
-
-// Wizard
-var wizardMoveset = [
-  { name: "Stab", effect: wizardAttack },
-  { name: "Dodge", effect: wizardDefend },
-  { name: "Bandage", effect: wizardHeal },
-  { name: "Backstab", effect: wizardSpecial },
-];
-function wizardAttack() {}
-
-function wizardDefend() {}
-
-function wizardHeal() {}
-
-function wizardSpecial() {}
-
-// Ranger
-var rangerMoveset = [
-  { name: "Stab", effect: rangerAttack },
-  { name: "Dodge", effect: rangerDefend },
-  { name: "Bandage", effect: rangerHeal },
-  { name: "Backstab", effect: rangerSpecial },
-];
-function rangerAttack() {
-  console.log("Ranger attack");
-}
-
-function rangerDefend() {
-  console.log("Ranger defend");
-}
-
-function rangerHeal() {
-  console.log("Ranger heal");
-}
-
-function rangerSpecial() {
-  console.log("Ranger special");
-}
-
-function setSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
+// Returns the path to the sprite
+function getSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
   var sprite = `../img/${spriteClass[spriteClassIndex]}/${spriteVariant[variantIndex]}/${direction[directionIndex]}/${spriteColor[colorIndex]}.png`;
   return sprite;
 }
 
-// Test characters
-const player = new Character(
-  "Cat Rogue :D",
-  classes[1] /*class*/,
-  [1, 0, 1, 2] /*sprite*/,
-  150 /*maxHp*/,
-  50 /*hp*/,
-  20 /*attack*/,
-  10 /*defense*/,
-  50 /*speed*/,
-  0 /*dodgeChance*/,
-  rogueMoveset /*moveset*/
-);
-const enemy = new Character(
-  "Dragoon >:(",
-  classes[0] /*class*/,
-  [1, 1, 0, 3] /*sprite*/,
-  70 /*maxHp*/,
-  28 /*hp*/,
-  40 /*attack*/,
-  40 /*defense*/,
-  50 /*speed*/,
-  10 /*dodgeChance*/,
-  fighterMoveset /*moveset*/
-);
+/////////////
+// Classes //
+/////////////
 
+characters = [
+  // Fighter
+  {
+    name: "fighter",
+    sprites: {
+      front: {
+        base: "../img/fighter/noVariant/front/base.png",
+        alt1: "../img/fighter/noVariant/front/alt1.png",
+        alt2: "../img/fighter/noVariant/front/alt2.png",
+        alt3: "../img/fighter/noVariant/front/alt3.png",
+        // stopped here, mapping sprites
+      },
+      back: {
+        base: "../img/fighter/noVariant/back/base.png",
+        alt1: "../img/fighter/noVariant/back/alt1.png",
+        alt2: "../img/fighter/noVariant/back/alt2.png",
+        alt3: "../img/fighter/noVariant/back/alt3.png",
+      },
+    },
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodgeChance: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodgeChance: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  },
+
+  // Rogue
+  {
+    name: "rogue",
+    sprites: {
+      front: {
+        base: "../img/rogue/noVariant/front/base.png",
+        alt1: "../img/rogue/noVariant/front/alt1.png",
+        alt2: "../img/rogue/noVariant/front/alt2.png",
+        alt3: "../img/rogue/noVariant/front/alt3.png",
+      },
+      back: {
+        base: "../img/rogue/noVariant/back/base.png",
+        alt1: "../img/rogue/noVariant/back/alt1.png",
+        alt2: "../img/rogue/noVariant/back/alt2.png",
+        alt3: "../img/rogue/noVariant/back/alt3.png",
+      },
+      frontVariant: {
+        base: "../img/rogue/variant/front/base.png",
+        alt1: "../img/rogue/variant/front/alt1.png",
+        alt2: "../img/rogue/variant/front/alt2.png",
+        alt3: "../img/rogue/variant/front/alt3.png",
+      },
+      backVariant: {
+        base: "../img/rogue/variant/back/base.png",
+        alt1: "../img/rogue/variant/back/alt1.png",
+        alt2: "../img/rogue/variant/back/alt2.png",
+        alt3: "../img/rogue/variant/back/alt3.png",
+      },
+    },
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodgeChance: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodgeChance: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  },
+
+  // Wizard
+  {
+    name: "wizard",
+    defaultSprite: "../img/wizard/noVariant/front/base.png",
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodgeChance: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodgeChance: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  },
+
+  // Ranger
+  {
+    name: "ranger",
+    defaultSprite: "../img/ranger/noVariant/front/base.png",
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodgeChance: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodgeChance: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  },
+];
+
+////////////////////////////
+// Character Constructors //
+////////////////////////////
+
+// This constructor uses the default sprite
+function Character(name, charClass, sprite = charClass.defaultSprite) {
+  this.name = name;
+  this.charClass = charClass;
+}
+
+//////////////////////////////////
+// Putting Characters on screen //
+//////////////////////////////////
+
+// Position will be either hero or enemy
+function loadCharacter(character, position) {
+  var hp = character.charClass.currentHP;
+  var maxHp = character.charClass.baseMaxHP;
+  $(`#${position}Name`).html(character.name);
+  $(`#${position}HP`).html(hp);
+  $(`#${position}MaxHP`).html(maxHp);
+  updateHPBar(position, hp, maxHp);
+  $(`#${position}Sprite`).attr("src", character.sprite);
+  console.log(character.sprite, "Sprite loaded");
+}
+
+// Updates the HP bar
+function updateHPBar(position, hp, maxHp) {
+  $(`#${position}HPBar`).attr("value", hp);
+  $(`#${position}HPBar`).attr("max", maxHp);
+}
+
+/////////////
+// Testing //
+/////////////
+
+const player = new Character("Cat Rogue :D", characters[1]);
+const enemy = new Character("Dragoon >:(", characters[2]);
+console.log(player.sprite);
+
+loadCharacter(player, "player");
+//loadCharacter(enemy, "enemy");
+
+/*
 // All of this runs when the page loads
 // Set player stats
 $("#playerName").html(player.name);
@@ -277,17 +266,13 @@ $("#enemyHP").html(enemy.hp);
 $("#enemyMaxHP").html(enemy.maxHp);
 $("#enemyHPBar").attr("value", enemy.hp);
 $("#enemyHPBar").attr("max", enemy.maxHp);
-
+*/
 function updateHP() {
   $("#playerHP").html(player.hp);
   $("#playerHPBar").attr("value", player.hp);
   $("#enemyHP").html(enemy.hp);
   $("#enemyHPBar").attr("value", enemy.hp);
 }
-
-// Battle functions
-
-function enemyAction() {}
 
 /*
 Statuses
@@ -344,6 +329,7 @@ function battle(actionChosen) {
   }
   //checkHealth();
   /*
+  
 Speed check
 Whoever wins goes first
 If speed is equal, player goes first
