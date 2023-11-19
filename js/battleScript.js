@@ -7,30 +7,14 @@ Finish off rogue moves
 Add enemy moves
  */
 
-/////////////
-// Sprites //
-/////////////
-
-// Sprite paths
-const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
-const spriteVariant = ["noVariant", "variant"];
-const direction = ["front", "back"];
-const spriteColor = ["base", "alt1", "alt2", "alt3"];
-
-// Sprite color table for reference
 /*
-Colors:  base  alt1   alt2   alt3
-Fighter:
-Rogue:   base   blue   purple red
-Wizard:  blue
-Ranger:  base   blue   purple white
+Contents:
+Classes
+Character
+Putting Characters on screen
+Buttons
+Testing
 */
-
-// Returns the path to the sprite
-function getSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
-  var sprite = `../img/${spriteClass[spriteClassIndex]}/${spriteVariant[variantIndex]}/${direction[directionIndex]}/${spriteColor[colorIndex]}.png`;
-  return sprite;
-}
 
 /////////////
 // Classes //
@@ -40,21 +24,7 @@ characters = [
   // Fighter
   {
     name: "fighter",
-    sprites: {
-      front: {
-        base: "../img/fighter/noVariant/front/base.png",
-        alt1: "../img/fighter/noVariant/front/alt1.png",
-        alt2: "../img/fighter/noVariant/front/alt2.png",
-        alt3: "../img/fighter/noVariant/front/alt3.png",
-        // stopped here, mapping sprites
-      },
-      back: {
-        base: "../img/fighter/noVariant/back/base.png",
-        alt1: "../img/fighter/noVariant/back/alt1.png",
-        alt2: "../img/fighter/noVariant/back/alt2.png",
-        alt3: "../img/fighter/noVariant/back/alt3.png",
-      },
-    },
+    sprites: {},
     baseMaxHP: 150,
     currentHP: 150,
     baseAttack: 20,
@@ -82,27 +52,27 @@ characters = [
     sprites: {
       front: {
         base: "../img/rogue/noVariant/front/base.png",
-        alt1: "../img/rogue/noVariant/front/alt1.png",
-        alt2: "../img/rogue/noVariant/front/alt2.png",
-        alt3: "../img/rogue/noVariant/front/alt3.png",
+        blue: "../img/rogue/noVariant/front/blue.png",
+        purple: "../img/rogue/noVariant/front/purple.png",
+        red: "../img/rogue/noVariant/front/red.png",
       },
       back: {
         base: "../img/rogue/noVariant/back/base.png",
-        alt1: "../img/rogue/noVariant/back/alt1.png",
-        alt2: "../img/rogue/noVariant/back/alt2.png",
-        alt3: "../img/rogue/noVariant/back/alt3.png",
+        blue: "../img/rogue/noVariant/back/blue.png",
+        purple: "../img/rogue/noVariant/back/purple.png",
+        red: "../img/rogue/noVariant/back/red.png",
       },
       frontVariant: {
         base: "../img/rogue/variant/front/base.png",
-        alt1: "../img/rogue/variant/front/alt1.png",
-        alt2: "../img/rogue/variant/front/alt2.png",
-        alt3: "../img/rogue/variant/front/alt3.png",
+        blue: "../img/rogue/variant/front/blue.png",
+        purple: "../img/rogue/variant/front/purple.png",
+        red: "../img/rogue/variant/front/red.png",
       },
       backVariant: {
         base: "../img/rogue/variant/back/base.png",
-        alt1: "../img/rogue/variant/back/alt1.png",
-        alt2: "../img/rogue/variant/back/alt2.png",
-        alt3: "../img/rogue/variant/back/alt3.png",
+        blue: "../img/rogue/variant/back/blue.png",
+        purple: "../img/rogue/variant/back/purple.png",
+        red: "../img/rogue/variant/back/red.png",
       },
     },
     baseMaxHP: 150,
@@ -118,18 +88,48 @@ characters = [
     moveset: [
       {
         name: attack,
-        effect: function () {},
+        effect: function () {
+          console.log("attack");
+        },
       },
-      { name: defend, effect: function () {} },
-      { name: heal, effect: function () {} },
-      { name: special, effect: function () {} },
+      {
+        name: defend,
+        effect: function () {
+          console.log("defend");
+        },
+      },
+      {
+        name: heal,
+        effect: function () {
+          console.log("heal");
+        },
+      },
+      {
+        name: special,
+        effect: function () {
+          console.log("special");
+        },
+      },
     ],
   },
 
   // Wizard
   {
     name: "wizard",
-    defaultSprite: "../img/wizard/noVariant/front/base.png",
+    sprites: {
+      front: {
+        base: "../img/wizard/noVariant/front/base.png",
+      },
+      back: {
+        base: "../img/wizard/noVariant/back/base.png",
+      },
+      frontVariant: {
+        base: "../img/wizard/variant/front/base.png",
+      },
+      backVariant: {
+        base: "../img/wizard/variant/back/base.png",
+      },
+    },
     baseMaxHP: 150,
     currentHP: 150,
     baseAttack: 20,
@@ -154,7 +154,20 @@ characters = [
   // Ranger
   {
     name: "ranger",
-    defaultSprite: "../img/ranger/noVariant/front/base.png",
+    sprites: {
+      front: {
+        base: "../img/ranger/front/base.png",
+        blue: "../img/ranger/front/blue.png",
+        purple: "../img/ranger/front/purple.png",
+        white: "../img/ranger/front/white.png",
+      },
+      back: {
+        base: "../img/ranger/back/base.png",
+        blue: "../img/ranger/back/blue.png",
+        purple: "../img/ranger/back/purple.png",
+        white: "../img/ranger/back/white.png",
+      },
+    },
     baseMaxHP: 150,
     currentHP: 150,
     baseAttack: 20,
@@ -177,14 +190,15 @@ characters = [
   },
 ];
 
-////////////////////////////
-// Character Constructors //
-////////////////////////////
+///////////////
+// Character //
+///////////////
 
-// This constructor uses the default sprite
-function Character(name, charClass, sprite = charClass.defaultSprite) {
+// This constructor uses a custom sprite
+function Character(name, charClass, sprite) {
   this.name = name;
   this.charClass = charClass;
+  this.sprite = sprite;
 }
 
 //////////////////////////////////
@@ -210,15 +224,46 @@ function updateHPBar(position, hp, maxHp) {
 }
 
 /////////////
+// Buttons //
+/////////////
+
+// Attack button
+$("#attack").click(function () {
+  player.charClass.moveset[0].effect();
+});
+
+// Defend button
+$("#defend").click(function () {
+  player.charClass.moveset[1].effect();
+});
+
+// Heal button
+$("#heal").click(function () {
+  player.charClass.moveset[2].effect();
+});
+
+// Special button
+$("#special").click(function () {
+  player.charClass.moveset[3].effect();
+});
+
+/////////////
 // Testing //
 /////////////
 
-const player = new Character("Cat Rogue :D", characters[1]);
-const enemy = new Character("Dragoon >:(", characters[2]);
-console.log(player.sprite);
+const player = new Character(
+  "Cat Rogue :D",
+  characters[1],
+  characters[1].sprites.back.base
+);
+const enemy = new Character(
+  "Dragoon >:(",
+  characters[2],
+  characters[2].sprites.front.base
+);
 
 loadCharacter(player, "player");
-//loadCharacter(enemy, "enemy");
+loadCharacter(enemy, "enemy");
 
 /*
 // All of this runs when the page loads
