@@ -8,8 +8,10 @@ Add enemy moves
  */
 
 console.log("battleScript.js loaded");
+
 function Character(
   name,
+  className,
   sprite,
   maxHp,
   hp,
@@ -20,6 +22,7 @@ function Character(
   moveset
 ) {
   this.name = name;
+  this.className = className;
   this.sprite = sprite;
   this.maxHp = maxHp;
   this.hp = hp;
@@ -31,6 +34,8 @@ function Character(
 }
 
 // Movesets
+
+var classes = ["fighter", "rogue", "wizard", "ranger"];
 
 // Fighter
 var fighterMoveset = [
@@ -49,10 +54,10 @@ function fighterSpecial() {}
 
 // Rogue
 var rogueMoveset = [
-  { name: "Stab", effect: rogueAttack },
-  { name: "Dodge", effect: rogueDefend },
-  { name: "Bandage", effect: rogueHeal },
-  { name: "Shadow Step", effect: rogueSpecial },
+  { name: "Stab", effect: rogueAttack() },
+  { name: "Dodge", effect: rogueDefend() },
+  { name: "Bandage", effect: rogueHeal() },
+  { name: "Shadow Step", effect: rogueSpecial() },
 ];
 function rogueAttack() {
   var attackRoll = Math.floor(Math.random() * 100);
@@ -138,21 +143,6 @@ function rangerSpecial() {
   console.log("Ranger special");
 }
 
-/*
-// Sprite color matrix
-const spriteSheet = [
-  [, , ,],
-  [
-    "../img/catrouge-basecolor.png",
-    "../img/catrouge-blue.png",
-    "../img/catrouge-purple.png",
-    "../img/catrouge-red.png",
-  ],
-  [, , ,],
-  [, , ,],
-];
-*/
-
 // Sprite Sheets
 const spriteClass = ["fighter", "rogue", "wizard", "ranger"];
 const spriteVariant = ["noVariant", "variant"];
@@ -167,25 +157,27 @@ function setSprite(spriteClassIndex, variantIndex, directionIndex, colorIndex) {
 // Test characters
 const player = new Character(
   "Cat Rogue :D",
-  [1, 0, 1, 2],
+  classes[1] /*class*/,
+  [1, 0, 1, 2] /*sprite*/,
   150 /*maxHp*/,
   50 /*hp*/,
   20 /*attack*/,
   10 /*defense*/,
   50 /*speed*/,
   0 /*dodgeChance*/,
-  rogueMoveset
+  rogueMoveset /*moveset*/
 );
 const enemy = new Character(
   "Dragoon >:(",
-  [1, 1, 0, 3],
+  classes[0] /*class*/,
+  [1, 1, 0, 3] /*sprite*/,
   70 /*maxHp*/,
   28 /*hp*/,
   40 /*attack*/,
   40 /*defense*/,
   50 /*speed*/,
   10 /*dodgeChance*/,
-  rogueMoveset
+  fighterMoveset /*moveset*/
 );
 
 // All of this runs when the page loads
@@ -207,13 +199,21 @@ $("#playerHPBar").attr("max", player.maxHp);
 
 // Set player moveset
 $("#attack").html(player.moveset[0].name);
-$("#attack").click(player.moveset[0].effect);
+$("#attack").click(function () {
+  battle(player.moveset[0].effect);
+});
 $("#defend").html(player.moveset[1].name);
-$("#defend").click(player.moveset[1].effect);
+$("#defend").click(function () {
+  battle(player.moveset[1].effect);
+});
 $("#heal").html(player.moveset[2].name);
-$("#heal").click(player.moveset[2].effect);
+$("#heal").click(function () {
+  battle(player.moveset[2].effect);
+});
 $("#special").html(player.moveset[3].name);
-$("#special").click(player.moveset[3].effect);
+$("#special").click(function () {
+  battle(player.moveset[3].effect);
+});
 
 // Set enemy stats
 $("#enemyName").html(enemy.name);
@@ -233,13 +233,65 @@ function updateHP() {
   $("#enemyHPBar").attr("value", enemy.hp);
 }
 
-battle();
+// Battle functions
+
+function enemyAction() {}
+
+/*
+Statuses
+DMG:
+Lethal Backstab (Rogue Attack)
+Celestial Infusion (Wizard Heal)
+Inflict Burn (Wizard Special)
+Stats:
+Guardian's Resolve (Fighter Defend)
+Intimidating Aura (Fighter Special)
+Acrobatic Evasion (Rogue Defend)
+Shadow Step (Rogue Special)
+Astral Ward (Wizard Defend)
+Natural Camouflage (Ranger Defend)
+Mark of the Predator (Ranger Special)
+*/
 
 // Battle script
-function battle() {
+var dmgStatus = [];
+var statStatus = [];
+function battle(actionChosen) {
   console.log("Battle start");
+  console.log(actionChosen);
+  var queue = [];
+  //enqueue dmging status
+  //playerAction();
+  $(".attacks-container").addClass("hide");
+
+  var enemyAction = rogueAttack;
+  //enemyAction();
+  //enqueue actions based on speed
+  //enqueue statuses
+  $.each(dmgStatus, function (index, value) {
+    queue.push(value);
+  });
+  if (player.speed > enemy.speed) {
+    queue.enqueue(actionChosen);
+    queue.enqueue(enemyAction);
+  } else if (player.speed < enemy.speed) {
+    queue.enqueue(enemyAction);
+    queue.enqueue(actionChosen);
+  }
+
+  console.log(queue);
+
+  $.each(statStatus, function (index, value) {
+    queue.enqueue(value);
+  });
+
+  while (queue.length != 0) {
+    var currentAction = queue.pop();
+    currentAction();
+    console.log(currentAction);
+  }
+  //checkHealth();
   /*
-Battle start
 Speed check
 Whoever wins goes first
 If speed is equal, player goes first
