@@ -7,6 +7,8 @@ Add enemy moves
 Add stat block bottom left
  */
 
+// stopped while working on bandit moveset
+
 /*
 Contents:
 Classes
@@ -24,310 +26,311 @@ Utility
 /////////////
 // Classes //
 /////////////
+
 $(document).ready(function () {
-  characters = [
-    // Fighter
-    {
-      name: "fighter",
-      sprites: {},
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
-        },
-        { name: defend, effect: function () {} },
-        { name: heal, effect: function () {} },
-        { name: special, effect: function () {} },
-      ],
-    },
-
-    // Rogue
-    {
-      name: "rogue",
-      sprites: {
-        front: {
-          base: "img/rogue/noVariant/front/base.png",
-          blue: "img/rogue/noVariant/front/blue.png",
-          purple: "img/rogue/noVariant/front/purple.png",
-          red: "img/rogue/noVariant/front/red.png",
-        },
-        back: {
-          base: "img/rogue/noVariant/back/base.png",
-          blue: "img/rogue/noVariant/back/blue.png",
-          purple: "img/rogue/noVariant/back/purple.png",
-          red: "img/rogue/noVariant/back/red.png",
-        },
-        frontVariant: {
-          base: "img/rogue/variant/front/base.png",
-          blue: "img/rogue/variant/front/blue.png",
-          purple: "img/rogue/variant/front/purple.png",
-          red: "img/rogue/variant/front/red.png",
-        },
-        backVariant: {
-          base: "img/rogue/variant/back/base.png",
-          blue: "img/rogue/variant/back/blue.png",
-          purple: "img/rogue/variant/back/purple.png",
-          red: "img/rogue/variant/back/red.png",
-        },
+  // Fighter
+  var fighter = {
+    name: "fighter",
+    sprites: {},
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
       },
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: "Lethal Backstab",
-          effect: function () {
-            if (
-              genRandomNumber(1, 100) >
-              enemy.charClass.baseDodge + enemy.charClass.bonusDodge
-            ) {
-              var damage =
-                10 +
-                Math.round(
-                  (player.charClass.baseAttack + player.charClass.bonusAttack) *
-                    1.25
-                );
-              if (enemy.charClass.currentHP - damage < 0) {
-                enemy.charClass.currentHP = 0;
-              } else {
-                enemy.charClass.currentHP -= damage;
-              }
-              addToBattleLog(
-                `${enemy.name} took ${damage} damage from ${player.name}'s Lethal Backstab!`
-              );
-              if (genRandomNumber(1, 100) > 10) {
-                console.log("bleed", currentStatuses);
-                if (!checkStatus(enemy, "bleed")) {
-                  currentStatuses.push(["bleed", 3, enemy]);
-                  addToBattleLog(`${enemy.name} is now bleeding!`);
-                }
-              }
-            } else {
-              addToBattleLog(
-                `${enemy.name} dodged ${player.name}'s Lethal Backstab!`
-              );
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  };
+
+  // Rogue
+  var rogue = {
+    name: "rogue",
+    sprites: {
+      front: {
+        base: "img/rogue/noVariant/front/base.png",
+        blue: "img/rogue/noVariant/front/blue.png",
+        purple: "img/rogue/noVariant/front/purple.png",
+        red: "img/rogue/noVariant/front/red.png",
+      },
+      back: {
+        base: "img/rogue/noVariant/back/base.png",
+        blue: "img/rogue/noVariant/back/blue.png",
+        purple: "img/rogue/noVariant/back/purple.png",
+        red: "img/rogue/noVariant/back/red.png",
+      },
+      frontVariant: {
+        base: "img/rogue/variant/front/base.png",
+        blue: "img/rogue/variant/front/blue.png",
+        purple: "img/rogue/variant/front/purple.png",
+        red: "img/rogue/variant/front/red.png",
+      },
+      backVariant: {
+        base: "img/rogue/variant/back/base.png",
+        blue: "img/rogue/variant/back/blue.png",
+        purple: "img/rogue/variant/back/purple.png",
+        red: "img/rogue/variant/back/red.png",
+      },
+    },
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: "Lethal Backstab",
+        effect: function () {
+          if (
+            genRandomNumber(1, 100) <
+            enemy.charClass.baseDodge + enemy.charClass.bonusDodge
+          ) {
+            addToBattleLog(
+              `${enemy.name} dodged ${player.name}'s Lethal Backstab!`
+            );
+            return;
+          }
+          var damage =
+            10 +
+            Math.round(
+              (player.charClass.baseAttack + player.charClass.bonusAttack) *
+                1.25
+            );
+          addToBattleLog(`${player.name} uses Lethal Backstab!`);
+          doDamage(enemy, damage);
+          if (genRandomNumber(1, 100) > 10) {
+            console.log("bleed", currentStatuses);
+            if (!checkStatus(enemy, "bleed")) {
+              currentStatuses.push(["bleed", 3, enemy]);
+              addToBattleLog(`${enemy.name} is now bleeding!`);
             }
-            updateHP();
-          },
-        },
-        {
-          name: "Acrobatic Evasion",
-          effect: function () {
-            console.log("defend");
-          },
-        },
-        {
-          name: "Quick Patch-Up",
-          effect: function () {
-            console.log("heal");
-          },
-        },
-        {
-          name: "Shadow Step",
-          effect: function () {
-            console.log("special");
-          },
-        },
-      ],
-    },
-
-    // Wizard
-    {
-      name: "wizard",
-      sprites: {
-        front: {
-          base: "img/wizard/noVariant/front/base.png",
-        },
-        back: {
-          base: "img/wizard/noVariant/back/base.png",
-        },
-        frontVariant: {
-          base: "img/wizard/variant/front/base.png",
-        },
-        backVariant: {
-          base: "img/wizard/variant/back/base.png",
+          }
         },
       },
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
-        },
-        { name: defend, effect: function () {} },
-        { name: heal, effect: function () {} },
-        { name: special, effect: function () {} },
-      ],
-    },
-
-    // Ranger
-    {
-      name: "ranger",
-      sprites: {
-        front: {
-          base: "img/ranger/front/base.png",
-          blue: "img/ranger/front/blue.png",
-          purple: "img/ranger/front/purple.png",
-          white: "img/ranger/front/white.png",
-        },
-        back: {
-          base: "img/ranger/back/base.png",
-          blue: "img/ranger/back/blue.png",
-          purple: "img/ranger/back/purple.png",
-          white: "img/ranger/back/white.png",
+      {
+        name: "Acrobatic Evasion",
+        effect: function () {
+          console.log("defend");
         },
       },
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
+      {
+        name: "Quick Patch-Up",
+        effect: function () {
+          console.log("heal");
         },
-        { name: defend, effect: function () {} },
-        { name: heal, effect: function () {} },
-        { name: special, effect: function () {} },
-      ],
+      },
+      {
+        name: "Shadow Step",
+        effect: function () {
+          console.log("special");
+        },
+      },
+    ],
+  };
+
+  // Wizard
+  var wizard = {
+    name: "wizard",
+    sprites: {
+      front: {
+        base: "img/wizard/noVariant/front/base.png",
+      },
+      back: {
+        base: "img/wizard/noVariant/back/base.png",
+      },
+      frontVariant: {
+        base: "img/wizard/variant/front/base.png",
+      },
+      backVariant: {
+        base: "img/wizard/variant/back/base.png",
+      },
     },
-  ];
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  };
+
+  // Ranger
+  var ranger = {
+    name: "ranger",
+    sprites: {
+      front: {
+        base: "img/ranger/front/base.png",
+        blue: "img/ranger/front/blue.png",
+        purple: "img/ranger/front/purple.png",
+        white: "img/ranger/front/white.png",
+      },
+      back: {
+        base: "img/ranger/back/base.png",
+        blue: "img/ranger/back/blue.png",
+        purple: "img/ranger/back/purple.png",
+        white: "img/ranger/back/white.png",
+      },
+    },
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+      { name: special, effect: function () {} },
+    ],
+  };
 
   /////////////
   // Enemies //
   /////////////
 
-  enemies = [
-    // Bandit
-    {
-      name: "bandit",
-      sprites: "img/ranger/front/white.png",
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 25,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
+  // Bandit
+  var bandit = {
+    name: "bandit",
+    sprites: "img/ranger/front/white.png",
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 100,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: "Slash",
+        effect: function (character) {
+          damage =
+            20 +
+            Math.round(
+              (enemy.charClass.baseAttack + enemy.charClass.bonusAttack) * 1.15
+            );
         },
-        { name: defend, effect: function () {} },
-      ],
-    },
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+    ],
+  };
 
-    // Goblin
-    {
-      name: "goblin",
-      sprites: {},
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
-        },
-        { name: defend, effect: function () {} },
-      ],
-    },
+  // Goblin
+  var goblin = {
+    name: "goblin",
+    sprites: {},
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+    ],
+  };
 
-    // Undead
-    {
-      name: "undead",
-      sprites: {},
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
-        },
-        { name: defend, effect: function () {} },
-      ],
-    },
+  // Undead
+  var undead = {
+    name: "undead",
+    sprites: {},
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+    ],
+  };
 
-    // Dragon
-    {
-      name: "dragon",
-      sprites: {},
-      baseMaxHP: 150,
-      currentHP: 150,
-      baseAttack: 20,
-      baseDefense: 10,
-      baseSpeed: 50,
-      baseDodge: 0,
-      bonusAttack: 0,
-      bonusDefense: 0,
-      bonusSpeed: 0,
-      bonusDodge: 0,
-      moveset: [
-        {
-          name: attack,
-          effect: function () {},
-        },
-        { name: defend, effect: function () {} },
-      ],
-    },
-  ];
+  // Dragon
+  var dragon = {
+    name: "dragon",
+    sprites: {},
+    baseMaxHP: 150,
+    currentHP: 150,
+    baseAttack: 20,
+    baseDefense: 10,
+    baseSpeed: 50,
+    baseDodge: 0,
+    bonusAttack: 0,
+    bonusDefense: 0,
+    bonusSpeed: 0,
+    bonusDodge: 0,
+    moveset: [
+      {
+        name: attack,
+        effect: function () {},
+      },
+      { name: defend, effect: function () {} },
+      { name: heal, effect: function () {} },
+    ],
+  };
 
   ////////////////////
   // Status effects //
   ////////////////////
 
-  var statuses = [
+  statuses = [
+    // Bleed
     {
       name: "bleed",
       effect: function (character) {
@@ -336,15 +339,12 @@ $(document).ready(function () {
             (character.charClass.baseMaxHP - character.charClass.currentHP) *
               0.05
         );
-        if (character.charClass.currentHP - damage < 0) {
-          character.charClass.currentHP = 0;
-        } else {
-          character.charClass.currentHP -= damage;
-        }
-        addToBattleLog(`${character.name} took ${damage} damage from Bleed!`);
-        updateHP();
+        addToBattleLog(`${character.name} is still bleeding!`);
+        doDamage(character, damage);
       },
     },
+
+    // Burn
     {
       name: "burn",
       effect: function (character) {
@@ -375,12 +375,8 @@ $(document).ready(function () {
   // Test Characters //
   /////////////////////
 
-  const player = new Character(
-    "Cat Rogue",
-    characters[1],
-    characters[1].sprites.back.base
-  );
-  const enemy = new Character("Bad Guy", enemies[0], enemies[0].sprites);
+  const player = new Character("Cat Rogue", rogue, rogue.sprites.back.base);
+  const enemy = new Character("Bad Guy", bandit, bandit.sprites);
 
   /////////////////////
   // Populate screen //
@@ -508,6 +504,20 @@ $(document).ready(function () {
 
   function enemyTurn() {
     console.log("Enemy turn");
+    var enemyPercentMissingHP =
+      (1 - enemy.charClass.currentHP / enemy.charClass.baseMaxHP) * 100;
+    var chanceToDefend = Math.round(enemyPercentMissingHP);
+    var chanceToHeal = Math.round(enemyPercentMissingHP / 3);
+    if (genRandomNumber(1, 100) > chanceToDefend) {
+      console.log("Attack");
+      enemy.charClass.moveset[0].effect();
+    } else if (genRandomNumber(1, 100) > chanceToHeal) {
+      console.log("Defend");
+      enemy.charClass.moveset[1].effect();
+    } else {
+      console.log("Heal");
+      enemy.charClass.moveset[2].effect();
+    }
   }
 
   ////////////////////////////
@@ -531,6 +541,8 @@ $(document).ready(function () {
   // Function to append a message to the battle log
   function addToBattleLog(message) {
     $("#battleLog").append(`<div>${message}</div>`);
+    var logContainer = document.getElementById("battleLog");
+    logContainer.scrollTop = logContainer.scrollHeight;
   }
 
   // Function to update the HP bars after a move
@@ -590,6 +602,18 @@ $(document).ready(function () {
     }
     return false;
   }
+
+  function doDamage(character, damage) {
+    if (character.charClass.currentHP - damage < 0) {
+      character.charClass.currentHP = 0;
+    } else {
+      character.charClass.currentHP -= damage;
+    }
+    addToBattleLog(`${character.name} took ${damage} damage!`);
+    updateHP();
+  }
+
+  function doHeal(character, heal) {}
 
   console.log("Battle Script Loaded");
 }); // End of document.ready

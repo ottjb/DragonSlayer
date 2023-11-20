@@ -5,29 +5,37 @@ body {
   height: 100%;
 }
 
-.character {
+.battleScreen {
   position: absolute;
-  top: 10vw;
-  width: 10vw;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 75%;
+}
+
+.character {
+  position: relative;
+  height: 5vw;
   aspect-ratio: 1/1;
 }
 
 .character#hero {
-  left: 15vw;
-  margin-top: 2vw;
+  margin-top: 10vw;
+  margin-left: 10vw;
 }
 
 .character#enemy {
-  left: 50vw;
-  margin-top: -2vw;
+  margin-top: -15vw;
+  margin-left: 45vw;
 }
 
 .sidebar {
   position: absolute;
   top: 0;
+  bottom: 25%;
   right: 0;
-  width: 20vw;
-  height: 75%;
+  width: 30%;
+  overflow-y: auto;
   border-left: 1px solid black;
 }
 
@@ -38,8 +46,9 @@ body {
 }
 
 .sidebar div {
-  text-align: center;
-  padding-top: 5px;
+  text-align: inline-start;
+  padding-top: 10px;
+  padding-inline: 10px;
 }
 
 .footbar {
