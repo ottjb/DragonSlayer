@@ -44,10 +44,43 @@ $(document).ready(function () {
     bonusDodge: 0,
     moveset: [
       {
-        name: attack,
-        effect: function () {},
+        name: "Crushing Blow",
+        effect: function (
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        ) {
+          if (checkDodged(enemyDodge)) {
+            addToBattleLog(
+              `${enemy.name} dodged ${player.name}'s Crushing Blow!`
+            );
+            return;
+          }
+          var damage = Math.round(playerAtk * 3 - enemyDef / 2);
+          addToBattleLog(`${player.name} uses Crushing Blow!`);
+          doDamage(enemy, damage);
+        },
       },
-      { name: defend, effect: function () {} },
+      {
+        name: "Guardian's Resolve",
+        effect: function () {
+          addToBattleLog(`${player.name} uses Guardian's Resolve!`);
+          player.charClass.bonusAttack += player.charClass.baseAttack * 0.2;
+          player.charClass.bonusDefense += player.charClass.baseDefense * 0.5;
+          updateStatBlock(
+            player.charClass.baseAttack + player.charClass.bonusAttack,
+            player.charClass.baseDefense + player.charClass.bonusDefense,
+            player.charClass.baseSpeed + player.charClass.bonusSpeed,
+            player.charClass.baseDodge + player.charClass.bonusDodge
+          );
+          currentStatuses.push(["guardian's resolve", 2, player]);
+        },
+      },
       { name: heal, effect: function () {} },
       { name: special, effect: function () {} },
     ],
@@ -111,7 +144,9 @@ $(document).ready(function () {
             );
             return;
           }
-          var damage = Math.round(playerAtk * 3);
+          var damage = Math.round(
+            playerAtk * 2 + playerSpd * 1.5 - enemyDef / 2
+          );
           addToBattleLog(`${player.name} uses Lethal Backstab!`);
           doDamage(enemy, damage);
           if (genRandomNumber(1, 100) <= 20) {
@@ -173,8 +208,34 @@ $(document).ready(function () {
     bonusDodge: 0,
     moveset: [
       {
-        name: attack,
-        effect: function () {},
+        name: "Arcane Missiles",
+        effect: function (
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        ) {
+          var numberOfMissiles = playerAtk / 3;
+          addToBattleLog(
+            `${player.name} fires ${numberOfMissiles} Arcane Missiles!`
+          );
+          var missilesLanded = 0;
+          var damage = 0;
+          for (var i = 0; i < numberOfMissiles; i++) {
+            if (!checkDodged(enemyDodge)) {
+              missilesLanded++;
+              damage += 8 - enemyDef / 2;
+            }
+          }
+          addToBattleLog(
+            `${missilesLanded} of ${player.name}'s Arcane Missiles hit!`
+          );
+          doDamage(enemy, damage);
+        },
       },
       { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
@@ -211,8 +272,26 @@ $(document).ready(function () {
     bonusDodge: 0,
     moveset: [
       {
-        name: attack,
-        effect: function () {},
+        name: "Piercing Shot",
+        effect: function (
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        ) {
+          if (checkDodged(enemyDodge)) {
+            addToBattleLog(`${enemy.name} dodged ${player.name}'s attack!`);
+            return;
+          }
+          enemyDef -= enemyDef * 0.2;
+          var damage = Math.round(playerAtk * 2 - enemyDef / 2);
+          addToBattleLog(`${player.name} uses Piercing Shot!`);
+          doDamage(enemy, damage);
+        },
       },
       { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
@@ -341,6 +420,26 @@ $(document).ready(function () {
       },
     },
 
+    // Guardian's Resolve
+    {
+      name: "guardian's resolve",
+      effect: function (character) {
+        console.log(character);
+        addToBattleLog(
+          `${character.name}'s Guardian's Resolve is still active!`
+        );
+        character.charClass.bonusAttack += character.charClass.baseAttack * 0.2;
+        character.charClass.bonusDefense +=
+          character.charClass.baseDefense * 0.5;
+        updateStatBlock(
+          player.charClass.baseAttack + player.charClass.bonusAttack,
+          player.charClass.baseDefense + player.charClass.bonusDefense,
+          player.charClass.baseSpeed + player.charClass.bonusSpeed,
+          player.charClass.baseDodge + player.charClass.bonusDodge
+        );
+      },
+    },
+
     // Burn
     {
       name: "burn",
@@ -372,7 +471,7 @@ $(document).ready(function () {
   // Test Characters //
   /////////////////////
 
-  const player = new Character("Cat Rogue", rogue, rogue.sprites.back.base);
+  const player = new Character("Cat Rogue", fighter, ranger.sprites.back.base);
   const enemy = new Character("Bad Guy", bandit, bandit.sprites);
 
   /////////////////////
@@ -432,20 +531,28 @@ $(document).ready(function () {
   function initializeBattle(playerAction) {
     disableButtons();
     addToBattleLog("New Turn Started");
-    var playerAtk = player.charClass.baseAttack + player.charClass.bonusAttack;
-    var playerDef =
-      player.charClass.baseDefense + player.charClass.bonusDefense;
-    var playerSpd = player.charClass.baseSpeed + player.charClass.bonusSpeed;
-    var playerDodge = player.charClass.baseDodge + player.charClass.bonusDodge;
+    var playerAtk = calcStats()[0];
+    var playerDef = calcStats()[1];
+    var playerSpd = calcStats()[2];
+    var playerDodge = calcStats()[3];
 
-    var enemyAtk = enemy.charClass.baseAttack + enemy.charClass.bonusAttack;
-    var enemyDef = enemy.charClass.baseDefense + enemy.charClass.bonusDefense;
-    var enemySpd = enemy.charClass.baseSpeed + enemy.charClass.bonusSpeed;
-    var enemyDodge = enemy.charClass.baseDodge + enemy.charClass.bonusDodge;
-    updateStatBlock(playerAtk, playerDef, playerSpd, playerDodge);
+    var enemyAtk = calcStats()[4];
+    var enemyDef = calcStats()[5];
+    var enemySpd = calcStats()[6];
+    var enemyDodge = calcStats()[7];
 
-    console.log("Battle start", currentStatuses);
     resolveStatuses();
+
+    playerAtk = calcStats()[0];
+    playerDef = calcStats()[1];
+    playerSpd = calcStats()[2];
+    playerDodge = calcStats()[3];
+
+    enemyAtk = calcStats()[4];
+    enemyDef = calcStats()[5];
+    enemySpd = calcStats()[6];
+    enemyDodge = calcStats()[7];
+    updateStatBlock(playerAtk, playerDef, playerSpd, playerDodge);
     if (playerSpd >= enemySpd) {
       setTimeout(function () {
         player.charClass.moveset[playerAction].effect(
@@ -458,7 +565,7 @@ $(document).ready(function () {
           enemySpd,
           enemyDodge
         );
-      }, 2000 + 2000 * currentStatuses.length);
+      }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
         enemyTurn(
           playerAtk,
@@ -470,7 +577,7 @@ $(document).ready(function () {
           enemySpd,
           enemyDodge
         );
-      }, 4000 + 2000 * currentStatuses.length);
+      }, 2000 + 1000 * currentStatuses.length);
     } else {
       setTimeout(function () {
         enemyTurn(
@@ -483,7 +590,7 @@ $(document).ready(function () {
           enemySpd,
           enemyDodge
         );
-      }, 2000 + 2000 * currentStatuses.length);
+      }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
         player.charClass.moveset[playerAction].effect(
           playerAtk,
@@ -495,23 +602,23 @@ $(document).ready(function () {
           enemySpd,
           enemyDodge
         );
-      }, 4000 + 2000 * currentStatuses.length);
+      }, 2000 + 1000 * currentStatuses.length);
     }
 
     setTimeout(function () {
       enableButtons();
       setBonusStatsZero(player);
-      playerAtk = player.charClass.baseAttack + player.charClass.bonusAttack;
-      playerDef = player.charClass.baseDefense + player.charClass.bonusDefense;
-      playerSpd = player.charClass.baseSpeed + player.charClass.bonusSpeed;
-      playerDodge = player.charClass.baseDodge + player.charClass.bonusDodge;
-      updateStatBlock(playerAtk, playerDef, playerSpd, playerDodge);
       setBonusStatsZero(enemy);
-      enemyAtk = enemy.charClass.baseAttack + enemy.charClass.bonusAttack;
-      enemyDef = enemy.charClass.baseDefense + enemy.charClass.bonusDefense;
-      enemySpd = enemy.charClass.baseSpeed + enemy.charClass.bonusSpeed;
-      enemyDodge = enemy.charClass.baseDodge + enemy.charClass.bonusDodge;
-    }, 6000);
+      playerAtk = calcStats()[0];
+      playerDef = calcStats()[1];
+      playerSpd = calcStats()[2];
+      playerDodge = calcStats()[3];
+
+      enemyAtk = calcStats()[4];
+      enemyDef = calcStats()[5];
+      enemySpd = calcStats()[6];
+      enemyDodge = calcStats()[7];
+    }, 6000 + 1000 * currentStatuses.length);
   }
 
   function resolveStatuses() {
@@ -523,7 +630,7 @@ $(document).ready(function () {
       var statusObject = statuses.find((status) => status.name === statusName);
       setTimeout(function () {
         statusObject.effect(currentStatus[2]);
-      }, 2000);
+      }, 1000);
       currentStatus[1]--;
       if (currentStatus[1] > 0) {
         tempStatuses.push(currentStatus);
@@ -648,6 +755,29 @@ $(document).ready(function () {
     if (genRandomNumber(1, 100) < dodge) {
       return true;
     }
+  }
+
+  function calcStats() {
+    var playerAtk = player.charClass.baseAttack + player.charClass.bonusAttack;
+    var playerDef =
+      player.charClass.baseDefense + player.charClass.bonusDefense;
+    var playerSpd = player.charClass.baseSpeed + player.charClass.bonusSpeed;
+    var playerDodge = player.charClass.baseDodge + player.charClass.bonusDodge;
+
+    var enemyAtk = enemy.charClass.baseAttack + enemy.charClass.bonusAttack;
+    var enemyDef = enemy.charClass.baseDefense + enemy.charClass.bonusDefense;
+    var enemySpd = enemy.charClass.baseSpeed + enemy.charClass.bonusSpeed;
+    var enemyDodge = enemy.charClass.baseDodge + enemy.charClass.bonusDodge;
+    return [
+      playerAtk,
+      playerDef,
+      playerSpd,
+      playerDodge,
+      enemyAtk,
+      enemyDef,
+      enemySpd,
+      enemyDodge,
+    ];
   }
 
   console.log("Battle Script Loaded");
