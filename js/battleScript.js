@@ -32,12 +32,12 @@ $(document).ready(function () {
   var fighter = {
     name: "fighter",
     sprites: {},
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
+    baseMaxHP: 100,
+    currentHP: 100,
+    baseAttack: 15,
     baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseSpeed: 8,
+    baseDodge: 5,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -82,12 +82,12 @@ $(document).ready(function () {
         red: "img/rogue/variant/back/red.png",
       },
     },
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseMaxHP: 80,
+    currentHP: 80,
+    baseAttack: 12,
+    baseDefense: 8,
+    baseSpeed: 12,
+    baseDodge: 15,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -95,25 +95,26 @@ $(document).ready(function () {
     moveset: [
       {
         name: "Lethal Backstab",
-        effect: function () {
-          if (
-            genRandomNumber(1, 100) <
-            enemy.charClass.baseDodge + enemy.charClass.bonusDodge
-          ) {
+        effect: function (
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        ) {
+          if (checkDodged(enemyDodge)) {
             addToBattleLog(
               `${enemy.name} dodged ${player.name}'s Lethal Backstab!`
             );
             return;
           }
-          var damage =
-            10 +
-            Math.round(
-              (player.charClass.baseAttack + player.charClass.bonusAttack) *
-                1.25
-            );
+          var damage = Math.round(playerAtk * 3);
           addToBattleLog(`${player.name} uses Lethal Backstab!`);
           doDamage(enemy, damage);
-          if (genRandomNumber(1, 100) > 10) {
+          if (genRandomNumber(1, 100) <= 20) {
             console.log("bleed", currentStatuses);
             if (!checkStatus(enemy, "bleed")) {
               currentStatuses.push(["bleed", 3, enemy]);
@@ -160,12 +161,12 @@ $(document).ready(function () {
         base: "img/wizard/variant/back/base.png",
       },
     },
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseMaxHP: 70,
+    currentHP: 70,
+    baseAttack: 18,
+    baseDefense: 6,
+    baseSpeed: 10,
+    baseDodge: 10,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -198,12 +199,12 @@ $(document).ready(function () {
         white: "img/ranger/back/white.png",
       },
     },
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseMaxHP: 90,
+    currentHP: 90,
+    baseAttack: 14,
+    baseDefense: 9,
+    baseSpeed: 10,
+    baseDodge: 12,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -227,12 +228,12 @@ $(document).ready(function () {
   var bandit = {
     name: "bandit",
     sprites: "img/ranger/front/white.png",
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 100,
+    baseMaxHP: 80,
+    currentHP: 80,
+    baseAttack: 12,
+    baseDefense: 8,
+    baseSpeed: 10,
+    baseDodge: 10,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -248,7 +249,6 @@ $(document).ready(function () {
             );
         },
       },
-      { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
     ],
   };
@@ -257,12 +257,12 @@ $(document).ready(function () {
   var goblin = {
     name: "goblin",
     sprites: {},
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseMaxHP: 70,
+    currentHP: 70,
+    baseAttack: 10,
+    baseDefense: 7,
+    baseSpeed: 11,
+    baseDodge: 12,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -272,7 +272,6 @@ $(document).ready(function () {
         name: attack,
         effect: function () {},
       },
-      { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
     ],
   };
@@ -281,12 +280,12 @@ $(document).ready(function () {
   var undead = {
     name: "undead",
     sprites: {},
-    baseMaxHP: 150,
-    currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseMaxHP: 90,
+    currentHP: 90,
+    baseAttack: 14,
+    baseDefense: 6,
+    baseSpeed: 8,
+    baseDodge: 7,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -296,7 +295,6 @@ $(document).ready(function () {
         name: attack,
         effect: function () {},
       },
-      { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
     ],
   };
@@ -307,10 +305,10 @@ $(document).ready(function () {
     sprites: {},
     baseMaxHP: 150,
     currentHP: 150,
-    baseAttack: 20,
-    baseDefense: 10,
-    baseSpeed: 50,
-    baseDodge: 0,
+    baseAttack: 25,
+    baseDefense: 20,
+    baseSpeed: 4,
+    baseDodge: 5,
     bonusAttack: 0,
     bonusDefense: 0,
     bonusSpeed: 0,
@@ -320,7 +318,6 @@ $(document).ready(function () {
         name: attack,
         effect: function () {},
       },
-      { name: defend, effect: function () {} },
       { name: heal, effect: function () {} },
     ],
   };
@@ -451,17 +448,53 @@ $(document).ready(function () {
     resolveStatuses();
     if (playerSpd >= enemySpd) {
       setTimeout(function () {
-        player.charClass.moveset[playerAction].effect();
+        player.charClass.moveset[playerAction].effect(
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        );
       }, 2000 + 2000 * currentStatuses.length);
       setTimeout(function () {
-        enemyTurn();
+        enemyTurn(
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        );
       }, 4000 + 2000 * currentStatuses.length);
     } else {
       setTimeout(function () {
-        enemyTurn();
+        enemyTurn(
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        );
       }, 2000 + 2000 * currentStatuses.length);
       setTimeout(function () {
-        player.charClass.moveset[playerAction].effect();
+        player.charClass.moveset[playerAction].effect(
+          playerAtk,
+          playerDef,
+          playerSpd,
+          playerDodge,
+          enemyAtk,
+          enemyDef,
+          enemySpd,
+          enemyDodge
+        );
       }, 4000 + 2000 * currentStatuses.length);
     }
 
@@ -506,17 +539,13 @@ $(document).ready(function () {
     console.log("Enemy turn");
     var enemyPercentMissingHP =
       (1 - enemy.charClass.currentHP / enemy.charClass.baseMaxHP) * 100;
-    var chanceToDefend = Math.round(enemyPercentMissingHP);
-    var chanceToHeal = Math.round(enemyPercentMissingHP / 3);
-    if (genRandomNumber(1, 100) > chanceToDefend) {
+    var chanceToHeal = Math.round(enemyPercentMissingHP);
+    if (genRandomNumber(1, 100) > chanceToHeal) {
       console.log("Attack");
       enemy.charClass.moveset[0].effect();
-    } else if (genRandomNumber(1, 100) > chanceToHeal) {
-      console.log("Defend");
-      enemy.charClass.moveset[1].effect();
     } else {
       console.log("Heal");
-      enemy.charClass.moveset[2].effect();
+      enemy.charClass.moveset[1].effect();
     }
   }
 
@@ -614,6 +643,12 @@ $(document).ready(function () {
   }
 
   function doHeal(character, heal) {}
+
+  function checkDodged(dodge) {
+    if (genRandomNumber(1, 100) < dodge) {
+      return true;
+    }
+  }
 
   console.log("Battle Script Loaded");
 }); // End of document.ready
