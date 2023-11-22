@@ -12,64 +12,65 @@
     <title>DragonSlayer | Battle</title>
   </head>
   <body>
-    <!--Adding sprites to the screen-->
-    <div class="battleScreen">
-      <div class="character" id="hero">
-        <div class="stats">
-          <p><span id="playerName">Default Name</span></p>
-          <progress value="100" max="100" id="playerHPBar"></progress>
-          <p>
-            HP: <span id="playerHP">Default HP</span> /
-            <span id="playerMaxHP">Default Max HP</span>
-          </p>
+    <div class="grid-container">
+      <!--Adding sprites to the screen-->
+      <div class="battleScreen">
+        <div class="character" id="hero">
+          <div class="stats">
+            <p><span id="playerName">Default Name</span></p>
+            <progress value="100" max="100" id="playerHPBar"></progress>
+            <p>
+              HP: <span id="playerHP">Default HP</span> /
+              <span id="playerMaxHP">Default Max HP</span>
+            </p>
+          </div>
+          <img
+            src="img/rogue/noVariant/front/blue.png"
+            alt=""
+            id="playerSprite"
+          />
         </div>
-        <img
-          src="img/rogue/noVariant/front/blue.png"
-          alt=""
-          id="playerSprite"
-        />
-      </div>
 
-      <div class="character" id="enemy">
-        <div class="stats">
-          <p><span id="enemyName">Default Name</span></p>
-          <progress value="100" max="100" id="enemyHPBar"></progress>
-          <p>
-            HP: <span id="enemyHP">Default HP</span>/<span id="enemyMaxHP"
-              >Default Max HP</span
-            >
-          </p>
+        <div class="character" id="enemy">
+          <div class="stats">
+            <p><span id="enemyName">Default Name</span></p>
+            <progress value="100" max="100" id="enemyHPBar"></progress>
+            <p>
+              HP: <span id="enemyHP">Default HP</span>/<span id="enemyMaxHP"
+                >Default Max HP</span
+              >
+            </p>
+          </div>
+          <img src="img/ranger/front/white.png" alt="" id="enemySprite" />
         </div>
-        <img src="img/ranger/front/white.png" alt="" id="enemySprite" />
       </div>
-    </div>
 
-    <div class="sidebar" id="battleLog">
-      <h1>Battle Log</h1>
-    </div>
-
-    <div class="footbar">
-      <p>What would you like to do?</p>
-    </div>
-
-    <div class="player-stats">
-      <div class="stats-container">
-        <div class="statName">Attack:</div>
-        <div class="statNum" id="playerAtkSt">0</div>
-        <div class="statName">Defense:</div>
-        <div class="statNum" id="playerDefSt">0</div>
-        <div class="statName">Speed:</div>
-        <div class="statNum" id="playerSpdSt">0</div>
-        <div class="statName">Dodge Chance:</div>
-        <div class="statNum" id="playerDodgeSt">0</div>
+      <div class="sidebar" id="battleLog">
+        <div><h1>Battle Log</h1></div>
+        <div class="logs" id="logs"></div>
       </div>
-    </div>
 
-    <div class="attacks-container">
-      <button id="attack">Attack</button>
-      <button id="defend">Defend</button>
-      <button id="heal">Heal</button>
-      <button id="special">Special</button>
+      <div class="footbar">
+        <p>What would you like to do?</p>
+      </div>
+
+      <div class="player-stats">
+        <div class="stats-container">
+          <div class="stat">Attack: <span id="playerAtkSt">0</span></div>
+          <div class="stat">Defense: <span id="playerDefSt">0</span></div>
+          <div class="stat">Speed: <span id="playerSpdSt">0</span></div>
+          <div class="stat">Dodge: <span id="playerDodgeSt">0</span></div>
+        </div>
+      </div>
+
+      <div class="player-attacks">
+        <div class="attacks-container">
+          <button id="attack">Attack</button>
+          <button id="defend">Defend</button>
+          <button id="heal">Heal</button>
+          <button id="special">Special</button>
+        </div>
+      </div>
     </div>
 
     <script src="js/battleScript.js"></script>

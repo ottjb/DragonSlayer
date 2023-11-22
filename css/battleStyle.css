@@ -1,10 +1,151 @@
+html,
 body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  grid-template-rows: 3fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.battleScreen {
+  position: relative;
+  grid-column: 1 / 3;
+  grid-row: 1 /2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.character {
+  position: relative;
+  height: 5vw;
+  aspect-ratio: 1/1;
+}
+
+.character#hero {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  justify-self: center;
+}
+
+.character#enemy {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  margin-top: 15%;
+  justify-self: center;
+}
+
+.sidebar {
+  position: relative;
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  overflow-y: auto;
+  border-left: 2px solid black;
+}
+
+.sidebar h1 {
+  position: absolute;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 2px;
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+.logs {
+  text-align: inline-start;
+  margin-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.footbar,
+.player-stats,
+.player-attacks {
+  grid-row: 2 / 3;
+}
+
+.footbar {
+  position: relative;
+  grid-column: 2 / 3;
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-stats {
+  position: relative;
+  grid-column: 1 / 2;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-attacks {
+  position: relative;
+  grid-column: 3 / 4;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  width: 100%;
+  height: 100%;
+}
+
+.attacks-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.attacks-container p {
+  margin-top: 15%;
+  justify-self: center;
+}
+
+.attacks-container button {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.hide {
+  display: none;
+}
+
+/*
 .battleScreen {
   position: absolute;
   top: 0;
@@ -121,3 +262,4 @@ body {
 .hide {
   display: none;
 }
+*/
