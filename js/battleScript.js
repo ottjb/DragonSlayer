@@ -76,7 +76,14 @@ $(document).ready(function () {
           currentStatuses.push(["guardian's resolve", 2, player]);
         },
       },
-      { name: heal, effect: function () {} },
+      {
+        name: "Vital Surge",
+        effect: function (stats) {
+          addToBattleLog(`${player.name} uses Vital Surge!`);
+          var heal = Math.round(player.charClass.baseMaxHP * 0.3);
+          doHeal(player, heal);
+        },
+      },
       { name: special, effect: function () {} },
     ],
   };
@@ -167,7 +174,18 @@ $(document).ready(function () {
       {
         name: "Quick Patch-Up",
         effect: function () {
-          console.log("heal");
+          addToBattleLog(`${player.name} uses Quick Patch-Up!`);
+          var heal = Math.round(player.charClass.baseMaxHP * 0.15);
+          doHeal(player, heal);
+          player.charClass.bonusDodge += player.charClass.baseDodge;
+
+          updateStatBlock(
+            player.charClass.baseAttack + player.charClass.bonusAttack,
+            player.charClass.baseDefense + player.charClass.bonusDefense,
+            player.charClass.baseSpeed + player.charClass.bonusSpeed,
+            player.charClass.baseDodge + player.charClass.bonusDodge
+          );
+          currentStatuses.push(["quick patch-up", 2, player]);
         },
       },
       {
@@ -244,7 +262,12 @@ $(document).ready(function () {
           currentStatuses.push(["astral ward", 2, player]);
         },
       },
-      { name: heal, effect: function () {} },
+      { name: "Celestial Infusion", effect: function () {
+        addToBattleLog(`${player.name} uses Celestial Infusion!`);
+        var heal = Math.round(player.charClass.baseMaxHP * 0.1);
+        doHeal(player, heal);
+        currentStatuses.push(["celestial infusion", 3, player]);
+      } },
       { name: special, effect: function () {} },
     ],
   };
@@ -304,7 +327,11 @@ $(document).ready(function () {
           currentStatuses.push(["natural camoflage", 1, player]);
         },
       },
-      { name: heal, effect: function () {} },
+      { name: "Natural Remedy", effect: function () {
+        addToBattleLog(`${player.name} uses Natural Remedy!`);
+        var heal = Math.round(player.charClass.baseMaxHP * 0.2);
+        doHeal(player, heal);
+      } },
       { name: special, effect: function () {} },
     ],
   };
@@ -503,6 +530,33 @@ $(document).ready(function () {
         );
       },
     },
+
+    // Quick Patch-Up
+    {
+      name: "quick patch-up",
+      effect: function (character) {
+        addToBattleLog(`${character.name}'s Quick Patch-Up is still active!`);
+        player.charClass.bonusDodge += Math.round(
+          player.charClass.baseDodge * 0.2
+        );
+        updateStatBlock(
+          player.charClass.baseAttack + player.charClass.bonusAttack,
+          player.charClass.baseDefense + player.charClass.bonusDefense,
+          player.charClass.baseSpeed + player.charClass.bonusSpeed,
+          player.charClass.baseDodge + player.charClass.bonusDodge
+        );
+      },
+    },
+
+    // Celestial Infusion
+    {
+      name: "celestial infusion",
+      effect: function (character) {
+        addToBattleLog(`${character.name}'s Celestial Infusion is still active!`);
+        var heal = Math.round(player.charClass.baseMaxHP * 0.1);
+        doHeal(player, heal);
+      },
+    },
   ];
 
   ///////////////////////////
@@ -520,7 +574,10 @@ $(document).ready(function () {
   // Test Characters //
   /////////////////////
 
-  const player = new Character("Cat Rogue", ranger, ranger.sprites.back.base);
+  //const player = new Character("Fighter", fighter, ranger.sprites.back.base);
+  const player = new Character("Cat Rogue", rogue, rogue.sprites.back.base);
+  //const player = new Character("Cat Rogue", wizard, wizard.sprites.back.base);
+  //const player = new Character("Cat Rogue", ranger, ranger.sprites.back.base);
   const enemy = new Character("Bad Guy", bandit, bandit.sprites);
 
   /////////////////////
@@ -742,7 +799,15 @@ $(document).ready(function () {
     updateHP();
   }
 
-  function doHeal(character, heal) {}
+  function doHeal(character, heal) {
+    if (character.charClass.currentHP + heal > character.charClass.baseMaxHP) {
+      character.charClass.currentHP = character.charClass.baseMaxHP;
+    } else {
+      character.charClass.currentHP += heal;
+    }
+    addToBattleLog(`${character.name} healed for ${heal} HP!`);
+    updateHP();
+  }
 
   function checkDodged(dodge) {
     if (genRandomNumber(1, 100) < dodge) {
