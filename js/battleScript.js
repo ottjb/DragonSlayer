@@ -1,14 +1,3 @@
-/* 
-Todo:
-Battle Script
-CREATE FUNCTION THAT DOES THE DAMAGE FOR FUNCTIONS (WILL MAKE EASIER TO FIGURE OUT IF BATTLE ENDS, AND SHORTENS CODE)
-Moves for all characters
-Add enemy moves
-Add stat block bottom left
- */
-
-// stopped while working on bandit moveset
-
 /*
 Contents:
 Classes
@@ -73,6 +62,7 @@ $(document).ready(function () {
           player.charClass.bonusDefense += Math.round(
             player.charClass.baseDefense * 0.5
           );
+          addToBattleLog(`${player.name}'s Attack and Defense increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -103,6 +93,7 @@ $(document).ready(function () {
           enemy.charClass.bonusAttack -= Math.round(
             enemy.charClass.baseAttack * 0.15
           );
+          addToBattleLog(`${enemy.name}'s Attack decreased!`);
           currentStatuses.push(["intimidating aura", 2, enemy]);
         },
       },
@@ -187,6 +178,7 @@ $(document).ready(function () {
           player.charClass.bonusSpeed += Math.round(
             player.charClass.baseSpeed * 0.1
           );
+          addToBattleLog(`${player.name}'s Dodge and Speed increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -206,7 +198,7 @@ $(document).ready(function () {
           var heal = Math.round(player.charClass.baseMaxHP * 0.15);
           doHeal(player, heal);
           player.charClass.bonusDodge += player.charClass.baseDodge;
-
+          addToBattleLog(`${player.name}'s Dodge increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -229,6 +221,7 @@ $(document).ready(function () {
           player.charClass.bonusSpeed += Math.round(
             player.charClass.baseSpeed * 0.2
           );
+          addToBattleLog(`${player.name}'s Attack and Speed increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -303,6 +296,7 @@ $(document).ready(function () {
           player.charClass.bonusDefense += Math.round(
             player.charClass.baseDefense * 0.5
           );
+          addToBattleLog(`${player.name}'s Defense increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -391,6 +385,7 @@ $(document).ready(function () {
           }
           addToBattleLog(`${player.name} uses Natural Camoflage!`);
           player.charClass.bonusDodge += 100 - player.charClass.baseDodge;
+          addToBattleLog(`${player.name}'s Dodge increased!`);
           updateStatBlock(
             player.charClass.baseAttack + player.charClass.bonusAttack,
             player.charClass.baseDefense + player.charClass.bonusDefense,
@@ -422,6 +417,7 @@ $(document).ready(function () {
           enemy.charClass.bonusDefense -= Math.round(
             enemy.charClass.baseDefense * 0.1
           );
+          addToBattleLog(`${enemy.name}'s Defense decreased!`);
           currentStatuses.push(["mark of the predator", 2, enemy]);
         },
       },
@@ -1107,19 +1103,3 @@ $(document).ready(function () {
 
   console.log("Battle Script Loaded");
 }); // End of document.ready
-
-/*
-Statuses
-DMG:
-Lethal Backstab (Rogue Attack)
-Celestial Infusion (Wizard Heal)
-Inflict Burn (Wizard Special)
-Stats:
-Guardian's Resolve (Fighter Defend)
-Intimidating Aura (Fighter Special)
-Acrobatic Evasion (Rogue Defend)
-Shadow Step (Rogue Special)
-Astral Ward (Wizard Defend)
-Natural Camouflage (Ranger Defend)
-Mark of the Predator (Ranger Special)
-*/
