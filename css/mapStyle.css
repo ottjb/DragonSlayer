@@ -1,0 +1,44 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.grid-container {
+  display: grid;
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  grid-template-rows: 3fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.map-container {
+  position: relative;
+  background-color: aquamarine;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.stats-container {
+  position: relative;
+  background-color: coral;
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  overflow-y: hidden;
+  border-left: 2px solid black;
+}
+
+.character-container {
+  position: relative;
+  background-color: darkseagreen;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  overflow-y: hidden;
+  border-top: 2px solid black;
+}
