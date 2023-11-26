@@ -24,8 +24,9 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  background-image:url(../img/test.jpg);
-  background-size: contain;
+  background-image:url(../img/forest.png);
+  background-size: 1000px 800px;
+  background-repeat: no-repeat;
 }
 
 .character {
@@ -53,6 +54,7 @@ body {
   grid-row: 1 / 2;
   overflow-y: auto;
   border-left: 2px solid black;
+  background-image: url(../img/bricks.png);
 }
 
 .sidebar h1 {
@@ -87,6 +89,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(../img/paper.png);
 }
 
 .player-stats {
