@@ -32,7 +32,36 @@ body {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
   overflow-y: hidden;
+  overflow-x: hidden;
   border-left: 2px solid black;
+}
+
+.account-stats-container > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 15%;
+  width: 100%;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 80%;
+  width: 100%;
+}
+
+.stats p {
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
 }
 
 .moveset-container {
@@ -95,13 +124,53 @@ body {
   visibility: visible;
 }
 
-.character-container {
+.pet-container {
   position: relative;
   background-color: darkseagreen;
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   overflow-y: hidden;
   border-top: 2px solid black;
+
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pet-container select {
+  padding: 0;
+  width: 15%;
+  text-align: center;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+}
+
+.pet-container select::-ms-expand {
+  display: none;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 10%;
+  width: 100%;
+}
+
+select:disabled {
+  opacity: 1;
+  background-color: transparent;
+  border: none;
+  color: black;
 }
 
 .prompt-container {
@@ -112,6 +181,10 @@ body {
   overflow-y: hidden;
   border-top: 2px solid black;
   border-left: 2px solid black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .character-stats-container {

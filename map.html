@@ -15,7 +15,23 @@
     <div class="grid-container">
       <div class="map-container"></div>
 
-      <div class="account-stats-container"></div>
+      <div class="account-stats-container">
+        <h2>Account Stats</h2>
+        <div class="stats">
+          <p>Username: <span id="accStatsCont__username">Username</span></p>
+          <p>
+            Number of Attempts: <span id="accStatsCont__numOfAttempts">0</span>
+          </p>
+          <p>Victories: <span id="accStatsCont__victories">0</span></p>
+          <p>Enemies Slain: <span id="accStatsCont__enemiesSlain">0</span></p>
+          <p>
+            Pets Acquired: (<span id="accStatsCont__petsAcquired">?</span>/7)
+          </p>
+          <p>
+            Current Class: <span id="accStatsCont__currentClass">Class</span>
+          </p>
+        </div>
+      </div>
 
       <div class="moveset-container">
         <div id="move1">
@@ -44,9 +60,18 @@
         </div>
       </div>
 
-      <div class="character-container"></div>
+      <div class="pet-container">
+        <p>Select your pet</p>
+        <div class="select-container">
+          <img src="img/arrows/arrowLeft.png" id="arrowLeft" />
+          <select name="pet" id="pet" disabled></select>
+          <img src="img/arrows/arrowRight.png" id="arrowRight" />
+        </div>
+      </div>
 
-      <div class="prompt-container"></div>
+      <div class="prompt-container">
+        <p>Choose your next move</p>
+      </div>
 
       <div class="character-stats-container">
         <p>Attack: <span id="charStatsCont__atk">0</span></p>
