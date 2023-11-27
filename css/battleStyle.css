@@ -24,8 +24,8 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  background-image:url(../img/forest.png);
-  background-size: 1200px 1000px;
+  background-image:url(../img/battlescreen/forest.png);
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
 }
 
@@ -54,7 +54,7 @@ body {
   grid-row: 1 / 2;
   overflow-y: auto;
   border-left: 2px solid black;
-  background-image: url(../img/bricks.png);
+  background-image: url(../img/battlescreen/bricks.png);
 }
 
 .sidebar h1 {
@@ -89,7 +89,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../img/paper.png);
+  background-image: url(../img/battlescreen/mainmap.jpg);
+  background-size: 50vw 25vh;
+  background-repeat: no-repeat;
 }
 
 .player-stats {
