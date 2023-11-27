@@ -9,11 +9,27 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="css/mapStyle.css" />
-    <title>Document</title>
+    <title>DragonSlayer | Map</title>
   </head>
   <body>
     <div class="grid-container">
-      <div class="map-container"></div>
+      <div class="map-container">
+        <div class="space" id="0">
+          <a href="battle.html" id="space-0"><img src="" id="space-img-0" /></a>
+        </div>
+        <div class="space" id="1">
+          <a href="battle.html" id="space-1"><img src="" id="space-img-1" /></a>
+        </div>
+        <div class="space" id="2">
+          <a href="battle.html" id="space-2"><img src="" id="space-img-2" /></a>
+        </div>
+        <div class="space" id="3">
+          <a href="battle.html" id="space-3"><img src="" id="space-img-3" /></a>
+        </div>
+        <div class="space" id="4">
+          <a href="battle.html" id="space-4"><img src="" id="space-img-4" /></a>
+        </div>
+      </div>
 
       <div class="account-stats-container">
         <h2>Account Stats</h2>
@@ -25,7 +41,7 @@
           <p>Victories: <span id="accStatsCont__victories">0</span></p>
           <p>Enemies Slain: <span id="accStatsCont__enemiesSlain">0</span></p>
           <p>
-            Pets Acquired: (<span id="accStatsCont__petsAcquired">?</span>/7)
+            Pets Acquired: (<span id="accStatsCont__petsAcquired">?</span>/4)
           </p>
           <p>
             Current Class: <span id="accStatsCont__currentClass">Class</span>
@@ -34,6 +50,12 @@
       </div>
 
       <div class="moveset-container">
+        <div id="move0">
+          <p class="move" id="moveset-container__move0">Move 0</p>
+          <p class="desc" id="moveset-container__move0desc">
+            Move 0 Description
+          </p>
+        </div>
         <div id="move1">
           <p class="move" id="moveset-container__move1">Move 1</p>
           <p class="desc" id="moveset-container__move1desc">
@@ -52,19 +74,13 @@
             Move 3 Description
           </p>
         </div>
-        <div id="move4">
-          <p class="move" id="moveset-container__move4">Move 4</p>
-          <p class="desc" id="moveset-container__move4desc">
-            Move 4 Description
-          </p>
-        </div>
       </div>
 
       <div class="pet-container">
         <p>Select your pet</p>
         <div class="select-container">
           <img src="img/arrows/arrowLeft.png" id="arrowLeft" />
-          <select name="pet" id="pet" disabled></select>
+          <select name="pet" id="pet"></select>
           <img src="img/arrows/arrowRight.png" id="arrowRight" />
         </div>
       </div>

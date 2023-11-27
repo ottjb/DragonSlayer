@@ -396,7 +396,7 @@ $(document).ready(function () {
         },
       },
       {
-        name: "Nature's Bleesing",
+        name: "Nature's Blessing",
         effect: function () {
           if (battleOver()) {
             return;
