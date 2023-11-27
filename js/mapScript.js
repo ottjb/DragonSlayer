@@ -8,7 +8,7 @@ $(document).ready(function () {
     username: "testUser",
     password: "testPassword",
     gameState: {
-      map: [1, 0, 0, 0, 5],
+      map: [1, 3, 0, 0, 5],
       positionOnMap: 0,
       currentEnemy: 0,
     },
@@ -235,24 +235,22 @@ $(document).ready(function () {
 
       if (map[this.id] === 0) {
         currentUser.gameState.positionOnMap = this.id;
-        modAnchors();
         moveCharacter(position, currentUser.gameState.positionOnMap);
         event.preventDefault();
         return;
       } else if (map[this.id] <= 5 && map[this.id] >= 2) {
         currentUser.gameState.currentEnemy = map[this.id];
         currentUser.gameState.positionOnMap = this.id;
-        modAnchors();
+        //update db here
+        moveCharacter(position, currentUser.gameState.positionOnMap);
+        window.location.href = "battle.html";
       }
-      moveCharacter(position, currentUser.gameState.positionOnMap);
-      console.log(
-        currentUser.gameState.map,
-        currentUser.gameState.positionOnMap,
-        currentUser.gameState.currentEnemy
-      );
+    } else {
+      return;
     }
   });
 
+  /*
   function modAnchors() {
     for (var i = 0; i < 5; i++) {
       if (
@@ -265,6 +263,7 @@ $(document).ready(function () {
       }
     }
   }
+  */
 
   function moveCharacter(currentPosition, spaceClicked) {
     currentUser.gameState.map[currentPosition] = 0;
@@ -321,7 +320,7 @@ $(document).ready(function () {
   ////////////////////////////////
 
   updateCharacterStats();
-  modAnchors();
+  //modAnchors();
 
   /////////////
   // Utility //
