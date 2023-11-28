@@ -1,8 +1,21 @@
+const currentUser = "testUser";
+var userData;
 $(document).ready(function () {
+  const db = firebase.firestore();
+  var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
+  userRef.get().then((querySnapshot) => {
+    userData = querySnapshot.data().userData;
+    console.log(userData);
+    startGame();
+  });
+});
+
+function startGame() {
   ///////////////
   // Test User //
   ///////////////
 
+  /*
   var testUser = {
     id: 1,
     username: "testUser",
@@ -28,11 +41,12 @@ $(document).ready(function () {
       speed: 8,
       dodge: 5,
     },
-    pets: ["Cat", "Dog", "Bird", "Turtle"],
+    acquiredPets: ["Cat", "Dog", "Bird", "Turtle"],
     currentEquippedPet: "Dog",
   };
+  */
 
-  var currentUser = testUser;
+  console.log(userData);
 
   /////////////////
   // Pet Section //
@@ -59,29 +73,31 @@ $(document).ready(function () {
 
   var petsMap = [];
 
-  for (var i = 0; i < currentUser.pets.length; i++) {
+  for (var i = 0; i < userData.pets.acquiredPets.length; i++) {
     petsMap.push({
       id: i + 1,
-      name: currentUser.pets[i],
+      name: userData.pets.acquiredPets[i],
     });
   }
 
   petsMap.forEach((pet) => {
+    console.log(pet);
     $("#pet").append(`<option value="${pet.id}">${pet.name}</option>`);
   });
 
-  $("#pet").val(currentUser.pets.indexOf(currentUser.currentEquippedPet) + 1);
-  currentUser.character[
-    petsList.find(
-      (pet) => pet.name === currentUser.currentEquippedPet
-    ).boostedStat
+  $("#pet").val(
+    userData.pets.acquiredPets.indexOf(userData.pets.equippedPet) + 1
+  );
+
+  userData.character[
+    petsList.find((pet) => pet.name === userData.pets.equippedPet).boostedStat
   ] += 10;
 
   $("#arrowLeft").click(function () {
     var current = parseInt($("#pet").val());
     var next = current - 1;
     if (next < 1) {
-      next = currentUser.pets.length;
+      next = userData.pets.acquiredPets.length;
     }
     $("#pet").val(next);
     changePet();
@@ -90,7 +106,7 @@ $(document).ready(function () {
   $("#arrowRight").click(function () {
     var current = parseInt($("#pet").val());
     var next = current + 1;
-    if (next > currentUser.pets.length) {
+    if (next > userData.pets.acquiredPets.length) {
       next = 1;
     }
     $("#pet").val(next);
@@ -98,19 +114,19 @@ $(document).ready(function () {
   });
 
   function changePet() {
-    var currentPet = currentUser.currentEquippedPet;
+    var currentPet = userData.pets.equippedPet;
     var currentBoostedStat = petsList.find(
       (pet) => pet.name === currentPet
     ).boostedStat;
-    currentUser.character[currentBoostedStat] -= 10;
+    userData.character[currentBoostedStat] -= 10;
     var newPet = petsMap.find(
       (pet) => pet.id === parseInt($("#pet").val())
     ).name;
     var newBoostedStat = petsList.find(
       (pet) => pet.name === newPet
     ).boostedStat;
-    currentUser.character[newBoostedStat] += 10;
-    currentUser.currentEquippedPet = newPet;
+    userData.character[newBoostedStat] += 10;
+    userData.pets.equippedPet = newPet;
     updateCharacterStats();
   }
 
@@ -118,12 +134,12 @@ $(document).ready(function () {
   // Loading Account Stats //
   ///////////////////////////
 
-  $("#accStatsCont__username").text(currentUser.username);
-  $("#accStatsCont__numOfAttempts").text(currentUser.accountStats.attempts);
-  $("#accStatsCont__victories").text(currentUser.accountStats.victories);
-  $("#accStatsCont__enemiesSlain").text(currentUser.accountStats.enemiesSlain);
-  $("#accStatsCont__petsAcquired").text(currentUser.pets.length);
-  $("#accStatsCont__currentClass").text(currentUser.character.class);
+  $("#accStatsCont__username").text(currentUser);
+  $("#accStatsCont__numOfAttempts").text(userData.accountStats.attempts);
+  $("#accStatsCont__victories").text(userData.accountStats.victories);
+  $("#accStatsCont__enemiesSlain").text(userData.accountStats.enemiesSlain);
+  $("#accStatsCont__petsAcquired").text(userData.pets.acquiredPets.length);
+  $("#accStatsCont__currentClass").text(userData.character.class);
 
   //////////////////////////////
   //  Loading Character Moves //
@@ -182,7 +198,7 @@ $(document).ready(function () {
     "Decrease the enemies defense for the next 2 turns.",
   ];
 
-  switch (currentUser.character.class) {
+  switch (userData.character.class) {
     case "Fighter":
       for (var i = 0; i < 4; i++) {
         $(`#moveset-container__move${i}`).text(fighterMoves[i]);
@@ -215,10 +231,10 @@ $(document).ready(function () {
   /////////////////////////////
 
   function updateCharacterStats() {
-    $("#charStatsCont__atk").text(currentUser.character.attack);
-    $("#charStatsCont__def").text(currentUser.character.defense);
-    $("#charStatsCont__spd").text(currentUser.character.speed);
-    $("#charStatsCont__dg").text(currentUser.character.dodge);
+    $("#charStatsCont__atk").text(userData.character.attack);
+    $("#charStatsCont__def").text(userData.character.defense);
+    $("#charStatsCont__spd").text(userData.character.speed);
+    $("#charStatsCont__dg").text(userData.character.dodge);
   }
 
   ///////////////
@@ -226,24 +242,22 @@ $(document).ready(function () {
   ///////////////
 
   $(".space").click(function (event) {
-    var map = currentUser.gameState.map;
-    console.log(map[this.id]);
+    var map = userData.gameState.map;
     // check if character is adjacent to space clicked
-    var position = parseInt(currentUser.gameState.positionOnMap);
+    var position = parseInt(userData.gameState.positionOnMap);
     if (this.id == position - 1 || this.id == position + 1) {
       // check if space clicked is enemy or empty
 
       if (map[this.id] === 0) {
-        currentUser.gameState.positionOnMap = this.id;
-        moveCharacter(position, currentUser.gameState.positionOnMap);
+        userData.gameState.positionOnMap = this.id;
+        moveCharacter(position, userData.gameState.positionOnMap);
         event.preventDefault();
         return;
       } else if (map[this.id] <= 5 && map[this.id] >= 2) {
-        currentUser.gameState.currentEnemy = map[this.id];
-        currentUser.gameState.positionOnMap = this.id;
-        //update db here
-        moveCharacter(position, currentUser.gameState.positionOnMap);
-        window.location.href = "battle.html";
+        userData.gameState.currentEnemy = map[this.id];
+        userData.gameState.positionOnMap = this.id;
+        moveCharacter(position, userData.gameState.positionOnMap);
+        updateDB(true);
       }
     } else {
       return;
@@ -266,9 +280,9 @@ $(document).ready(function () {
   */
 
   function moveCharacter(currentPosition, spaceClicked) {
-    currentUser.gameState.map[currentPosition] = 0;
-    currentUser.gameState.map[spaceClicked] = 1;
-    loadMap(currentUser.gameState.map);
+    userData.gameState.map[currentPosition] = 0;
+    userData.gameState.map[spaceClicked] = 1;
+    loadMap(userData.gameState.map);
   }
 
   ///////////////////////////
@@ -289,7 +303,7 @@ $(document).ready(function () {
           $(`#space-img-${index}`).attr("src", "img/blank.png");
           break;
         case 1:
-          $(`#space-img-${index}`).attr("src", currentUser.character.sprite);
+          $(`#space-img-${index}`).attr("src", userData.character.sprite.front);
           break;
         case 2:
           $(`#space-img-${index}`).attr("src", "img/enemy/bandit.png");
@@ -309,10 +323,10 @@ $(document).ready(function () {
     });
   }
 
-  if (currentUser.gameState.map === "") {
+  if (userData.gameState.map === "") {
     generateMap();
   } else {
-    loadMap(currentUser.gameState.map);
+    loadMap(userData.gameState.map);
   }
 
   ////////////////////////////////
@@ -330,5 +344,19 @@ $(document).ready(function () {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  function updateDB(battle) {
+    const db = firebase.firestore();
+    var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
+    userRef.set({
+      userData: userData,
+    });
+
+    console.log(userData);
+
+    if (battle) {
+      window.location.href = "battle.html";
+    }
+  }
+
   console.log("mapScript.js loaded");
-}); // End of document.ready
+} // End of startGame()
