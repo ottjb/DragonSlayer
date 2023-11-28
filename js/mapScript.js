@@ -255,9 +255,11 @@ function startGame() {
         return;
       } else if (map[this.id] <= 5 && map[this.id] >= 2) {
         userData.gameState.currentEnemy = map[this.id];
+        updateDB(true);
+        /* this code needs to run if battle is won
         userData.gameState.positionOnMap = this.id;
         moveCharacter(position, userData.gameState.positionOnMap);
-        updateDB(true);
+        */
       }
     } else {
       return;

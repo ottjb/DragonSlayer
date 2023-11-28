@@ -12,15 +12,28 @@ Functions Ran on Build
 Utility
 */
 
-/////////////
-// Classes //
-/////////////
-
+const currentUser = "testUser";
+var userData;
 $(document).ready(function () {
+  const db = firebase.firestore();
+  var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
+  userRef.get().then((querySnapshot) => {
+    userData = querySnapshot.data().userData;
+    console.log(userData);
+    startGame();
+  });
+});
+
+function startGame() {
+  /////////////
+  // Classes //
+  /////////////
+
   // Fighter
+
   var fighter = {
-    name: "fighter",
-    sprites: {},
+    name: "Fighter",
+    /*
     baseMaxHP: 100,
     currentHP: 100,
     baseAttack: 12,
@@ -31,6 +44,7 @@ $(document).ready(function () {
     bonusDefense: 0,
     bonusSpeed: 0,
     bonusDodge: 0,
+    */
     moveset: [
       {
         name: "Crushing Blow",
@@ -101,34 +115,10 @@ $(document).ready(function () {
   };
 
   // Rogue
+
   var rogue = {
-    name: "rogue",
-    sprites: {
-      front: {
-        base: "img/rogue/noVariant/front/base.png",
-        blue: "img/rogue/noVariant/front/blue.png",
-        purple: "img/rogue/noVariant/front/purple.png",
-        red: "img/rogue/noVariant/front/red.png",
-      },
-      back: {
-        base: "img/rogue/noVariant/back/base.png",
-        blue: "img/rogue/noVariant/back/blue.png",
-        purple: "img/rogue/noVariant/back/purple.png",
-        red: "img/rogue/noVariant/back/red.png",
-      },
-      frontVariant: {
-        base: "img/rogue/variant/front/base.png",
-        blue: "img/rogue/variant/front/blue.png",
-        purple: "img/rogue/variant/front/purple.png",
-        red: "img/rogue/variant/front/red.png",
-      },
-      backVariant: {
-        base: "img/rogue/variant/back/base.png",
-        blue: "img/rogue/variant/back/blue.png",
-        purple: "img/rogue/variant/back/purple.png",
-        red: "img/rogue/variant/back/red.png",
-      },
-    },
+    name: "Rogue",
+    /*
     baseMaxHP: 80,
     currentHP: 80,
     baseAttack: 9,
@@ -139,6 +129,7 @@ $(document).ready(function () {
     bonusDefense: 0,
     bonusSpeed: 0,
     bonusDodge: 0,
+    */
     moveset: [
       {
         name: "Lethal Backstab",
@@ -236,21 +227,8 @@ $(document).ready(function () {
 
   // Wizard
   var wizard = {
-    name: "wizard",
-    sprites: {
-      front: {
-        base: "img/wizard/noVariant/front/base.png",
-      },
-      back: {
-        base: "img/wizard/noVariant/back/base.png",
-      },
-      frontVariant: {
-        base: "img/wizard/variant/front/base.png",
-      },
-      backVariant: {
-        base: "img/wizard/variant/back/base.png",
-      },
-    },
+    name: "Wizard",
+    /*
     baseMaxHP: 70,
     currentHP: 70,
     baseAttack: 15,
@@ -261,6 +239,7 @@ $(document).ready(function () {
     bonusDefense: 0,
     bonusSpeed: 0,
     bonusDodge: 0,
+    */
     moveset: [
       {
         name: "Arcane Missiles",
@@ -335,21 +314,8 @@ $(document).ready(function () {
 
   // Ranger
   var ranger = {
-    name: "ranger",
-    sprites: {
-      front: {
-        base: "img/ranger/front/base.png",
-        blue: "img/ranger/front/blue.png",
-        purple: "img/ranger/front/purple.png",
-        white: "img/ranger/front/white.png",
-      },
-      back: {
-        base: "img/ranger/back/base.png",
-        blue: "img/ranger/back/blue.png",
-        purple: "img/ranger/back/purple.png",
-        white: "img/ranger/back/white.png",
-      },
-    },
+    name: "Ranger",
+    /*
     baseMaxHP: 90,
     currentHP: 90,
     baseAttack: 11,
@@ -360,6 +326,7 @@ $(document).ready(function () {
     bonusDefense: 0,
     bonusSpeed: 0,
     bonusDodge: 0,
+    */
     moveset: [
       {
         name: "Piercing Shot",
@@ -428,10 +395,12 @@ $(document).ready(function () {
   // Enemies //
   /////////////
 
+  var enemyArray = ["bandit", "Goblin", "Skeleton", "Dragon"];
+
   // Bandit
   var bandit = {
-    name: "bandit",
-    sprites: "img/ranger/front/white.png",
+    name: "Bandit",
+    sprite: "img/enemy/bandit.png",
     baseMaxHP: 80,
     currentHP: 80,
     baseAttack: 12,
@@ -474,8 +443,8 @@ $(document).ready(function () {
 
   // Goblin
   var goblin = {
-    name: "goblin",
-    sprites: {},
+    name: "Goblin",
+    sprite: "img/enemy/goblin.png",
     baseMaxHP: 70,
     currentHP: 70,
     baseAttack: 10,
@@ -516,10 +485,10 @@ $(document).ready(function () {
     ],
   };
 
-  // Undead
-  var undead = {
-    name: "undead",
-    sprites: {},
+  // Skeleton
+  var skeleton = {
+    name: "Skeleton",
+    sprite: "img/enemy/skeleton.png",
     baseMaxHP: 90,
     currentHP: 90,
     baseAttack: 14,
@@ -563,8 +532,8 @@ $(document).ready(function () {
 
   // Dragon
   var dragon = {
-    name: "dragon",
-    sprites: {},
+    name: "Dragon",
+    sprite: "img/enemy/dragon.png",
     baseMaxHP: 150,
     currentHP: 150,
     baseAttack: 25,
@@ -606,6 +575,30 @@ $(document).ready(function () {
       },
     ],
   };
+
+  // Create the enemy
+
+  //var currentEnemy = enemyArray[userData.gameState.currentEnemy - 2];
+  var currentEnemy = enemyArray[0];
+
+  function Enemy(currentEnemy) {
+    this.name = currentEnemy.name;
+    this.sprite = currentEnemy.sprite;
+    this.maxHP = currentEnemy.baseMaxHP;
+    this.currentHP = currentEnemy.currentHP;
+    this.baseAttack = currentEnemy.baseAttack;
+    this.baseDefense = currentEnemy.baseDefense;
+    this.baseSpeed = currentEnemy.baseSpeed;
+    this.baseDodge = currentEnemy.baseDodge;
+    this.bonusAttack = currentEnemy.bonusAttack;
+    this.bonusDefense = currentEnemy.bonusDefense;
+    this.bonusSpeed = currentEnemy.bonusSpeed;
+    this.bonusDodge = currentEnemy.bonusDodge;
+    this.moveset = currentEnemy.moveset;
+  }
+
+  var enemy = new Enemy(eval(currentEnemy.toLowerCase()));
+  console.log(enemy);
 
   ////////////////////
   // Status effects //
@@ -811,44 +804,29 @@ $(document).ready(function () {
     },
   ];
 
-  ///////////////////////////
-  // Character Constructor //
-  ///////////////////////////
-
-  // This constructor uses a custom sprite
-  function Character(name, charClass, sprite) {
-    this.name = name;
-    this.charClass = charClass;
-    this.sprite = sprite;
-  }
-
-  /////////////////////
-  // Test Characters //
-  /////////////////////
-
-  //const player = new Character("Fighter", fighter, ranger.sprites.back.base);
-  const player = new Character("Cat Rogue", rogue, rogue.sprites.back.base);
-  //const player = new Character("Cat Rogue", wizard, wizard.sprites.back.base);
-  //const player = new Character("Cat Rogue", ranger, ranger.sprites.back.base);
-
-  //const enemy = new Character("Bad Guy", bandit, bandit.sprites);
-  const enemy = new Character("Bad Guy", goblin, bandit.sprites);
-  //const enemy = new Character("Bad Guy", undead, bandit.sprites);
-  //const enemy = new Character("Bad Guy", dragon, bandit.sprites);
-
   /////////////////////
   // Populate screen //
   /////////////////////
 
-  // Position will be either hero or enemy
-  function loadCharacter(character, position) {
-    var hp = character.charClass.currentHP;
-    var maxHp = character.charClass.baseMaxHP;
-    $(`#${position}Name`).html(character.name);
-    $(`#${position}HP`).html(hp);
-    $(`#${position}MaxHP`).html(maxHp);
-    updateHPBar(position, hp, maxHp);
-    $(`#${position}Sprite`).attr("src", character.sprite);
+  // Position will be either player or enemy
+  function loadCharacter(position) {
+    if (position === "player") {
+      $(`#playerName`).html(currentUser);
+      $(`#playerHP`).html(userData.character.currentHP);
+      $(`#playerMaxHP`).html(userData.character.maxHP);
+      updateHPBar(
+        position,
+        userData.character.currentHP,
+        userData.character.baseMaxHP
+      );
+      $(`#playerSprite`).attr("src", userData.character.sprite.back);
+    } else {
+      $(`#enemyName`).html(enemy.name);
+      $(`#enemyHP`).html(enemy.currentHP);
+      $(`#enemyMaxHP`).html(enemy.maxHP);
+      updateHPBar(position, enemy.currentHP, enemy.maxHP);
+      $(`#enemySprite`).attr("src", enemy.sprite);
+    }
   }
 
   // Updates the HP bar
@@ -861,29 +839,82 @@ $(document).ready(function () {
   // Buttons //
   /////////////
 
-  // Attack button
-  $("#attack").text(player.charClass.moveset[0].name);
-  $("#attack").click(function () {
-    initializeBattle(0);
-  });
-
-  // Defend button
-  $("#defend").text(player.charClass.moveset[1].name);
-  $("#defend").click(function () {
-    initializeBattle(1);
-  });
-
-  // Heal button
-  $("#heal").text(player.charClass.moveset[2].name);
-  $("#heal").click(function () {
-    initializeBattle(2);
-  });
-
-  // Special button
-  $("#special").text(player.charClass.moveset[3].name);
-  $("#special").click(function () {
-    initializeBattle(3);
-  });
+  switch (userData.character.class.toLowerCase()) {
+    case "fighter":
+      $("#attack").text(fighter.moveset[0].name);
+      $("#attack").click(function () {
+        initializeBattle(0);
+      });
+      $("#defend").text(fighter.moveset[1].name);
+      $("#defend").click(function () {
+        initializeBattle(1);
+      });
+      $("#heal").text(fighter.moveset[2].name);
+      $("#heal").click(function () {
+        initializeBattle(2);
+      });
+      $("#special").text(fighter.moveset[3].name);
+      $("#special").click(function () {
+        initializeBattle(3);
+      });
+      break;
+    case "Rogue":
+      $("#attack").text(rogue.moveset[0].name);
+      $("#attack").click(function () {
+        initializeBattle(0);
+      });
+      $("#defend").text(rogue.moveset[1].name);
+      $("#defend").click(function () {
+        initializeBattle(1);
+      });
+      $("#heal").text(rogue.moveset[2].name);
+      $("#heal").click(function () {
+        initializeBattle(2);
+      });
+      $("#special").text(rogue.moveset[3].name);
+      $("#special").click(function () {
+        initializeBattle(3);
+      });
+      break;
+    case "Wizard":
+      $("#attack").text(wizard.moveset[0].name);
+      $("#attack").click(function () {
+        initializeBattle(0);
+      });
+      $("#defend").text(wizard.moveset[1].name);
+      $("#defend").click(function () {
+        initializeBattle(1);
+      });
+      $("#heal").text(wizard.moveset[2].name);
+      $("#heal").click(function () {
+        initializeBattle(2);
+      });
+      $("#special").text(wizard.moveset[3].name);
+      $("#special").click(function () {
+        initializeBattle(3);
+      });
+      break;
+    case "Ranger":
+      $("#attack").text(ranger.moveset[0].name);
+      $("#attack").click(function () {
+        initializeBattle(0);
+      });
+      $("#defend").text(ranger.moveset[1].name);
+      $("#defend").click(function () {
+        initializeBattle(1);
+      });
+      $("#heal").text(ranger.moveset[2].name);
+      $("#heal").click(function () {
+        initializeBattle(2);
+      });
+      $("#special").text(ranger.moveset[3].name);
+      $("#special").click(function () {
+        initializeBattle(3);
+      });
+      break;
+    default:
+      break;
+  }
 
   ////////////
   // Battle //
@@ -949,13 +980,12 @@ $(document).ready(function () {
   }
 
   function enemyTurn() {
-    var enemyPercentMissingHP =
-      (1 - enemy.charClass.currentHP / enemy.charClass.baseMaxHP) * 100;
+    var enemyPercentMissingHP = (1 - enemy.currentHP / enemy.baseMaxHP) * 100;
     var chanceToHeal = Math.round(enemyPercentMissingHP);
     if (genRandomNumber(1, 100) > chanceToHeal) {
-      enemy.charClass.moveset[0].effect(calcStats());
+      enemy.moveset[0].effect(calcStats());
     } else {
-      enemy.charClass.moveset[1].effect();
+      enemy.moveset[1].effect();
     }
   }
 
@@ -963,14 +993,14 @@ $(document).ready(function () {
   // Functions ran on build //
   ////////////////////////////
 
-  loadCharacter(player, "player");
-  loadCharacter(enemy, "enemy");
+  loadCharacter("player");
+  loadCharacter("enemy");
 
   updateStatBlock(
-    player.charClass.baseAttack,
-    player.charClass.baseDefense,
-    player.charClass.baseSpeed,
-    player.charClass.baseDodge
+    userData.character.attack,
+    userData.character.defense,
+    userData.character.speed,
+    userData.character.dodge
   );
 
   /////////////
@@ -1042,6 +1072,7 @@ $(document).ready(function () {
     return false;
   }
 
+  // stopped here, updating to make work like doheal
   function doDamage(character, damage) {
     if (character.charClass.currentHP - damage < 0) {
       addToBattleLog(
@@ -1055,17 +1086,25 @@ $(document).ready(function () {
     updateHP();
   }
 
-  function doHeal(character, heal) {
-    if (character.charClass.currentHP + heal > character.charClass.baseMaxHP) {
-      addToBattleLog(
-        `${character.name} healed for ${
-          character.charClass.baseMaxHP - heal
-        } HP!`
-      );
-      character.charClass.currentHP = character.charClass.baseMaxHP;
+  function doHeal(unit, heal) {
+    if (unit === "player") {
+      if (userData.character.currentHP + heal > userData.character.maxHP) {
+        addToBattleLog(
+          `${currentUser} healed for ${userData.character.maxHP - heal} HP!`
+        );
+        userData.character.currentHP = userData.character.maxHP;
+      } else {
+        addToBattleLog(`${currentUser} healed for ${heal} HP!`);
+        userData.character.currentHP += heal;
+      }
     } else {
-      addToBattleLog(`${character.name} healed for ${heal} HP!`);
-      character.charClass.currentHP += heal;
+      if (enemy.currentHP + heal > enemy.maxHP) {
+        addToBattleLog(`${enemy.name} healed for ${enemy.maxHP - heal} HP!`);
+        enemy.currentHP = enemy.maxHP;
+      } else {
+        addToBattleLog(`${enemy.name} healed for ${heal} HP!`);
+        enemy.currentHP += heal;
+      }
     }
     updateHP();
   }
@@ -1078,23 +1117,23 @@ $(document).ready(function () {
 
   function calcStats() {
     var stats = {
-      playerAtk: player.charClass.baseAttack + player.charClass.bonusAttack,
-      playerDef: player.charClass.baseDefense + player.charClass.bonusDefense,
-      playerSpd: player.charClass.baseSpeed + player.charClass.bonusSpeed,
-      playerDodge: player.charClass.baseDodge + player.charClass.bonusDodge,
-      enemyAtk: enemy.charClass.baseAttack + enemy.charClass.bonusAttack,
-      enemyDef: enemy.charClass.baseDefense + enemy.charClass.bonusDefense,
-      enemySpd: enemy.charClass.baseSpeed + enemy.charClass.bonusSpeed,
-      enemyDodge: enemy.charClass.baseDodge + enemy.charClass.bonusDodge,
+      playerAtk: userData.character.attack + userData.character.bonusAttack,
+      playerDef: userData.character.defense + userData.character.bonusDefense,
+      playerSpd: userData.character.speed + userData.character.bonusSpeed,
+      playerDodge: userData.character.dodge + userData.character.bonusDodge,
+      enemyAtk: enemy.baseAttack + enemy.bonusAttack,
+      enemyDef: enemy.baseDefense + enemy.bonusDefense,
+      enemySpd: enemy.baseSpeed + enemy.bonusSpeed,
+      enemyDodge: enemy.baseDodge + enemy.bonusDodge,
     };
     return stats;
   }
 
   function battleOver() {
-    if (player.charClass.currentHP <= 0) {
-      addToBattleLog(`${player.name} has been defeated!`);
+    if (userData.character.currentHP <= 0) {
+      addToBattleLog(`${currentUser} has been defeated!`);
       return true;
-    } else if (enemy.charClass.currentHP <= 0) {
+    } else if (enemy.currentHP <= 0) {
       addToBattleLog(`${enemy.name} has been defeated!`);
       return true;
     }
@@ -1102,4 +1141,4 @@ $(document).ready(function () {
   }
 
   console.log("Battle Script Loaded");
-}); // End of document.ready
+} // End of startGame()
