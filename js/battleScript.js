@@ -19,7 +19,6 @@ $(document).ready(function () {
   var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
   userRef.get().then((querySnapshot) => {
     userData = querySnapshot.data().userData;
-    console.log(userData);
     startGame();
   });
 });
@@ -70,18 +69,14 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Guardian's Resolve!`);
-          player.charClass.bonusAttack += Math.round(
-            player.charClass.baseAttack * 0.2
-          );
-          player.charClass.bonusDefense += Math.round(
-            player.charClass.baseDefense * 0.5
-          );
+          player.bonusAttack += Math.round(player.baseAttack * 0.2);
+          player.bonusDefense += Math.round(player.baseDefense * 0.5);
           addToBattleLog(`${player.name}'s Attack and Defense increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["guardian's resolve", 2, player]);
         },
@@ -93,7 +88,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Vital Surge!`);
-          var heal = Math.round(player.charClass.baseMaxHP * 0.3);
+          var heal = Math.round(player.maxHP * 0.3);
           doHeal(player, heal);
         },
       },
@@ -104,9 +99,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Intimidating Aura!`);
-          enemy.charClass.bonusAttack -= Math.round(
-            enemy.charClass.baseAttack * 0.15
-          );
+          enemy.bonusAttack -= Math.round(enemy.baseAttack * 0.15);
           addToBattleLog(`${enemy.name}'s Attack decreased!`);
           currentStatuses.push(["intimidating aura", 2, enemy]);
         },
@@ -163,18 +156,14 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Acrobatic Evasion!`);
-          player.charClass.bonusDodge += Math.round(
-            player.charClass.baseDodge * 3
-          );
-          player.charClass.bonusSpeed += Math.round(
-            player.charClass.baseSpeed * 0.1
-          );
+          player.bonusDodge += Math.round(player.baseDodge * 3);
+          player.bonusSpeed += Math.round(player.baseSpeed * 0.1);
           addToBattleLog(`${player.name}'s Dodge and Speed increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["acrobatic evasion", 2, player]);
         },
@@ -186,15 +175,15 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Quick Patch-Up!`);
-          var heal = Math.round(player.charClass.baseMaxHP * 0.15);
+          var heal = Math.round(player.maxHP * 0.15);
           doHeal(player, heal);
-          player.charClass.bonusDodge += player.charClass.baseDodge;
+          player.bonusDodge += player.baseDodge;
           addToBattleLog(`${player.name}'s Dodge increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["quick patch-up", 2, player]);
         },
@@ -206,18 +195,14 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Shadow Step!`);
-          player.charClass.bonusAttack += Math.round(
-            player.charClass.baseAttack * 0.3
-          );
-          player.charClass.bonusSpeed += Math.round(
-            player.charClass.baseSpeed * 0.2
-          );
+          player.bonusAttack += Math.round(player.baseAttack * 0.3);
+          player.bonusSpeed += Math.round(player.baseSpeed * 0.2);
           addToBattleLog(`${player.name}'s Attack and Speed increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["shadow step", 2, player]);
         },
@@ -272,15 +257,13 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Astral Ward!`);
-          player.charClass.bonusDefense += Math.round(
-            player.charClass.baseDefense * 0.5
-          );
+          player.bonusDefense += Math.round(player.baseDefense * 0.5);
           addToBattleLog(`${player.name}'s Defense increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["astral ward", 2, player]);
         },
@@ -292,7 +275,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Celestial Infusion!`);
-          var heal = Math.round(player.charClass.baseMaxHP * 0.1);
+          var heal = Math.round(player.maxHP * 0.1);
           doHeal(player, heal);
           currentStatuses.push(["celestial infusion", 3, player]);
         },
@@ -304,7 +287,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Inflict Burn!`);
-          var damage = Math.round(player.charClass.baseAttack * 0.2);
+          var damage = Math.round(player.baseAttack * 0.2);
           doDamage(enemy, damage);
           currentStatuses.push(["burn", 3, enemy]);
         },
@@ -351,13 +334,13 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Natural Camoflage!`);
-          player.charClass.bonusDodge += 100 - player.charClass.baseDodge;
+          player.bonusDodge += 100 - player.baseDodge;
           addToBattleLog(`${player.name}'s Dodge increased!`);
           updateStatBlock(
-            player.charClass.baseAttack + player.charClass.bonusAttack,
-            player.charClass.baseDefense + player.charClass.bonusDefense,
-            player.charClass.baseSpeed + player.charClass.bonusSpeed,
-            player.charClass.baseDodge + player.charClass.bonusDodge
+            player.baseAttack + player.bonusAttack,
+            player.baseDefense + player.bonusDefense,
+            player.baseSpeed + player.bonusSpeed,
+            player.baseDodge + player.bonusDodge
           );
           currentStatuses.push(["natural camoflage", 1, player]);
         },
@@ -369,7 +352,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Nature's Blessing!`);
-          var heal = Math.round(player.charClass.baseMaxHP * 0.2);
+          var heal = Math.round(player.maxHP * 0.2);
           doHeal(player, heal);
           currentStatuses.push(["nature's blessing", 2, player]);
         },
@@ -381,8 +364,8 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Mark of the Predator!`);
-          enemy.charClass.bonusDefense -= Math.round(
-            enemy.charClass.baseDefense * 0.1
+          enemy.bonusDefense -= Math.round(
+            enemy.baseDefense * 0.1
           );
           addToBattleLog(`${enemy.name}'s Defense decreased!`);
           currentStatuses.push(["mark of the predator", 2, enemy]);
@@ -401,7 +384,7 @@ function startGame() {
   var bandit = {
     name: "Bandit",
     sprite: "img/enemy/bandit.png",
-    baseMaxHP: 80,
+    maxHP: 80,
     currentHP: 80,
     baseAttack: 12,
     baseDefense: 8,
@@ -434,7 +417,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Stolen Potion!`);
-          var heal = Math.round(enemy.charClass.baseMaxHP * 0.2);
+          var heal = Math.round(enemy.maxHP * 0.2);
           doHeal(enemy, heal);
         },
       },
@@ -445,7 +428,7 @@ function startGame() {
   var goblin = {
     name: "Goblin",
     sprite: "img/enemy/goblin.png",
-    baseMaxHP: 70,
+    maxHP: 70,
     currentHP: 70,
     baseAttack: 10,
     baseDefense: 7,
@@ -478,7 +461,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Herbal Remedy!`);
-          var heal = Math.round(enemy.charClass.baseMaxHP * 0.25);
+          var heal = Math.round(enemy.maxHP * 0.25);
           doHeal(enemy, heal);
         },
       },
@@ -489,7 +472,7 @@ function startGame() {
   var skeleton = {
     name: "Skeleton",
     sprite: "img/enemy/skeleton.png",
-    baseMaxHP: 90,
+    maxHP: 90,
     currentHP: 90,
     baseAttack: 14,
     baseDefense: 6,
@@ -523,7 +506,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Soul Mend!`);
-          var heal = Math.round(enemy.charClass.baseMaxHP * 0.3);
+          var heal = Math.round(enemy.maxHP * 0.3);
           doHeal(enemy, heal);
         },
       },
@@ -534,7 +517,7 @@ function startGame() {
   var dragon = {
     name: "Dragon",
     sprite: "img/enemy/dragon.png",
-    baseMaxHP: 150,
+    maxHP: 150,
     currentHP: 150,
     baseAttack: 25,
     baseDefense: 20,
@@ -569,7 +552,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Draconian Renewal!`);
-          var heal = Math.round(enemy.charClass.baseMaxHP * 0.4);
+          var heal = Math.round(enemy.maxHP * 0.4);
           doHeal(enemy, heal);
         },
       },
@@ -584,7 +567,7 @@ function startGame() {
   function Enemy(currentEnemy) {
     this.name = currentEnemy.name;
     this.sprite = currentEnemy.sprite;
-    this.maxHP = currentEnemy.baseMaxHP;
+    this.maxHP = currentEnemy.maxHP;
     this.currentHP = currentEnemy.currentHP;
     this.baseAttack = currentEnemy.baseAttack;
     this.baseDefense = currentEnemy.baseDefense;
@@ -597,9 +580,15 @@ function startGame() {
     this.moveset = currentEnemy.moveset;
   }
 
-  var enemy = new Enemy(eval(currentEnemy.toLowerCase()));
-  console.log(enemy);
+  /////////////////////////////
+  // Creating the characters //
+  /////////////////////////////
 
+  var player = userData.character;
+  player.name = currentUser;
+  var enemy = new Enemy(eval(currentEnemy.toLowerCase()));
+  console.log(player);
+  console.log(enemy);
   ////////////////////
   // Status effects //
   ////////////////////
@@ -609,7 +598,7 @@ function startGame() {
     {
       name: "bleed",
       effect: function (character) {
-        var damage = Math.round(player.charClass.baseAttack * 0.5);
+        var damage = Math.round(player.baseAttack * 0.5);
         addToBattleLog(`${character.name} is still bleeding!`);
         doDamage(character, damage);
       },
@@ -622,17 +611,17 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Guardian's Resolve is still active!`
         );
-        character.charClass.bonusAttack += Math.round(
-          character.charClass.baseAttack * 0.2
+        character.bonusAttack += Math.round(
+          character.baseAttack * 0.2
         );
-        character.charClass.bonusDefense += Math.round(
-          character.charClass.baseDefense * 0.5
+        character.bonusDefense += Math.round(
+          character.baseDefense * 0.5
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -644,17 +633,17 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Acrobatic Evasion is still active!`
         );
-        player.charClass.bonusDodge += Math.round(
-          player.charClass.baseDodge * 3
+        player.bonusDodge += Math.round(
+          player.baseDodge * 3
         );
-        player.charClass.bonusSpeed += Math.round(
-          player.charClass.baseSpeed * 0.1
+        player.bonusSpeed += Math.round(
+          player.baseSpeed * 0.1
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -664,14 +653,14 @@ function startGame() {
       name: "astral ward",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Astral Ward is still active!`);
-        player.charClass.bonusDefense += Math.round(
-          player.charClass.baseDefense * 0.5
+        player.bonusDefense += Math.round(
+          player.baseDefense * 0.5
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -683,12 +672,12 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Natural Camoflage is still active!`
         );
-        player.charClass.bonusDodge += 100 - player.charClass.baseDodge;
+        player.bonusDodge += 100 - player.baseDodge;
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -698,14 +687,14 @@ function startGame() {
       name: "quick patch-up",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Quick Patch-Up is still active!`);
-        player.charClass.bonusDodge += Math.round(
-          player.charClass.baseDodge * 0.2
+        player.bonusDodge += Math.round(
+          player.baseDodge * 0.2
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -717,7 +706,7 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Celestial Infusion is still active!`
         );
-        var heal = Math.round(player.charClass.baseMaxHP * 0.1);
+        var heal = Math.round(player.maxHP * 0.1);
         doHeal(player, heal);
       },
     },
@@ -729,14 +718,14 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Nature's Blessing is still active!`
         );
-        player.charClass.bonusAttack += Math.round(
-          player.charClass.baseAttack * 0.3
+        player.bonusAttack += Math.round(
+          player.baseAttack * 0.3
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -746,8 +735,8 @@ function startGame() {
       name: "intimidating aura",
       effect: function (character) {
         addToBattleLog(`${character.name} is still intimidated!`);
-        enemy.charClass.bonusAttack -= Math.round(
-          enemy.charClass.baseAttack * 0.15
+        enemy.bonusAttack -= Math.round(
+          enemy.baseAttack * 0.15
         );
       },
     },
@@ -757,17 +746,17 @@ function startGame() {
       name: "shadow step",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Shadow Step is still active!`);
-        player.charClass.bonusAttack += Math.round(
-          player.charClass.baseAttack * 0.3
+        player.bonusAttack += Math.round(
+          player.baseAttack * 0.3
         );
-        player.charClass.bonusSpeed += Math.round(
-          player.charClass.baseSpeed * 0.2
+        player.bonusSpeed += Math.round(
+          player.baseSpeed * 0.2
         );
         updateStatBlock(
-          player.charClass.baseAttack + player.charClass.bonusAttack,
-          player.charClass.baseDefense + player.charClass.bonusDefense,
-          player.charClass.baseSpeed + player.charClass.bonusSpeed,
-          player.charClass.baseDodge + player.charClass.bonusDodge
+          player.baseAttack + player.bonusAttack,
+          player.baseDefense + player.bonusDefense,
+          player.baseSpeed + player.bonusSpeed,
+          player.baseDodge + player.bonusDodge
         );
       },
     },
@@ -777,7 +766,7 @@ function startGame() {
       name: "burn",
       effect: function (character) {
         addToBattleLog(`${character.name} is still burning!`);
-        var damage = Math.round(player.charClass.baseAttack * 0.2);
+        var damage = Math.round(player.baseAttack * 0.2);
         doDamage(character, damage);
       },
     },
@@ -787,8 +776,8 @@ function startGame() {
       name: "mark of the predator",
       effect: function (character) {
         addToBattleLog(`${character.name} is still marked!`);
-        enemy.charClass.bonusDefense -= Math.round(
-          enemy.charClass.baseDefense * 0.1
+        enemy.bonusDefense -= Math.round(
+          enemy.baseDefense * 0.1
         );
       },
     },
@@ -798,7 +787,7 @@ function startGame() {
       name: "infernal breath",
       effect: function (character) {
         addToBattleLog(`${character.name} is still burning!`);
-        var damage = Math.round(enemy.charClass.baseAttack * 0.2);
+        var damage = Math.round(enemy.baseAttack * 0.2);
         doDamage(character, damage);
       },
     },
@@ -811,15 +800,15 @@ function startGame() {
   // Position will be either player or enemy
   function loadCharacter(position) {
     if (position === "player") {
-      $(`#playerName`).html(currentUser);
-      $(`#playerHP`).html(userData.character.currentHP);
-      $(`#playerMaxHP`).html(userData.character.maxHP);
+      $(`#playerName`).html(player.name);
+      $(`#playerHP`).html(player.currentHP);
+      $(`#playerMaxHP`).html(player.maxHP);
       updateHPBar(
         position,
-        userData.character.currentHP,
-        userData.character.baseMaxHP
+        player.currentHP,
+        player.maxHP
       );
-      $(`#playerSprite`).attr("src", userData.character.sprite.back);
+      $(`#playerSprite`).attr("src", player.sprite.back);
     } else {
       $(`#enemyName`).html(enemy.name);
       $(`#enemyHP`).html(enemy.currentHP);
@@ -839,7 +828,7 @@ function startGame() {
   // Buttons //
   /////////////
 
-  switch (userData.character.class.toLowerCase()) {
+  switch (player.class.toLowerCase()) {
     case "fighter":
       $("#attack").text(fighter.moveset[0].name);
       $("#attack").click(function () {
@@ -937,7 +926,7 @@ function startGame() {
     );
     if (stats.playerSpd >= stats.enemySpd) {
       setTimeout(function () {
-        player.charClass.moveset[playerAction].effect(calcStats());
+        player.moveset[playerAction].effect(calcStats());
       }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
         enemyTurn();
@@ -947,7 +936,7 @@ function startGame() {
         enemyTurn();
       }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
-        player.charClass.moveset[playerAction].effect(calcStats());
+        player.moveset[playerAction].effect(calcStats());
       }, 2000 + 1000 * currentStatuses.length);
     }
 
@@ -980,7 +969,7 @@ function startGame() {
   }
 
   function enemyTurn() {
-    var enemyPercentMissingHP = (1 - enemy.currentHP / enemy.baseMaxHP) * 100;
+    var enemyPercentMissingHP = (1 - enemy.currentHP / maxHP) * 100;
     var chanceToHeal = Math.round(enemyPercentMissingHP);
     if (genRandomNumber(1, 100) > chanceToHeal) {
       enemy.moveset[0].effect(calcStats());
@@ -997,10 +986,10 @@ function startGame() {
   loadCharacter("enemy");
 
   updateStatBlock(
-    userData.character.attack,
-    userData.character.defense,
-    userData.character.speed,
-    userData.character.dodge
+    player.attack,
+    player.defense,
+    player.speed,
+    player.dodge
   );
 
   /////////////
@@ -1016,10 +1005,10 @@ function startGame() {
 
   // Function to update the HP bars after a move
   function updateHP() {
-    $("#playerHP").html(player.charClass.currentHP);
-    $("#playerHPBar").attr("value", player.charClass.currentHP);
-    $("#enemyHP").html(enemy.charClass.currentHP);
-    $("#enemyHPBar").attr("value", enemy.charClass.currentHP);
+    $("#playerHP").html(player.currentHP);
+    $("#playerHPBar").attr("value", player.currentHP);
+    $("#enemyHP").html(enemy.currentHP);
+    $("#enemyHPBar").attr("value", enemy.currentHP);
   }
 
   // Updates the stat block
@@ -1047,11 +1036,18 @@ function startGame() {
   }
 
   // Sets bonus stats to 0
-  function setBonusStatsZero(character) {
-    character.charClass.bonusAttack = 0;
-    character.charClass.bonusDefense = 0;
-    character.charClass.bonusSpeed = 0;
-    character.charClass.bonusDodge = 0;
+  function setBonusStatsZero(unit) {
+    if (unit === "player") {
+      player.bonusAttack = 0;
+      player.bonusDefense = 0;
+      player.bonusSpeed = 0;
+      player.bonusDodge = 0;
+    } else {
+      enemy.bonusAttack = 0;
+      enemy.bonusDefense = 0;
+      enemy.bonusSpeed = 0;
+      enemy.bonusDodge = 0;
+    }
   }
 
   // Generate a random number
@@ -1072,7 +1068,6 @@ function startGame() {
     return false;
   }
 
-  // stopped here, updating to make work like doheal
   function doDamage(character, damage) {
     if (character.charClass.currentHP - damage < 0) {
       addToBattleLog(
@@ -1086,26 +1081,17 @@ function startGame() {
     updateHP();
   }
 
-  function doHeal(unit, heal) {
-    if (unit === "player") {
-      if (userData.character.currentHP + heal > userData.character.maxHP) {
+  function doHeal(character, heal) {
+      if (character.currentHP + heal > character.maxHP) {
         addToBattleLog(
-          `${currentUser} healed for ${userData.character.maxHP - heal} HP!`
+          `${character.name} healed for ${character.maxHP - heal} HP!`
         );
-        userData.character.currentHP = userData.character.maxHP;
+        character.currentHP = character.maxHP;
       } else {
-        addToBattleLog(`${currentUser} healed for ${heal} HP!`);
-        userData.character.currentHP += heal;
+        addToBattleLog(`${character.name} healed for ${heal} HP!`);
+        character.currentHP += heal;
       }
-    } else {
-      if (enemy.currentHP + heal > enemy.maxHP) {
-        addToBattleLog(`${enemy.name} healed for ${enemy.maxHP - heal} HP!`);
-        enemy.currentHP = enemy.maxHP;
-      } else {
-        addToBattleLog(`${enemy.name} healed for ${heal} HP!`);
-        enemy.currentHP += heal;
-      }
-    }
+    
     updateHP();
   }
 
@@ -1117,10 +1103,10 @@ function startGame() {
 
   function calcStats() {
     var stats = {
-      playerAtk: userData.character.attack + userData.character.bonusAttack,
-      playerDef: userData.character.defense + userData.character.bonusDefense,
-      playerSpd: userData.character.speed + userData.character.bonusSpeed,
-      playerDodge: userData.character.dodge + userData.character.bonusDodge,
+      playerAtk: player.attack + player.bonusAttack,
+      playerDef: player.defense + player.bonusDefense,
+      playerSpd: player.speed + player.bonusSpeed,
+      playerDodge: player.dodge + player.bonusDodge,
       enemyAtk: enemy.baseAttack + enemy.bonusAttack,
       enemyDef: enemy.baseDefense + enemy.bonusDefense,
       enemySpd: enemy.baseSpeed + enemy.bonusSpeed,
@@ -1130,8 +1116,8 @@ function startGame() {
   }
 
   function battleOver() {
-    if (userData.character.currentHP <= 0) {
-      addToBattleLog(`${currentUser} has been defeated!`);
+    if (player.currentHP <= 0) {
+      addToBattleLog(`${character.name} has been defeated!`);
       return true;
     } else if (enemy.currentHP <= 0) {
       addToBattleLog(`${enemy.name} has been defeated!`);
