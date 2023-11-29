@@ -243,19 +243,22 @@ function startGame() {
 
   $(".space").click(function (event) {
     var map = userData.gameState.map;
+    console.log(this.id, userData.gameState.positionOnMap);
     // check if character is adjacent to space clicked
     var position = parseInt(userData.gameState.positionOnMap);
     if (this.id == position - 1 || this.id == position + 1) {
+      console.log("adjacent");
       // check if space clicked is enemy or empty
 
       if (map[this.id] === 0) {
+        console.log("empty");
         userData.gameState.positionOnMap = this.id;
         moveCharacter(position, userData.gameState.positionOnMap);
         event.preventDefault();
         return;
       } else if (map[this.id] <= 5 && map[this.id] >= 2) {
         userData.gameState.currentEnemy = map[this.id];
-        updateDB(true);
+        updateDBThenBattle();
         /* this code needs to run if battle is won
         userData.gameState.positionOnMap = this.id;
         moveCharacter(position, userData.gameState.positionOnMap);
@@ -266,22 +269,8 @@ function startGame() {
     }
   });
 
-  /*
-  function modAnchors() {
-    for (var i = 0; i < 5; i++) {
-      if (
-        currentUser.gameState.map[i] <= 5 &&
-        currentUser.gameState.map[i] >= 2
-      ) {
-        $(`#space-${i}`).attr("href", "battle.html");
-      } else {
-        $(`#space-${i}`).attr("href", "#");
-      }
-    }
-  }
-  */
-
   function moveCharacter(currentPosition, spaceClicked) {
+    console.log(currentPosition);
     userData.gameState.map[currentPosition] = 0;
     userData.gameState.map[spaceClicked] = 1;
     loadMap(userData.gameState.map);
@@ -346,18 +335,17 @@ function startGame() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  function updateDB(battle) {
+  function updateDBThenBattle() {
     const db = firebase.firestore();
     var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
-    userRef.set({
-      userData: userData,
-    });
-
-    console.log(userData);
-
-    if (battle) {
-      window.location.href = "battle.html";
-    }
+    userRef
+      .set({
+        userData: userData,
+      })
+      .then(function () {
+        console.log(userData);
+        window.location.href = "battle.html";
+      });
   }
 
   console.log("mapScript.js loaded");

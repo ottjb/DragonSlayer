@@ -364,9 +364,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${player.name} uses Mark of the Predator!`);
-          enemy.bonusDefense -= Math.round(
-            enemy.baseDefense * 0.1
-          );
+          enemy.bonusDefense -= Math.round(enemy.baseDefense * 0.1);
           addToBattleLog(`${enemy.name}'s Defense decreased!`);
           currentStatuses.push(["mark of the predator", 2, enemy]);
         },
@@ -559,10 +557,12 @@ function startGame() {
     ],
   };
 
-  // Create the enemy
+  ///////////////////////
+  // Enemy Constructor //
+  ///////////////////////
 
-  //var currentEnemy = enemyArray[userData.gameState.currentEnemy - 2];
-  var currentEnemy = enemyArray[0];
+  var currentEnemy = enemyArray[userData.gameState.currentEnemy - 2];
+  //var currentEnemy = enemyArray[0];
 
   function Enemy(currentEnemy) {
     this.name = currentEnemy.name;
@@ -611,12 +611,8 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Guardian's Resolve is still active!`
         );
-        character.bonusAttack += Math.round(
-          character.baseAttack * 0.2
-        );
-        character.bonusDefense += Math.round(
-          character.baseDefense * 0.5
-        );
+        character.bonusAttack += Math.round(character.baseAttack * 0.2);
+        character.bonusDefense += Math.round(character.baseDefense * 0.5);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -633,12 +629,8 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Acrobatic Evasion is still active!`
         );
-        player.bonusDodge += Math.round(
-          player.baseDodge * 3
-        );
-        player.bonusSpeed += Math.round(
-          player.baseSpeed * 0.1
-        );
+        player.bonusDodge += Math.round(player.baseDodge * 3);
+        player.bonusSpeed += Math.round(player.baseSpeed * 0.1);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -653,9 +645,7 @@ function startGame() {
       name: "astral ward",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Astral Ward is still active!`);
-        player.bonusDefense += Math.round(
-          player.baseDefense * 0.5
-        );
+        player.bonusDefense += Math.round(player.baseDefense * 0.5);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -687,9 +677,7 @@ function startGame() {
       name: "quick patch-up",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Quick Patch-Up is still active!`);
-        player.bonusDodge += Math.round(
-          player.baseDodge * 0.2
-        );
+        player.bonusDodge += Math.round(player.baseDodge * 0.2);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -718,9 +706,7 @@ function startGame() {
         addToBattleLog(
           `${character.name}'s Nature's Blessing is still active!`
         );
-        player.bonusAttack += Math.round(
-          player.baseAttack * 0.3
-        );
+        player.bonusAttack += Math.round(player.baseAttack * 0.3);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -735,9 +721,7 @@ function startGame() {
       name: "intimidating aura",
       effect: function (character) {
         addToBattleLog(`${character.name} is still intimidated!`);
-        enemy.bonusAttack -= Math.round(
-          enemy.baseAttack * 0.15
-        );
+        enemy.bonusAttack -= Math.round(enemy.baseAttack * 0.15);
       },
     },
 
@@ -746,12 +730,8 @@ function startGame() {
       name: "shadow step",
       effect: function (character) {
         addToBattleLog(`${character.name}'s Shadow Step is still active!`);
-        player.bonusAttack += Math.round(
-          player.baseAttack * 0.3
-        );
-        player.bonusSpeed += Math.round(
-          player.baseSpeed * 0.2
-        );
+        player.bonusAttack += Math.round(player.baseAttack * 0.3);
+        player.bonusSpeed += Math.round(player.baseSpeed * 0.2);
         updateStatBlock(
           player.baseAttack + player.bonusAttack,
           player.baseDefense + player.bonusDefense,
@@ -776,9 +756,7 @@ function startGame() {
       name: "mark of the predator",
       effect: function (character) {
         addToBattleLog(`${character.name} is still marked!`);
-        enemy.bonusDefense -= Math.round(
-          enemy.baseDefense * 0.1
-        );
+        enemy.bonusDefense -= Math.round(enemy.baseDefense * 0.1);
       },
     },
 
@@ -803,11 +781,7 @@ function startGame() {
       $(`#playerName`).html(player.name);
       $(`#playerHP`).html(player.currentHP);
       $(`#playerMaxHP`).html(player.maxHP);
-      updateHPBar(
-        position,
-        player.currentHP,
-        player.maxHP
-      );
+      updateHPBar(position, player.currentHP, player.maxHP);
       $(`#playerSprite`).attr("src", player.sprite.back);
     } else {
       $(`#enemyName`).html(enemy.name);
@@ -924,9 +898,10 @@ function startGame() {
       stats.playerSpd,
       stats.playerDodge
     );
+    // STOPPED HERE, MAKE MOVES WORK
     if (stats.playerSpd >= stats.enemySpd) {
       setTimeout(function () {
-        player.moveset[playerAction].effect(calcStats());
+        player.character.class.moveset[playerAction].effect(calcStats());
       }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
         enemyTurn();
@@ -985,12 +960,7 @@ function startGame() {
   loadCharacter("player");
   loadCharacter("enemy");
 
-  updateStatBlock(
-    player.attack,
-    player.defense,
-    player.speed,
-    player.dodge
-  );
+  updateStatBlock(player.attack, player.defense, player.speed, player.dodge);
 
   /////////////
   // Utility //
@@ -1082,16 +1052,16 @@ function startGame() {
   }
 
   function doHeal(character, heal) {
-      if (character.currentHP + heal > character.maxHP) {
-        addToBattleLog(
-          `${character.name} healed for ${character.maxHP - heal} HP!`
-        );
-        character.currentHP = character.maxHP;
-      } else {
-        addToBattleLog(`${character.name} healed for ${heal} HP!`);
-        character.currentHP += heal;
-      }
-    
+    if (character.currentHP + heal > character.maxHP) {
+      addToBattleLog(
+        `${character.name} healed for ${character.maxHP - heal} HP!`
+      );
+      character.currentHP = character.maxHP;
+    } else {
+      addToBattleLog(`${character.name} healed for ${heal} HP!`);
+      character.currentHP += heal;
+    }
+
     updateHP();
   }
 
