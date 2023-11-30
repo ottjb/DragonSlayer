@@ -48,9 +48,6 @@ function startGame() {
       {
         name: "Crushing Blow",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.enemyDodge)) {
             addToBattleLog(
               `${enemy.name} dodged ${player.name}'s Crushing Blow!`
@@ -65,9 +62,6 @@ function startGame() {
       {
         name: "Guardian's Resolve",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Guardian's Resolve!`);
           player.bonusAttack += Math.round(player.baseAttack * 0.2);
           player.bonusDefense += Math.round(player.baseDefense * 0.5);
@@ -84,9 +78,6 @@ function startGame() {
       {
         name: "Vital Surge",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Vital Surge!`);
           var heal = Math.round(player.maxHP * 0.3);
           doHeal(player, heal);
@@ -95,9 +86,6 @@ function startGame() {
       {
         name: "Intimidating Aura",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Intimidating Aura!`);
           enemy.bonusAttack -= Math.round(enemy.baseAttack * 0.15);
           addToBattleLog(`${enemy.name}'s Attack decreased!`);
@@ -127,9 +115,6 @@ function startGame() {
       {
         name: "Lethal Backstab",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.enemyDodge)) {
             addToBattleLog(
               `${enemy.name} dodged ${player.name}'s Lethal Backstab!`
@@ -152,9 +137,6 @@ function startGame() {
       {
         name: "Acrobatic Evasion",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Acrobatic Evasion!`);
           player.bonusDodge += Math.round(player.baseDodge * 3);
           player.bonusSpeed += Math.round(player.baseSpeed * 0.1);
@@ -171,9 +153,6 @@ function startGame() {
       {
         name: "Quick Patch-Up",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Quick Patch-Up!`);
           var heal = Math.round(player.maxHP * 0.15);
           doHeal(player, heal);
@@ -191,9 +170,6 @@ function startGame() {
       {
         name: "Shadow Step",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Shadow Step!`);
           player.bonusAttack += Math.round(player.baseAttack * 0.3);
           player.bonusSpeed += Math.round(player.baseSpeed * 0.2);
@@ -229,9 +205,6 @@ function startGame() {
       {
         name: "Arcane Missiles",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           var numberOfMissiles = stats.playerAtk / 3;
           addToBattleLog(
             `${player.name} fires ${numberOfMissiles} Arcane Missiles!`
@@ -253,9 +226,6 @@ function startGame() {
       {
         name: "Astral Ward",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Astral Ward!`);
           player.bonusDefense += Math.round(player.baseDefense * 0.5);
           addToBattleLog(`${player.name}'s Defense increased!`);
@@ -271,9 +241,6 @@ function startGame() {
       {
         name: "Celestial Infusion",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Celestial Infusion!`);
           var heal = Math.round(player.maxHP * 0.1);
           doHeal(player, heal);
@@ -283,9 +250,6 @@ function startGame() {
       {
         name: "Inflict Burn",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Inflict Burn!`);
           var damage = Math.round(player.baseAttack * 0.2);
           doDamage(enemy, damage);
@@ -314,9 +278,6 @@ function startGame() {
       {
         name: "Piercing Shot",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.enemyDodge)) {
             addToBattleLog(`${enemy.name} dodged ${player.name}'s attack!`);
             return;
@@ -330,9 +291,6 @@ function startGame() {
       {
         name: "Natural Camoflage",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Natural Camoflage!`);
           player.bonusDodge += 100 - player.baseDodge;
           addToBattleLog(`${player.name}'s Dodge increased!`);
@@ -348,9 +306,6 @@ function startGame() {
       {
         name: "Nature's Blessing",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Nature's Blessing!`);
           var heal = Math.round(player.maxHP * 0.2);
           doHeal(player, heal);
@@ -360,9 +315,6 @@ function startGame() {
       {
         name: "Mark of the Predator",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${player.name} uses Mark of the Predator!`);
           enemy.bonusDefense -= Math.round(enemy.baseDefense * 0.1);
           addToBattleLog(`${enemy.name}'s Defense decreased!`);
@@ -396,9 +348,6 @@ function startGame() {
       {
         name: "Sneak Strike",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.playerDodge)) {
             addToBattleLog(`${player.name} dodged ${enemy.name}'s attack!`);
             return;
@@ -411,9 +360,6 @@ function startGame() {
       {
         name: "Stolen Potion",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${enemy.name} uses Stolen Potion!`);
           var heal = Math.round(enemy.maxHP * 0.2);
           doHeal(enemy, heal);
@@ -440,9 +386,6 @@ function startGame() {
       {
         name: "Vicious Strike",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.playerDodge)) {
             addToBattleLog(`${player.name} dodged ${enemy.name}'s attack!`);
             return;
@@ -455,9 +398,6 @@ function startGame() {
       {
         name: "Herbal Remedy",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${enemy.name} uses Herbal Remedy!`);
           var heal = Math.round(enemy.maxHP * 0.25);
           doHeal(enemy, heal);
@@ -484,9 +424,6 @@ function startGame() {
       {
         name: "Soul Siphon",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.playerDodge)) {
             addToBattleLog(`${player.name} dodged ${enemy.name}'s attack!`);
             return;
@@ -500,9 +437,6 @@ function startGame() {
       {
         name: "Soul Mend",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${enemy.name} uses Soul Mend!`);
           var heal = Math.round(enemy.maxHP * 0.3);
           doHeal(enemy, heal);
@@ -529,9 +463,6 @@ function startGame() {
       {
         name: "Infernal Breath",
         effect: function (stats) {
-          if (battleOver()) {
-            return;
-          }
           if (checkDodged(stats.playerDodge)) {
             addToBattleLog(`${player.name} dodged ${enemy.name}'s attack!`);
             return;
@@ -546,9 +477,6 @@ function startGame() {
       {
         name: "Draconian Renewal",
         effect: function () {
-          if (battleOver()) {
-            return;
-          }
           addToBattleLog(`${enemy.name} uses Draconian Renewal!`);
           var heal = Math.round(enemy.maxHP * 0.4);
           doHeal(enemy, heal);
@@ -586,9 +514,30 @@ function startGame() {
 
   var player = userData.character;
   player.name = currentUser;
+  var playerMoveset;
+
+  // Getting the players moveset
+  switch (player.class.toLowerCase()) {
+    case "fighter":
+      playerMoveset = fighter.moveset;
+      break;
+    case "rogue":
+      playerMoveset = rogue.moveset;
+      break;
+    case "wizard":
+      playerMoveset = wizard.moveset;
+      break;
+    case "ranger":
+      playerMoveset = ranger.moveset;
+      break;
+    default:
+      break;
+  }
+
   var enemy = new Enemy(eval(currentEnemy.toLowerCase()));
   console.log(player);
   console.log(enemy);
+
   ////////////////////
   // Status effects //
   ////////////////////
@@ -883,8 +832,10 @@ function startGame() {
   // Battle //
   ////////////
 
+  var battleOver = false;
   var currentStatuses = []; // [["status", turns left, target]]
   function initializeBattle(playerAction) {
+    console.log(playerMoveset);
     disableButtons();
     addToBattleLog("New Turn Started");
     var stats = calcStats();
@@ -898,24 +849,47 @@ function startGame() {
       stats.playerSpd,
       stats.playerDodge
     );
-    // STOPPED HERE, MAKE MOVES WORK
     if (stats.playerSpd >= stats.enemySpd) {
       setTimeout(function () {
-        player.character.class.moveset[playerAction].effect(calcStats());
+        playerMoveset[playerAction].effect(calcStats());
+        if (enemy.currentHP <= 0) {
+          console.log("Enemy is dead");
+          battleOver = true;
+          return;
+        }
       }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
         enemyTurn();
+        if (player.currentHP <= 0) {
+          console.log("Player is dead");
+          battleOver = true;
+          return;
+        }
       }, 2000 + 1000 * currentStatuses.length);
     } else {
       setTimeout(function () {
         enemyTurn();
+        if (player.currentHP <= 0) {
+          console.log("Player is dead");
+          battleOver = true;
+          return;
+        }
       }, 1000 + 1000 * currentStatuses.length);
       setTimeout(function () {
-        player.moveset[playerAction].effect(calcStats());
+        playerMoveset[playerAction].effect(calcStats());
+        if (enemy.currentHP <= 0) {
+          console.log("Enemy is dead");
+          battleOver = true;
+          return;
+        }
       }, 2000 + 1000 * currentStatuses.length);
     }
 
     setTimeout(function () {
+      if (battleOver) {
+        $("#footbar").text("Battle Over");
+        return;
+      }
       enableButtons();
       setBonusStatsZero(player);
       setBonusStatsZero(enemy);
@@ -944,7 +918,7 @@ function startGame() {
   }
 
   function enemyTurn() {
-    var enemyPercentMissingHP = (1 - enemy.currentHP / maxHP) * 100;
+    var enemyPercentMissingHP = (1 - enemy.currentHP / enemy.maxHP) * 100;
     var chanceToHeal = Math.round(enemyPercentMissingHP);
     if (genRandomNumber(1, 100) > chanceToHeal) {
       enemy.moveset[0].effect(calcStats());
@@ -1039,13 +1013,11 @@ function startGame() {
   }
 
   function doDamage(character, damage) {
-    if (character.charClass.currentHP - damage < 0) {
-      addToBattleLog(
-        `${character.name} took ${character.charClass.currentHP} damage!`
-      );
-      character.charClass.currentHP = 0;
+    if (character.currentHP - damage < 0) {
+      addToBattleLog(`${character.name} took ${character.currentHP} damage!`);
+      character.currentHP = 0;
     } else {
-      character.charClass.currentHP -= damage;
+      character.currentHP -= damage;
       addToBattleLog(`${character.name} took ${damage} damage!`);
     }
     updateHP();
