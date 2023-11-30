@@ -314,8 +314,9 @@ function startGame() {
     });
   }
 
-  if (userData.gameState.map === "") {
+  if (userData.gameState.map.length == 0) {
     generateMap();
+    loadMap(userData.gameState.map);
   } else {
     loadMap(userData.gameState.map);
   }
@@ -346,6 +347,18 @@ function startGame() {
         console.log(userData);
         window.location.href = "battle.html";
       });
+  }
+
+  function generateMap() {
+    var map = [];
+    map.push(1);
+    for (i = 1; i < 4; i++) {
+      map.push(genRandomNumber(2, 4));
+    }
+    map.push(5);
+    userData.gameState.map = map;
+    userData.gameState.positionOnMap = 0;
+    userData.gameState.currentEnemy = 0;
   }
 
   console.log("mapScript.js loaded");
