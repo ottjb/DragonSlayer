@@ -98,5 +98,21 @@
     </div>
 
     <script src="js/mapScript.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDri320IvvqmXlm9fyaz23gVaBl46clz28",
+        authDomain: "database-csci225.firebaseapp.com",
+        projectId: "database-csci225",
+        storageBucket: "database-csci225.appspot.com",
+        messagingSenderId: "722611732595",
+        appId: "1:722611732595:web:f5e74d49f3fc09e7ae6a06",
+        measurementId: "G-GZ8N8TZJQ1",
+      };
+
+      // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>
