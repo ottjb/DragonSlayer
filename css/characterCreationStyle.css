@@ -1,0 +1,25 @@
+.select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 10%;
+  width: 100%;
+}
+
+select {
+  padding: 0;
+  width: 15%;
+  text-align: center;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+
+  opacity: 1;
+  background-color: transparent;
+  border: none;
+  color: black;
+}

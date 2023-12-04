@@ -28,6 +28,7 @@ $(document).ready(function () {
 function startGame() {
   $("#goToMap").hide();
   $("#goToMap").click(function () {
+    updateStatsFromPet();
     userData.gameState.map[userData.gameState.positionOnMap] = 0;
     userData.gameState.positionOnMap++;
     userData.gameState.map[userData.gameState.positionOnMap] = 1;
@@ -1005,18 +1006,11 @@ function startGame() {
   }
 
   // Sets bonus stats to 0
-  function setBonusStatsZero(unit) {
-    if (unit === "player") {
-      player.bonusAttack = 0;
-      player.bonusDefense = 0;
-      player.bonusSpeed = 0;
-      player.bonusDodge = 0;
-    } else {
-      enemy.bonusAttack = 0;
-      enemy.bonusDefense = 0;
-      enemy.bonusSpeed = 0;
-      enemy.bonusDodge = 0;
-    }
+  function setBonusStatsZero(character) {
+    character.bonusAttack = 0;
+    character.bonusDefense = 0;
+    character.bonusSpeed = 0;
+    character.bonusDodge = 0;
   }
 
   // Generate a random number
@@ -1092,6 +1086,36 @@ function startGame() {
       return true;
     }
     return false;
+  }
+
+  var petsList = [
+    {
+      name: "Dog",
+      boostedStat: "attack",
+    },
+    {
+      name: "Turtle",
+      boostedStat: "defense",
+    },
+    {
+      name: "Cat",
+      boostedStat: "speed",
+    },
+    {
+      name: "Bird",
+      boostedStat: "dodge",
+    },
+  ];
+
+  function updateStatsFromPet() {
+    if (userData.pets.equippedPet === "none") {
+      return;
+    } else {
+      var currentBoostedStat = petsList.find(
+        (pet) => pet.name === userData.pets.equippedPet
+      ).boostedStat;
+      userData.character[currentBoostedStat] -= 10;
+    }
   }
 
   function updateDBThenMap() {
