@@ -765,6 +765,10 @@ function startGame() {
     $(`#${position}HPBar`).attr("max", maxHp);
   }
 
+
+
+
+
   /////////////
   // Buttons //
   /////////////
