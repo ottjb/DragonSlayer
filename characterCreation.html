@@ -14,24 +14,36 @@
   <body>
     <div class="grid-container">
       <div class="title"></div>
-      <div class="classSelection">
+      <div class="class-selection">
         <div class="select-container">
           <img src="img/arrows/arrowLeft.png" id="classLeft" />
           <select name="class" id="class"></select>
           <img src="img/arrows/arrowRight.png" id="classRight" />
         </div>
       </div>
-      <div class="variantSelection">
+      <div class="variant-selection">
         <div class="select-container">
           <img src="img/arrows/arrowLeft.png" id="variantLeft" />
           <select name="variant" id="variant"></select>
           <img src="img/arrows/arrowRight.png" id="variantRight" />
         </div>
       </div>
-      <div class="characterImage">
-        <img src="img/fighter/front/base.png" />
+      <div class="class-name"><h1 id="name"></h1></div>
+      <div class="character-image">
+        <img src="img/fighter/front/base.png" id="charImg" />
       </div>
-      <div class="statsDisplay"></div>
+      <div class="class-description"><p id="description"></p></div>
+      <div class="stats-display">
+        <div class="stats-container">
+          <p>Health: <span id="hp">0</span></p>
+          <p>Attack: <span id="atk">0</span></p>
+          <p>Defense: <span id="def">0</span></p>
+          <p>Speed: <span id="spd">0</span></p>
+          <p>Dodge: <span id="dge">0</span></p>
+        </div>
+      </div>
+      <div class="done-button">
+        <button id="createChar">Create Character</button>
     </div>
 
     <script src="js/characterCreationScript.js"></script>

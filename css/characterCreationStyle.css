@@ -1,3 +1,89 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.class-selection {
+  grid-column: 1/2;
+  grid-row: 2/3;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.variant-selection {
+  grid-column: 1/2;
+  grid-row: 3/4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.character-image {
+  grid-column: 2/3;
+  grid-row: 2/4;
+}
+
+.stats-display {
+  grid-column: 3/4;
+  grid-row: 2/4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-description {
+  grid-column: 2/3;
+  grid-row: 4/5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-name {
+  grid-column: 2/3;
+  grid-row: 1/2;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-description p {
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}
+
+.stats-container {
+  line-height: 3;
+}
+
+.character-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .select-container {
   display: flex;
   justify-content: center;
