@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/characterCreationStyle.css" />
+    <title>DragonSlayer | Map</title>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="title"></div>
+      <div class="class-selection">
+        <div class="select-container">
+          <img src="img/arrows/arrowLeft.png" id="classLeft" />
+          <select name="class" id="class"></select>
+          <img src="img/arrows/arrowRight.png" id="classRight" />
+        </div>
+      </div>
+      <div class="variant-selection">
+        <div class="select-container">
+          <img src="img/arrows/arrowLeft.png" id="variantLeft" />
+          <select name="variant" id="variant"></select>
+          <img src="img/arrows/arrowRight.png" id="variantRight" />
+        </div>
+      </div>
+      <div class="class-name"><h1 id="name"></h1></div>
+      <div class="character-image">
+        <img src="img/fighter/front/base.png" id="charImg" />
+      </div>
+      <div class="class-description"><p id="description"></p></div>
+      <div class="stats-display">
+        <div class="stats-container">
+          <p>Health: <span id="hp">0</span></p>
+          <p>Attack: <span id="atk">0</span></p>
+          <p>Defense: <span id="def">0</span></p>
+          <p>Speed: <span id="spd">0</span></p>
+          <p>Dodge: <span id="dge">0</span></p>
+        </div>
+      </div>
+      <div class="done-button">
+        <button id="createChar">Create Character</button>
+    </div>
+
+    <script src="js/characterCreationScript.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDri320IvvqmXlm9fyaz23gVaBl46clz28",
+        authDomain: "database-csci225.firebaseapp.com",
+        projectId: "database-csci225",
+        storageBucket: "database-csci225.appspot.com",
+        messagingSenderId: "722611732595",
+        appId: "1:722611732595:web:f5e74d49f3fc09e7ae6a06",
+        measurementId: "G-GZ8N8TZJQ1",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  </body>
+</html>
