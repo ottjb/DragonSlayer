@@ -763,11 +763,6 @@ function startGame() {
     $(`#${position}HPBar`).attr("value", hp);
     $(`#${position}HPBar`).attr("max", maxHp);
   }
-
-
-
-
-
   /////////////
   // Buttons //
   /////////////
@@ -1050,8 +1045,13 @@ function startGame() {
       character.currentHP -= damage;
       addToBattleLog(`${character.name} took ${damage} damage!`);
     }
+
     updateHP();
+
   }
+
+  $
+
 
   function doHeal(character, heal) {
     if (character.currentHP + heal > character.maxHP) {
@@ -1123,6 +1123,7 @@ function startGame() {
         //window.location.href = ".html";
       });
   }
+  
 
   console.log("Battle Script Loaded");
 } // End of startGame()

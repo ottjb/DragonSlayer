@@ -74,10 +74,14 @@ body {
 
 #playerHealth, #enemyHealth{
   text-align: center;
+  font-size: 0.75em;
   position:absolute;
+  left: 64px;
+  top: 40px;
+  /*position:absolute;
   left: 4.25vw;
-  top: 4.75vh;
-  font-size: small;
+  top: 4.75vh;*/
+
 }
 
 .sidebar {
@@ -214,9 +218,6 @@ body {
   
 }
 
-.hide {
-  display: none;
-}
 /*
 .battleScreen {
   position: absolute;
