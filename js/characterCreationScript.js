@@ -309,6 +309,9 @@ function startGame() {
 
   $("#createChar").click(function () {
     console.log(userData.character);
+    userData.gameState.map = [];
+    userData.gameState.positionOnMap = 0;
+    userData.gameState.currentEnemy = 0;
     var chosenClass = $("#class").val();
     switch (chosenClass) {
       case "1":
@@ -340,6 +343,7 @@ function startGame() {
       bonusSpeed: 0,
       bonusDodge: 0,
     };
+    
     userData.character = createdChar;
     updateDBthenMap();
   });
