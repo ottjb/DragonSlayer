@@ -67,6 +67,15 @@ body {
   align-items: center;
 }
 
+.done-button {
+  grid-column: 3/4;
+  grid-row: 4/5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .class-description p {
   margin: 0;
   padding: 0;

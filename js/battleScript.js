@@ -12,8 +12,6 @@ Functions Ran on Build
 Utility
 */
 
-// stopped while fixing guardians resolve, was stacking the stat bonuses
-
 const currentUser = "testUser";
 var userData;
 $(document).ready(function () {
