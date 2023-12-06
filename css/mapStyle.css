@@ -27,6 +27,10 @@ body {
   justify-content: center;
   align-items: center;
   background-image: url(../img/mainmap.jpg);
+  background-size: 68vw 76vh;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
 .space {
