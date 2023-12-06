@@ -331,7 +331,7 @@ function startGame() {
     var createdChar = {
       class: currentTemplate.class,
       name: currentUser,
-      sprite: currentTemplate.sprite,
+      sprite: variantPaths[`${chosenClass}${$("#variant").val()}`],
       maxHP: currentTemplate.maxHP,
       currentHP: currentTemplate.currentHP,
       attack: currentTemplate.attack,
@@ -343,7 +343,7 @@ function startGame() {
       bonusSpeed: 0,
       bonusDodge: 0,
     };
-    
+
     userData.character = createdChar;
     updateDBthenMap();
   });
