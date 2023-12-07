@@ -12,7 +12,8 @@ Functions Ran on Build
 Utility
 */
 
-const currentUser = "testUser";
+var url = window.location.href;
+var currentUser = url.split("=")[1];
 var userData;
 $(document).ready(function () {
   const db = firebase.firestore();
@@ -1039,11 +1040,9 @@ function startGame() {
     }
 
     updateHP();
-
   }
 
-  $
-
+  $;
 
   function doHeal(character, heal) {
     if (character.currentHP + heal > character.maxHP) {
@@ -1129,7 +1128,7 @@ function startGame() {
       })
       .then(function () {
         console.log(userData);
-        window.location.href = "map.html";
+        window.location.href = "map.html?currentUser=" + currentUser;
       });
   }
 
@@ -1142,10 +1141,9 @@ function startGame() {
       })
       .then(function () {
         console.log(userData);
-        //window.location.href = ".html";
+        window.location.href = "characterCreation.html$currentUser=" + currentUser;
       });
   }
-  
 
   console.log("Battle Script Loaded");
 } // End of startGame()

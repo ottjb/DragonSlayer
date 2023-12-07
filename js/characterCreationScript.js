@@ -1,6 +1,9 @@
-const currentUser = "testUser";
+var url = window.location.href;
+var currentUser = url.split("=")[1];
 var userData;
 $(document).ready(function () {
+  console.log(currentUser);
+  //currentUser = firebase.auth().currentUser.displayName;
   const db = firebase.firestore();
   var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
   userRef.get().then((querySnapshot) => {
@@ -309,6 +312,7 @@ function startGame() {
 
   $("#createChar").click(function () {
     console.log(userData.character);
+    userData.accountStats.attempts++;
     userData.gameState.map = [];
     userData.gameState.positionOnMap = 0;
     userData.gameState.currentEnemy = 0;
@@ -357,7 +361,7 @@ function startGame() {
       })
       .then(function () {
         console.log(userData);
-        window.location.href = "map.html";
+        window.location.href = "map.html?currentUser=" + currentUser;
       });
   }
 }

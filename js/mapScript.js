@@ -1,4 +1,5 @@
-const currentUser = "testUser";
+var url = window.location.href;
+var currentUser = url.split("=")[1];
 var userData;
 $(document).ready(function () {
   const db = firebase.firestore();
@@ -73,45 +74,53 @@ function startGame() {
 
   var petsMap = [];
 
-  for (var i = 0; i < userData.pets.acquiredPets.length; i++) {
-    petsMap.push({
-      id: i + 1,
-      name: userData.pets.acquiredPets[i],
+  if (userData.pets.acquiredPets.length == 0) {
+    $("#pet").append(`<option value="0">None</option>`);
+  } else {
+    for (var i = 0; i < userData.pets.acquiredPets.length; i++) {
+      petsMap.push({
+        id: i + 1,
+        name: userData.pets.acquiredPets[i],
+      });
+    }
+
+    petsMap.forEach((pet) => {
+      console.log(pet);
+      $("#pet").append(`<option value="${pet.id}">${pet.name}</option>`);
+    });
+
+    $("#pet").val(
+      userData.pets.acquiredPets.indexOf(userData.pets.equippedPet) + 1
+    );
+
+    if (userData.pets.equippedPet != "") {
+      userData.character[
+        petsList.find(
+          (pet) => pet.name === userData.pets.equippedPet
+        ).boostedStat
+      ] += 10;
+    }
+
+    $("#arrowLeft").click(function () {
+      var current = parseInt($("#pet").val());
+      var next = current - 1;
+      if (next < 1) {
+        next = userData.pets.acquiredPets.length;
+      }
+      $("#pet").val(next);
+      changePet();
+    });
+
+    $("#arrowRight").click(function () {
+      var current = parseInt($("#pet").val());
+      var next = current + 1;
+      if (next > userData.pets.acquiredPets.length) {
+        next = 1;
+      }
+      $("#pet").val(next);
+      changePet();
     });
   }
-
-  petsMap.forEach((pet) => {
-    console.log(pet);
-    $("#pet").append(`<option value="${pet.id}">${pet.name}</option>`);
-  });
-
-  $("#pet").val(
-    userData.pets.acquiredPets.indexOf(userData.pets.equippedPet) + 1
-  );
-
-  userData.character[
-    petsList.find((pet) => pet.name === userData.pets.equippedPet).boostedStat
-  ] += 10;
-
-  $("#arrowLeft").click(function () {
-    var current = parseInt($("#pet").val());
-    var next = current - 1;
-    if (next < 1) {
-      next = userData.pets.acquiredPets.length;
-    }
-    $("#pet").val(next);
-    changePet();
-  });
-
-  $("#arrowRight").click(function () {
-    var current = parseInt($("#pet").val());
-    var next = current + 1;
-    if (next > userData.pets.acquiredPets.length) {
-      next = 1;
-    }
-    $("#pet").val(next);
-    changePet();
-  });
 
   function changePet() {
     var currentPet = userData.pets.equippedPet;
@@ -345,7 +354,7 @@ function startGame() {
       })
       .then(function () {
         console.log(userData);
-        window.location.href = "battle.html";
+        window.location.href = "battle.html?currentUser=" + currentUser;
       });
   }
 
