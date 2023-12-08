@@ -34,7 +34,7 @@ body {
 }
 
 .space {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   width: 12%;
   aspect-ratio: 1/1;
 }
