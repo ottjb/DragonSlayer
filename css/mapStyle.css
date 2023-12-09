@@ -52,12 +52,14 @@ a.disabled {
 
 .account-stats-container {
   position: relative;
-  background-color: coral;
+  background-image: url(../img/mapscreen/banner_right.jpg);
+  background-size: 33.5vw 50vh;
+  background-repeat: no-repeat;
   grid-column: 3 / 4;
   grid-row: 1 / 2;
   overflow-y: hidden;
   overflow-x: hidden;
-  border-left: 2px solid black;
+  border-left: 2px solid #33240F;
 }
 
 .account-stats-container > h2 {
@@ -68,6 +70,10 @@ a.disabled {
   padding: 0;
   height: 15%;
   width: 100%;
+  color:#271306;
+  font-family: Pixelify Sans;
+  text-shadow: 2px 2px 2px #625137b4;
+  text-transform: uppercase;
 }
 
 .stats {
@@ -86,17 +92,22 @@ a.disabled {
   margin: 0;
   padding: 0;
   padding-left: 10px;
+  color:#271306;
+  font-family: Rokkitt;
+  text-shadow: 2px 2px 2px #625137b4;
 }
 
 .moveset-container {
   position: relative;
-  background-color: darkslateblue;
+  background-image: url(../img/mapscreen/banner_rightcorner.jpg);
+  background-repeat: no-repeat;
+  background-size: 33.6vw 26vh;
   grid-column: 3 / 4;
   grid-row: 2 / 3;
   overflow-y: hidden;
   overflow-x: hidden;
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+  border-top: 2px solid #33240F;
+  border-left: 2px solid #33240F;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -125,16 +136,20 @@ a.disabled {
   justify-content: center;
   align-items: center;
   text-align: center;
+  color:#271306;
+  font-family: Pixelify Sans;
+  text-shadow: 2px 2px 2px #625137b4;
+  text-transform: uppercase;
 }
 
 .moveset-container #move0 {
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  border-right: 2px solid #33240F;
+  border-bottom: 2px solid #33240F;
 }
 
 .moveset-container #move3 {
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+  border-left: 2px solid #33240F;
+  border-top: 2px solid #33240F;
 }
 
 .moveset-container div .desc {
@@ -152,11 +167,12 @@ a.disabled {
 .pet-container {
   position: relative;
   background-image: url(../img/mapscreen/bricks.png);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-top: 2px solid black;
+  border-top: 2px solid #33240F;
 
   height: 100%;
   width: 100%;
@@ -165,6 +181,12 @@ a.disabled {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  color:#28221b;
+  text-shadow: 2px 3px 4px #372f25bd;
+  background-color: #a48d765e;
+  font-family: Rokkitt;
+  font-size: 1.30em;
 }
 
 .pet-container select {
@@ -180,7 +202,11 @@ a.disabled {
   opacity: 1;
   background-color: transparent;
   border: none;
-  color: black;
+  color:#28221b;
+  text-shadow: 2px 3px 4px #372f25bd;
+  background-color: #a48d765e;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
 }
 
 .pet-container select::-ms-expand {
@@ -207,27 +233,39 @@ select {
 .prompt-container {
   position: relative;
   background-image: url(../img/mapscreen/bricks.png);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   grid-column: 2 / 3;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-top: 2px solid black;
-  border-left: 2px solid black;
+  border-top: 2px solid #33240F;
+  border-left:2px solid #7C6A56;
 
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
+  color:#28221b;
+  text-shadow: 2px 3px 4px #372f25bd;
+  background-color: #a48d765e;
+  font-family: Rokkitt;
+  font-size: 1.30em;
+}
+.prompt-container p{
+  position: fixed;
+  bottom: 9.5vh;
+}
 .character-stats-container {
   position: relative;
   background-image: url(../img/mapscreen/bricks.png);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
   grid-column: 3 / 4;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+  border-top: 2px solid #7C6A56;
+  border-left:2px solid #7C6A56;
+
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -236,6 +274,13 @@ select {
   grid-row-gap: 0px;
   height: 100%;
   width: 100%;
+
+  color:#28221b;
+  text-shadow: 2px 3px 4px #372f25bd;
+  background-color: #a48d765e;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  font-size: 1.30em;
 }
 
 .character-stats-container > p {
