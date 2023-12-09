@@ -5,9 +5,19 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #000000;
 }
 
+.bg-img{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-image: url("../img/loginscreen/map.jpg");
+  background-attachment: fixed;
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  filter: blur(5px);
+  z-index: -1;
+}
 .container {
   width: 60%;
   height: 80%;
@@ -15,7 +25,19 @@ body {
   margin-bottom: 5%;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgb(255, 243, 197);
+  background-color:#33240f;
+  border: 2px solid #2b1e0c;
+  border-radius: 25px 25px 25px 25px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  z-index:0;
+}
+
+h1{
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  color: whitesmoke;
+  text-align: center;
+  text-shadow:  4px 4px rgba(75, 55, 29, 0.8);
 }
 
 .row {
@@ -35,8 +57,11 @@ body {
 
 input.btn {
   background-color: antiquewhite;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.374);
 }
 
 .col#signup {
-  border-left: 1px solid black;
+  border-left: 2px solid #2b1e0c;
 }
