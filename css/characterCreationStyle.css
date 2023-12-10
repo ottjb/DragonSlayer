@@ -6,15 +6,27 @@ body {
   height: 100%;
   overflow: hidden;
 }
-
+.bg-img{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/characterscreen/camp.png);
+  background-attachment: fixed;
+  background-size: 100vw 100vh;
+  background-repeat: no-repeat;
+  filter: blur(5px);
+  z-index: -1;
+}
 .grid-container {
   display: grid;
+  position: fixed;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   width: 100%;
   height: 100%;
+  z-index: 1;
 }
 
 .class-selection {
@@ -24,6 +36,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #355e3b9a;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  color: white;
 }
 
 .variant-selection {
@@ -33,11 +49,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #355e3b9a;
+
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  color: white;
 }
 
 .character-image {
   grid-column: 2/3;
   grid-row: 2/4;
+  filter: drop-shadow(20px 20px 30px black);
 }
 
 .stats-display {
@@ -47,6 +69,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Pixelify Sans;
+  color: white;
+  text-transform: uppercase;
+  background-color: #355e3b9a;
 }
 
 .class-description {
@@ -65,6 +91,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Pixelify Sans;
+  color: white;
+  text-transform: uppercase;
 }
 
 .done-button {
@@ -81,6 +110,8 @@ body {
   padding: 0;
 
   text-align: center;
+  font-family: Rokkitt;
+  color: white;
 }
 
 .stats-container {
