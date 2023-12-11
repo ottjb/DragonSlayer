@@ -221,6 +221,12 @@ a.disabled {
   padding: 0;
   height: 10%;
   width: 100%;
+
+  color:#28221b;
+  text-shadow: 2px 3px 4px #372f25bd;
+  background-color: #a48d765e;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
 }
 
 select {

@@ -107,7 +107,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
+
+button{
+  background-color: #1c321f;
+  color: #fff;
+  font-size: 25px;
+  font-family: Pixelify Sans;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0px 9px;
+  border: 2px solid #0b140d;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 8px 6px 6px 0px rgba(11.000000000000002,20,12.999999999999998,0.5);
+  text-shadow: 4px 0px 2px #2e5133;
+ }
+
+ button:active{
+  transform: scale(0.95);
+ }
 
 
 
@@ -143,7 +163,7 @@ body {
   font-family: Pixelify Sans;
   color: white;
   text-shadow:  4px 4px #2e5133;
-  font-size: 2em;
+  text-transform: uppercase;
 }
 
 select {
