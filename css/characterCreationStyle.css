@@ -160,10 +160,10 @@ button{
   height: 10%;
   width: 100%;
 
-  font-family: Pixelify Sans;
+  /*font-family: Pixelify Sans;
   color: white;
   text-shadow:  4px 4px #2e5133;
-  text-transform: uppercase;
+  text-transform: uppercase;*/
 }
 
 select {
