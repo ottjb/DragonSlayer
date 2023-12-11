@@ -40,6 +40,7 @@ body {
   font-family: Pixelify Sans;
   text-transform: uppercase;
   color: white;
+    text-shadow:  4px 4px #2e5133;
 }
 
 .variant-selection {
@@ -54,6 +55,7 @@ body {
   font-family: Pixelify Sans;
   text-transform: uppercase;
   color: white;
+  text-shadow:  4px 4px #2e5133;
 }
 
 .character-image {
@@ -72,6 +74,7 @@ body {
   font-family: Pixelify Sans;
   color: white;
   text-transform: uppercase;
+  text-shadow:  4px 4px #2e5133;
   background-color: #355e3b9a;
 }
 
@@ -94,6 +97,7 @@ body {
   font-family: Pixelify Sans;
   color: white;
   text-transform: uppercase;
+  text-shadow:  4px 4px #2e5133;
 }
 
 .done-button {
@@ -105,6 +109,8 @@ body {
   align-items: center;
 }
 
+
+
 .class-description p {
   margin: 0;
   padding: 0;
@@ -112,6 +118,7 @@ body {
   text-align: center;
   font-family: Rokkitt;
   color: white;
+  text-shadow:  4px 4px #2e5133;
 }
 
 .stats-container {
