@@ -154,5 +154,7 @@ select {
   opacity: 1;
   background-color: transparent;
   border: none;
-  color: black;
+  font-family: Pixelify Sans;
+  color: white;
+  text-shadow:  4px 4px #2e5133;
 }
