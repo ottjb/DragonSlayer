@@ -40,7 +40,7 @@ body {
   font-family: Pixelify Sans;
   text-transform: uppercase;
   color: white;
-    text-shadow:  4px 4px #2e5133;
+  text-shadow:  4px 4px #2e5133;
 }
 
 .variant-selection {
@@ -179,5 +179,8 @@ select {
   opacity: 1;
   background-color: transparent;
   border: none;
+  font-family: Pixelify Sans;
   color: white;
+  text-shadow:  4px 4px #2e5133;
+  text-transform: uppercase;
 }
