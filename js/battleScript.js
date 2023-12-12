@@ -1042,7 +1042,8 @@ function startGame() {
     updateHP();
   }
 
-  $;
+  
+
 
   function doHeal(character, heal) {
     if (character.currentHP + heal > character.maxHP) {
