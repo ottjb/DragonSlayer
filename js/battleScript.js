@@ -1031,7 +1031,7 @@ function startGame() {
     }
     return false;
   }
-
+  
   function doDamage(character, damage) {
     console.log(damage);
     if (character.currentHP - damage < 0) {
@@ -1039,6 +1039,7 @@ function startGame() {
       character.currentHP = 0;
     } else {
       character.currentHP -= damage;
+
       addToBattleLog(`${character.name} took ${damage} damage!`);
     }
 
