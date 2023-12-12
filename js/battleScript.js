@@ -534,9 +534,10 @@ function startGame() {
   var player = userData.character;
   player.name = currentUser;
   var playerMoveset;
+  var playerClass = player.class.toLowerCase();
 
   // Getting the players moveset
-  switch (player.class.toLowerCase()) {
+  switch (playerClass) {
     case "fighter":
       playerMoveset = fighter.moveset;
       break;
@@ -547,7 +548,9 @@ function startGame() {
       playerMoveset = wizard.moveset;
       break;
     case "ranger":
+      console.log("here");
       playerMoveset = ranger.moveset;
+      console.log(playerMoveset);
       break;
     default:
       break;
@@ -767,7 +770,7 @@ function startGame() {
   // Buttons //
   /////////////
 
-  switch (player.class.toLowerCase()) {
+  switch (playerClass) {
     case "fighter":
       $("#attack").text(fighter.moveset[0].name);
       $("#attack").click(function () {
@@ -786,7 +789,7 @@ function startGame() {
         initializeBattle(3);
       });
       break;
-    case "Rogue":
+    case "rogue":
       $("#attack").text(rogue.moveset[0].name);
       $("#attack").click(function () {
         initializeBattle(0);
@@ -804,7 +807,7 @@ function startGame() {
         initializeBattle(3);
       });
       break;
-    case "Wizard":
+    case "wizard":
       $("#attack").text(wizard.moveset[0].name);
       $("#attack").click(function () {
         initializeBattle(0);
@@ -822,7 +825,7 @@ function startGame() {
         initializeBattle(3);
       });
       break;
-    case "Ranger":
+    case "ranger":
       $("#attack").text(ranger.moveset[0].name);
       $("#attack").click(function () {
         initializeBattle(0);
@@ -1109,7 +1112,7 @@ function startGame() {
   ];
 
   function updateStatsFromPet() {
-    if (userData.pets.equippedPet === "none") {
+    if (userData.pets.equippedPet === "") {
       return;
     } else {
       var currentBoostedStat = petsList.find(
@@ -1141,7 +1144,8 @@ function startGame() {
       })
       .then(function () {
         console.log(userData);
-        window.location.href = "characterCreation.html$currentUser=" + currentUser;
+        window.location.href =
+          "characterCreation.html?currentUser=" + currentUser;
       });
   }
 
