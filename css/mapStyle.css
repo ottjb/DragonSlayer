@@ -99,10 +99,10 @@ a.disabled {
 .btn-container {
   position: absolute;
   width: 100%;
-  gap: 5%;
+
   bottom: 2vh;
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-content: center;
 }
 
@@ -114,6 +114,7 @@ a.disabled {
   text-transform: uppercase;
   background-color: #b89872;
   border: 2px solid black;
+  margin-right: 2.5vh;
 }
 
 .moveset-container {

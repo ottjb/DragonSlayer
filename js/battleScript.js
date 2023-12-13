@@ -303,7 +303,7 @@ function startGame() {
             return;
           }
           stats.enemyDef -= stats.enemyDef * 0.2;
-          var damage = Math.round(stats.playerAtk * 2 - stats.enemyDef / 2);
+          var damage = Math.round(stats.playerAtk * 3 - stats.enemyDef / 2);
           addToBattleLog(`${player.name} uses Piercing Shot!`);
           doDamage(enemy, damage);
         },
@@ -452,14 +452,14 @@ function startGame() {
           console.log(stats.enemyAtk, stats.playerDef);
           var damage = Math.round(stats.enemyAtk * 2 - stats.playerDef / 2);
           doDamage(player, damage);
-          doHeal(enemy, Math.round(damage * 0.66));
+          doHeal(enemy, Math.round(damage * 0.33));
         },
       },
       {
         name: "Soul Mend",
         effect: function () {
           addToBattleLog(`${enemy.name} uses Soul Mend!`);
-          var heal = Math.round(enemy.maxHP * 0.3);
+          var heal = Math.round(enemy.maxHP * 0.2);
           doHeal(enemy, heal);
         },
       },
@@ -470,9 +470,9 @@ function startGame() {
   var dragon = {
     name: "Dragon",
     sprite: "img/enemy/dragon.png",
-    maxHP: 150,
-    currentHP: 150,
-    baseAttack: 25,
+    maxHP: 100,
+    currentHP: 100,
+    baseAttack: 15,
     baseDefense: 20,
     baseSpeed: 4,
     baseDodge: 5,
@@ -489,7 +489,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Infernal Breath!`);
-          var damage = Math.round(stats.enemyAtk * 3 - stats.playerDef / 2);
+          var damage = Math.round(stats.enemyAtk * 2 - stats.playerDef / 2);
           doDamage(player, damage);
           addToBattleLog(`${player.name} is now burning!`);
           currentStatuses.push(["infernal breath", 3, player]);
@@ -499,7 +499,7 @@ function startGame() {
         name: "Draconian Renewal",
         effect: function () {
           addToBattleLog(`${enemy.name} uses Draconian Renewal!`);
-          var heal = Math.round(enemy.maxHP * 0.4);
+          var heal = Math.round(enemy.maxHP * 0.25);
           doHeal(enemy, heal);
         },
       },
@@ -1114,6 +1114,20 @@ function startGame() {
 
       addToBattleLog(`${character.name} took ${damage} damage!`);
     }
+
+    console.log(character);
+    if (character.name === player.name) {
+      $("#playerSprite").addClass("add-shake");
+      setTimeout(function () {
+        $("#playerSprite").removeClass("add-shake");
+      }, 1000);
+
+    } else if (character.name === enemy.name) {
+      $("#enemySprite").addClass("add-shake");
+      setTimeout(function () {
+        $("#enemySprite").removeClass("add-shake");
+      }, 1000);
+    };
 
     updateHP();
   }

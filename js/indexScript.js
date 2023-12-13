@@ -7,10 +7,7 @@ $(document).ready(function () {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var user = [
-          doc.data().username,
-          doc.data().userData.accountStats.victories,
-        ];
+        var user = [doc.id, doc.data().userData.accountStats.victories];
         console.log(user);
         newList.push(user);
       });
@@ -147,7 +144,11 @@ function start() {
 
   var toAddToTable = "";
   toAddToTable += "<tr><td>Name</td><td>Victories</td></tr>";
-  for (let i = 0; i < 5 || i < sortedArray.length(); i++) {
+  var numOfRanks = 5;
+  if (sortedArray.length < 5) {
+    numOfRanks = sortedArray.length;
+  }
+  for (let i = 0; i < numOfRanks; i++) {
     toAddToTable +=
       "<tr><td>" +
       sortedArray[i][0] +
