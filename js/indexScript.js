@@ -145,22 +145,19 @@ function start() {
       });
   });
 
-  function createLeaderBoard() {
-    var toAddToTable = "";
-    toAddToTable += "<tr><td>Name</td><td>Victories</td></tr>";
-    for (let i = 0; i < 5; i++) {
-      toAddToTable +=
-        "<tr><td>" +
-        sortedArray[i][0] +
-        "</td><td>" +
-        sortedArray[i][1] +
-        "</td></tr>";
-    }
-
-    console.log(toAddToTable);
-    $("#board").html(toAddToTable);
+  var toAddToTable = "";
+  toAddToTable += "<tr><td>Name</td><td>Victories</td></tr>";
+  for (let i = 0; i < 5 || i < sortedArray.length(); i++) {
+    toAddToTable +=
+      "<tr><td>" +
+      sortedArray[i][0] +
+      "</td><td>" +
+      sortedArray[i][1] +
+      "</td></tr>";
   }
 
-  createLeaderBoard();
+  console.log(toAddToTable);
+  $("#board").html(toAddToTable);
+
   console.log("indexScript.js loaded");
 }
