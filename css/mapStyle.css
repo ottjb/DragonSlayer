@@ -299,31 +299,31 @@ button:hover{
   cursor: pointer;
 }
 
-.space#s0 {
+.space:nth-child(1) {
   position: absolute;
   top: 13vh;
   left: 10vh;
 }
 
-.space#s1 {
+.space:nth-child(2) {
   position: absolute;
   top: 3vh;
   left: 25vh;
 }
 
-.space#s2 {
+.space:nth-child(3) {
   position: absolute;
   top: 15vh;
   left: 50vh;
 }
 
-.space#s3 {
+.space:nth-child(4) {
   position: absolute;
   top: 30vh;
   left: 60vh;
 }
 
-.space#s4 {
+.space:nth-child(5) {
   position: absolute;
   top: 27vh;
   left: 105vh;

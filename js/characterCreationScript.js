@@ -1,5 +1,6 @@
 var url = window.location.href;
 var currentUser = url.split("=")[1];
+currentUser = currentUser.replace("#", "");
 var userData;
 $(document).ready(function () {
   console.log(currentUser);
