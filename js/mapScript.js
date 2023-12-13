@@ -56,10 +56,6 @@ function startGame() {
 
   var petsList = [
     {
-      name: "Dog",
-      boostedStat: "attack",
-    },
-    {
       name: "Turtle",
       boostedStat: "defense",
     },
@@ -69,15 +65,24 @@ function startGame() {
     },
     {
       name: "Bird",
+      boostedStat: "attack",
+    },
+    {
+      name: "Snake",
       boostedStat: "dodge",
     },
   ];
 
   var petsMap = [];
 
+  if (userData.pets.acquiredPets.length == 1) {
+    userData.pets.equippedPet = userData.pets.acquiredPets[0];
+  }
+
   if (userData.pets.acquiredPets.length == 0) {
     $("#pet").append(`<option value="0">None</option>`);
   } else {
+    console.log(userData.pets.acquiredPets);
     for (var i = 0; i < userData.pets.acquiredPets.length; i++) {
       petsMap.push({
         id: i + 1,
@@ -150,6 +155,42 @@ function startGame() {
   $("#accStatsCont__enemiesSlain").text(userData.accountStats.enemiesSlain);
   $("#accStatsCont__petsAcquired").text(userData.pets.acquiredPets.length);
   $("#accStatsCont__currentClass").text(userData.character.class);
+
+  /////////////////////
+  // Loading Buttons //
+  /////////////////////
+
+  $("#signOut").click(function () {
+    const response = confirm("Are you sure you want to sign out?");
+    if (response) {
+      firebase
+        .auth()
+        .signOut()
+        .then(function () {
+          window.location.href = "index.html";
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      return;
+    }
+  });
+
+  $("#newCharacter").click(function () {
+    const response = confirm(
+      "Are you sure you want to make a new character? \n(This will delete your current character)"
+    );
+    if (response) {
+      userData.character = {};
+      userData.gameState.currentEnemy = 0;
+      userData.gameState.map = "";
+      userData.gameState.positionOnMap = 0;
+      updateDBThenChar();
+    } else {
+      return;
+    }
+  });
 
   //////////////////////////////
   //  Loading Character Moves //
@@ -369,6 +410,20 @@ function startGame() {
     userData.gameState.map = map;
     userData.gameState.positionOnMap = 0;
     userData.gameState.currentEnemy = 0;
+  }
+
+  function updateDBThenChar() {
+    const db = firebase.firestore();
+    var userRef = db.collection("DragonSlayerUsers").doc(currentUser);
+    userRef
+      .set({
+        userData: userData,
+      })
+      .then(function () {
+        console.log(userData);
+        window.location.href =
+          "characterCreation.html?currentUser=" + currentUser;
+      });
   }
 
   console.log("mapScript.js loaded");

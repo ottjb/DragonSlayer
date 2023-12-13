@@ -449,6 +449,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Soul Siphon!`);
+          console.log(stats.enemyAtk, stats.playerDef);
           var damage = Math.round(stats.enemyAtk * 2 - stats.playerDef / 2);
           doDamage(player, damage);
           doHeal(enemy, Math.round(damage * 0.66));
@@ -855,7 +856,8 @@ function startGame() {
   var battleOver = false;
   var currentStatuses = []; // [["status", turns left, target]]
   function initializeBattle(playerAction) {
-    console.log(playerMoveset);
+    console.log(petsList);
+
     disableButtons();
     addToBattleLog("New Turn Started");
     var stats = calcStats();
@@ -873,7 +875,41 @@ function startGame() {
       setTimeout(function () {
         playerMoveset[playerAction].effect(calcStats());
         if (enemy.currentHP <= 0) {
-          $("#footbar").text("You win!");
+          $("#footbar").text(`${enemy.name} has been defeated!`);
+          userData.accountStats.enemiesSlain++;
+          if (enemy.name === "Dragon") {
+            var petwon;
+            switch (playerClass) {
+              case "fighter":
+                console.log("here");
+                petWon = petsMap[0];
+                break;
+              case "rogue":
+                petWon = "Cat";
+                break;
+              case "wizard":
+                petWon = "Bird";
+                break;
+              case "ranger":
+                petWon = "Snake";
+                break;
+              default:
+                break;
+            }
+            var userPets = userData.pets.acquiredPets;
+            if (userPets.indexOf(petWon) > -1) {
+              $("#footbar").text("You win!");
+            } else {
+              $("#footbar").text(
+                `You win! You have unlocked the ${petWon.name}!`
+              );
+              userData.pets.acquiredPets.push(petWon.name);
+            }
+            userData.accountStats.victories++;
+            $("#newChar").show();
+            battleOver = true;
+            return;
+          }
           $("#goToMap").show();
           console.log("Enemy is dead");
           battleOver = true;
@@ -905,9 +941,44 @@ function startGame() {
       setTimeout(function () {
         playerMoveset[playerAction].effect(calcStats());
         if (enemy.currentHP <= 0) {
-          console.log("Enemy is dead");
-          $("#footbar").text("You win!");
+          $("#footbar").text(`${enemy.name} has been defeated!`);
+          userData.accountStats.enemiesSlain++;
+          if (enemy.name === "Dragon") {
+            var petwon;
+            switch (playerClass) {
+              case "fighter":
+                console.log("here");
+                petWon = petsMap[0];
+                break;
+              case "rogue":
+                petWon = "Cat";
+                break;
+              case "wizard":
+                petWon = "Bird";
+                break;
+              case "ranger":
+                petWon = "Snake";
+                break;
+              default:
+                break;
+            }
+            var userPets = userData.pets.acquiredPets;
+            console.log(userPets);
+            if (userPets.indexOf(petWon) > -1) {
+              $("#footbar").text("You win!");
+            } else {
+              $("#footbar").text(
+                `You win! You have unlocked the ${petWon.name}!`
+              );
+              userData.pets.acquiredPets.push(petWon.name);
+            }
+            userData.accountStats.victories++;
+            $("#newChar").show();
+            battleOver = true;
+            return;
+          }
           $("#goToMap").show();
+          console.log("Enemy is dead");
           battleOver = true;
           return;
         }
@@ -1032,7 +1103,7 @@ function startGame() {
     }
     return false;
   }
-  
+
   function doDamage(character, damage) {
     console.log(damage);
     if (character.currentHP - damage < 0) {
@@ -1050,6 +1121,9 @@ function startGame() {
   $;
 
   function doHeal(character, heal) {
+    if (character.currentHP === 0) {
+      return;
+    }
     if (character.currentHP + heal > character.maxHP) {
       addToBattleLog(
         `${character.name} healed for ${character.maxHP - heal} HP!`
