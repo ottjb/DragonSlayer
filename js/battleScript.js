@@ -569,7 +569,7 @@ function startGame() {
     {
       name: "bleed",
       effect: function (character) {
-        var damage = Math.round(player.baseAttack * 0.5);
+        var damage = Math.round(player.attack * 0.5);
         addToBattleLog(`${character.name} is still bleeding!`);
         doDamage(character, damage);
       },
