@@ -42,7 +42,7 @@ function startGame() {
     userData.gameState.positionOnMap = 0;
     updateDBThenChar();
   });
-
+  
   /////////////
   // Classes //
   /////////////

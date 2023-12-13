@@ -14,6 +14,8 @@
     <title>DragonSlayer | Battle</title>
   </head>
   <body>
+    <!--<audio  controls autoplay loop src="../DragonSlayer/audio/dragonslayer.wav" type="audio/wav" id="musicman"></audio>-->
+
     <div class="grid-container">
       <!--Adding sprites to the screen-->
       <div class="battleScreen">
@@ -76,6 +78,13 @@
         </div>
       </div>
     </div>
+
+    <script>
+        function playSound() {
+          const sound = document.getElementById('musicman');
+          sound.play();
+        }
+    </script>
 
     <script src="js/battleScript.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
