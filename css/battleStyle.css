@@ -244,7 +244,10 @@ body {
   font-size: 1.25em;
   text-shadow: 2px 2px 2px #625137ab;
   text-transform: uppercase;
-  
+}
+
+button:hover{
+  cursor: pointer;
 }
 
 /*

@@ -73,3 +73,7 @@ input.btn {
 .col#signup {
   border-left: 2px solid #2b1e0c;
 }
+
+button:hover{
+  cursor: pointer;
+}

@@ -179,3 +179,7 @@ select {
   text-shadow:  4px 4px #2e5133;
   text-transform: uppercase;
 }
+
+button:hover{
+  cursor: pointer;
+}
