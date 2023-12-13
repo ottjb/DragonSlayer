@@ -1,7 +1,34 @@
-$(document).ready(function () {
-  // Initialize Firebase
-  //firebase.initializeApp(firebaseConfig);
+var newList = [];
+var sortedArray = [];
 
+$(document).ready(function () {
+  const db = firebase.firestore();
+  db.collection("DragonSlayerUsers")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var user = [
+          doc.data().username,
+          doc.data().userData.accountStats.victories,
+        ];
+        console.log(user);
+        newList.push(user);
+      });
+    })
+    .then(function () {
+      console.log(newList);
+      sortedArray = newList.sort(function (a, b) {
+        return b[1] - a[1];
+      });
+      console.log(sortedArray);
+      start();
+    });
+});
+
+// Initialize Firebase
+//firebase.initializeApp(firebaseConfig);
+
+function start() {
   $("#login").submit(function (e) {
     e.preventDefault();
 
@@ -66,6 +93,7 @@ $(document).ready(function () {
         user.updateProfile({ displayName: username });
 
         var userinfo = {
+          username: username,
           userData: {
             accountStats: {
               attempts: 0,
@@ -116,4 +144,23 @@ $(document).ready(function () {
         alert(errorMessage);
       });
   });
-});
+
+  function createLeaderBoard() {
+    var toAddToTable = "";
+    toAddToTable += "<tr><td>Name</td><td>Victories</td></tr>";
+    for (let i = 0; i < 5; i++) {
+      toAddToTable +=
+        "<tr><td>" +
+        sortedArray[i][0] +
+        "</td><td>" +
+        sortedArray[i][1] +
+        "</td></tr>";
+    }
+
+    console.log(toAddToTable);
+    $("#board").html(toAddToTable);
+  }
+
+  createLeaderBoard();
+  console.log("indexScript.js loaded");
+}

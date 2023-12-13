@@ -30,7 +30,6 @@ body {
   background-size: 68vw 76vh;
   background-repeat: no-repeat;
   background-position: center;
-
 }
 
 .space {
@@ -59,7 +58,7 @@ a.disabled {
   grid-row: 1 / 2;
   overflow-y: hidden;
   overflow-x: hidden;
-  border-left: 2px solid #33240F;
+  border-left: 2px solid #33240f;
 }
 
 .account-stats-container > h2 {
@@ -70,7 +69,7 @@ a.disabled {
   padding: 0;
   height: 15%;
   width: 100%;
-  color:#271306;
+  color: #271306;
   font-family: Pixelify Sans;
   text-shadow: 2px 2px 2px #625137b4;
   text-transform: uppercase;
@@ -92,9 +91,29 @@ a.disabled {
   margin: 0;
   padding: 0;
   padding-left: 10px;
-  color:#271306;
+  color: #271306;
   font-family: Rokkitt;
   text-shadow: 2px 2px 2px #625137b4;
+}
+
+.btn-container {
+  position: absolute;
+  width: 100%;
+  gap: 5%;
+  bottom: 2vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.btn-container button {
+  width: 20%;
+  font-family: Pixelify Sans;
+  color: #271306;
+  text-shadow: 2px 2px 2px #625137ab;
+  text-transform: uppercase;
+  background-color: #b89872;
+  border: 2px solid black;
 }
 
 .moveset-container {
@@ -106,8 +125,8 @@ a.disabled {
   grid-row: 2 / 3;
   overflow-y: hidden;
   overflow-x: hidden;
-  border-top: 2px solid #33240F;
-  border-left: 2px solid #33240F;
+  border-top: 2px solid #33240f;
+  border-left: 2px solid #33240f;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -136,20 +155,20 @@ a.disabled {
   justify-content: center;
   align-items: center;
   text-align: center;
-  color:#271306;
+  color: #271306;
   font-family: Pixelify Sans;
   text-shadow: 2px 2px 2px #625137b4;
   text-transform: uppercase;
 }
 
 .moveset-container #move0 {
-  border-right: 2px solid #33240F;
-  border-bottom: 2px solid #33240F;
+  border-right: 2px solid #33240f;
+  border-bottom: 2px solid #33240f;
 }
 
 .moveset-container #move3 {
-  border-left: 2px solid #33240F;
-  border-top: 2px solid #33240F;
+  border-left: 2px solid #33240f;
+  border-top: 2px solid #33240f;
 }
 
 .moveset-container div .desc {
@@ -172,7 +191,7 @@ a.disabled {
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-top: 2px solid #33240F;
+  border-top: 2px solid #33240f;
 
   height: 100%;
   width: 100%;
@@ -182,11 +201,11 @@ a.disabled {
   align-items: center;
   flex-direction: column;
 
-  color:#28221b;
+  color: #28221b;
   text-shadow: 2px 3px 4px #372f25bd;
   background-color: #a48d765e;
   font-family: Rokkitt;
-  font-size: 1.30em;
+  font-size: 1.3em;
 }
 
 .pet-container select {
@@ -202,7 +221,7 @@ a.disabled {
   opacity: 1;
   background-color: transparent;
   border: none;
-  color:#28221b;
+  color: #28221b;
   text-shadow: 2px 3px 4px #372f25bd;
   background-color: #a48d765e;
   font-family: Pixelify Sans;
@@ -222,7 +241,7 @@ a.disabled {
   height: 10%;
   width: 100%;
 
-  color:#28221b;
+  color: #28221b;
   text-shadow: 2px 3px 4px #372f25bd;
   background-color: #a48d765e;
   font-family: Pixelify Sans;
@@ -244,20 +263,20 @@ select {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-top: 2px solid #33240F;
-  border-left:2px solid #7C6A56;
+  border-top: 2px solid #33240f;
+  border-left: 2px solid #7c6a56;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  color:#28221b;
+  color: #28221b;
   text-shadow: 2px 3px 4px #372f25bd;
   background-color: #a48d765e;
   font-family: Rokkitt;
-  font-size: 1.30em;
+  font-size: 1.3em;
 }
-.prompt-container p{
+.prompt-container p {
   position: fixed;
   bottom: 9.5vh;
 }
@@ -269,9 +288,8 @@ select {
   grid-column: 3 / 4;
   grid-row: 3 / 4;
   overflow-y: hidden;
-  border-top: 2px solid #7C6A56;
-  border-left:2px solid #7C6A56;
-
+  border-top: 2px solid #7c6a56;
+  border-left: 2px solid #7c6a56;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -281,12 +299,12 @@ select {
   height: 100%;
   width: 100%;
 
-  color:#28221b;
+  color: #28221b;
   text-shadow: 2px 3px 4px #372f25bd;
   background-color: #a48d765e;
   font-family: Pixelify Sans;
   text-transform: uppercase;
-  font-size: 1.30em;
+  font-size: 1.3em;
 }
 
 .character-stats-container > p {
@@ -295,7 +313,7 @@ select {
   align-items: center;
 }
 
-button:hover{
+button:hover {
   cursor: pointer;
 }
 
@@ -329,6 +347,7 @@ button:hover{
   left: 105vh;
 }
 
-#arrowLeft:hover, #arrowRight:hover {
+#arrowLeft:hover,
+#arrowRight:hover {
   cursor: pointer;
 }

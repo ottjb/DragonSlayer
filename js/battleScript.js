@@ -742,32 +742,6 @@ function startGame() {
     },
   ];
 
-  //////////
-  // Pets //
-  //////////
-  var petsList = [
-      {
-        character: "fighter",
-        name: "Turtle",
-        boostedStat: "defense",
-      },
-      {
-        character: "rogue",
-        name: "Cat",
-        boostedStat: "speed",
-      },
-      {
-        character: "wizard",
-        name: "",
-        boostedStat: "attack",
-      },
-      {
-        character: "ranger",
-        name: "Bird",
-        boostedStat: "dodge",
-      },
-  ];
-
   /////////////////////
   // Populate screen //
   /////////////////////
@@ -883,7 +857,7 @@ function startGame() {
   var currentStatuses = []; // [["status", turns left, target]]
   function initializeBattle(playerAction) {
     console.log(petsList);
-    
+
     disableButtons();
     addToBattleLog("New Turn Started");
     var stats = calcStats();
@@ -904,13 +878,34 @@ function startGame() {
           $("#footbar").text(`${enemy.name} has been defeated!`);
           userData.accountStats.enemiesSlain++;
           if (enemy.name === "Dragon") {
-            console.log(petsList);
-            console.log(playerClass);
-            var petWon = petsList.find(
-              (pet) => pet.character === playerClass);
-              console.log(petWon);
+            var petwon;
+            switch (playerClass) {
+              case "fighter":
+                console.log("here");
+                petWon = petsMap[0];
+                break;
+              case "rogue":
+                petWon = "Cat";
+                break;
+              case "wizard":
+                petWon = "Bird";
+                break;
+              case "ranger":
+                petWon = "Snake";
+                break;
+              default:
+                break;
+            }
+            var userPets = userData.pets.acquiredPets;
+            if (userPets.indexOf(petWon) > -1) {
+              $("#footbar").text("You win!");
+            } else {
+              $("#footbar").text(
+                `You win! You have unlocked the ${petWon.name}!`
+              );
+              userData.pets.acquiredPets.push(petWon.name);
+            }
             userData.accountStats.victories++;
-            $("#footbar").text("You win!");
             $("#newChar").show();
             battleOver = true;
             return;
@@ -949,8 +944,35 @@ function startGame() {
           $("#footbar").text(`${enemy.name} has been defeated!`);
           userData.accountStats.enemiesSlain++;
           if (enemy.name === "Dragon") {
+            var petwon;
+            switch (playerClass) {
+              case "fighter":
+                console.log("here");
+                petWon = petsMap[0];
+                break;
+              case "rogue":
+                petWon = "Cat";
+                break;
+              case "wizard":
+                petWon = "Bird";
+                break;
+              case "ranger":
+                petWon = "Snake";
+                break;
+              default:
+                break;
+            }
+            var userPets = userData.pets.acquiredPets;
+            console.log(userPets);
+            if (userPets.indexOf(petWon) > -1) {
+              $("#footbar").text("You win!");
+            } else {
+              $("#footbar").text(
+                `You win! You have unlocked the ${petWon.name}!`
+              );
+              userData.pets.acquiredPets.push(petWon.name);
+            }
             userData.accountStats.victories++;
-            $("#footbar").text("You win!");
             $("#newChar").show();
             battleOver = true;
             return;

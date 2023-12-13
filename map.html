@@ -8,7 +8,10 @@
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pixelify+Sans|Rokkitt">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Pixelify+Sans|Rokkitt"
+    />
     <link rel="stylesheet" href="css/mapStyle.css" />
     <title>DragonSlayer | Map</title>
   </head>
@@ -47,6 +50,10 @@
           <p>
             Current Class: <span id="accStatsCont__currentClass">Class</span>
           </p>
+        </div>
+        <div class="btn-container">
+          <button id="signOut">Sign Out</button>
+          <button id="newCharacter">New Character</button>
         </div>
       </div>
 
@@ -114,8 +121,8 @@
       };
 
       // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      firebase.initializeApp(firebaseConfig);
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     </script>
   </body>
 </html>
