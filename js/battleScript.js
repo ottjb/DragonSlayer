@@ -270,7 +270,7 @@ function startGame() {
         name: "Inflict Burn",
         effect: function () {
           addToBattleLog(`${player.name} uses Inflict Burn!`);
-          var damage = Math.round(player.baseAttack * 0.2);
+          var damage = Math.round(player.attack * 0.2);
           doDamage(enemy, damage);
           currentStatuses.push(["burn", 3, enemy]);
         },
@@ -715,7 +715,7 @@ function startGame() {
       name: "burn",
       effect: function (character) {
         addToBattleLog(`${character.name} is still burning!`);
-        var damage = Math.round(player.baseAttack * 0.2);
+        var damage = Math.round(player.attack * 0.2);
         doDamage(character, damage);
       },
     },
