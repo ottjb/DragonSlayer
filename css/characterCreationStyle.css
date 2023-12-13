@@ -183,3 +183,7 @@ select {
 button:hover{
   cursor: pointer;
 }
+
+.arrow:hover{
+  cursor: pointer;
+}

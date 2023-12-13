@@ -449,6 +449,7 @@ function startGame() {
             return;
           }
           addToBattleLog(`${enemy.name} uses Soul Siphon!`);
+          console.log(stats.enemyAtk, stats.playerDef);
           var damage = Math.round(stats.enemyAtk * 2 - stats.playerDef / 2);
           doDamage(player, damage);
           doHeal(enemy, Math.round(damage * 0.66));
@@ -741,6 +742,32 @@ function startGame() {
     },
   ];
 
+  //////////
+  // Pets //
+  //////////
+  var petsList = [
+      {
+        character: "fighter",
+        name: "Turtle",
+        boostedStat: "defense",
+      },
+      {
+        character: "rogue",
+        name: "Cat",
+        boostedStat: "speed",
+      },
+      {
+        character: "wizard",
+        name: "",
+        boostedStat: "attack",
+      },
+      {
+        character: "ranger",
+        name: "Bird",
+        boostedStat: "dodge",
+      },
+  ];
+
   /////////////////////
   // Populate screen //
   /////////////////////
@@ -855,7 +882,8 @@ function startGame() {
   var battleOver = false;
   var currentStatuses = []; // [["status", turns left, target]]
   function initializeBattle(playerAction) {
-    console.log(playerMoveset);
+    console.log(petsList);
+    
     disableButtons();
     addToBattleLog("New Turn Started");
     var stats = calcStats();
@@ -873,7 +901,20 @@ function startGame() {
       setTimeout(function () {
         playerMoveset[playerAction].effect(calcStats());
         if (enemy.currentHP <= 0) {
-          $("#footbar").text("You win!");
+          $("#footbar").text(`${enemy.name} has been defeated!`);
+          userData.accountStats.enemiesSlain++;
+          if (enemy.name === "Dragon") {
+            console.log(petsList);
+            console.log(playerClass);
+            var petWon = petsList.find(
+              (pet) => pet.character === playerClass);
+              console.log(petWon);
+            userData.accountStats.victories++;
+            $("#footbar").text("You win!");
+            $("#newChar").show();
+            battleOver = true;
+            return;
+          }
           $("#goToMap").show();
           console.log("Enemy is dead");
           battleOver = true;
@@ -905,9 +946,17 @@ function startGame() {
       setTimeout(function () {
         playerMoveset[playerAction].effect(calcStats());
         if (enemy.currentHP <= 0) {
-          console.log("Enemy is dead");
-          $("#footbar").text("You win!");
+          $("#footbar").text(`${enemy.name} has been defeated!`);
+          userData.accountStats.enemiesSlain++;
+          if (enemy.name === "Dragon") {
+            userData.accountStats.victories++;
+            $("#footbar").text("You win!");
+            $("#newChar").show();
+            battleOver = true;
+            return;
+          }
           $("#goToMap").show();
+          console.log("Enemy is dead");
           battleOver = true;
           return;
         }
@@ -1032,7 +1081,7 @@ function startGame() {
     }
     return false;
   }
-  
+
   function doDamage(character, damage) {
     console.log(damage);
     if (character.currentHP - damage < 0) {
@@ -1050,6 +1099,9 @@ function startGame() {
   $;
 
   function doHeal(character, heal) {
+    if (character.currentHP === 0) {
+      return;
+    }
     if (character.currentHP + heal > character.maxHP) {
       addToBattleLog(
         `${character.name} healed for ${character.maxHP - heal} HP!`

@@ -328,3 +328,7 @@ button:hover{
   top: 27vh;
   left: 105vh;
 }
+
+#arrowLeft:hover, #arrowRight:hover {
+  cursor: pointer;
+}
